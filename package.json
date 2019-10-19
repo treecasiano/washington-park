@@ -1,0 +1,82 @@
+{
+  "name": "washington-park",
+  "version": "0.0.1",
+  "description": "Interactive Web Map of Washington Park",
+  "author": "Tree Casiano",
+  "repository": "https://github.com/treecasiano/washington-park.git",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "cypress": "cypress open",
+    "cypress:headless": "cypress run",
+    "integration": "jest --bail --detectOpenHandles --runInBand --verbose __tests__integration__/",
+    "start": "node app.js"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@babel/core": "^7.4.5",
+    "@types/leaflet": "^1.5.1",
+    "args": "^5.0.0",
+    "axios": "^0.19.0",
+    "babel-polyfill": "^6.26.0",
+    "body-parser": "^1.19.0",
+    "config": "^2.0.2",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-openapi": "^2.0.7",
+    "got": "^9.2.1",
+    "leaflet": "^1.5.1",
+    "pg-promise": "^8.6.4",
+    "regenerator-runtime": "^0.13.2",
+    "swagger-ui-dist": "^3.23.8",
+    "vue": "^2.6.10",
+    "vue-router": "^3.1.3",
+    "vue2-leaflet": "^2.2.1",
+    "vuetify": "^2.0.15",
+    "vuex": "^3.1.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-plugin-unit-jest": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "babel-eslint": "^10.0.1",
+    "cypress": "^3.4.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "jest": "^24.9.0",
+    "material-design-icons-iconfont": "^5.0.1",
+    "prettier": "^1.18.2",
+    "sass": "^1.17.4",
+    "sass-loader": "^7.1.0",
+    "vue-cli-plugin-vuetify": "^0.6.3",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.3.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "license": "ISC"
+}
