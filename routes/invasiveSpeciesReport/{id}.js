@@ -1,13 +1,10 @@
-const dropdownValues = require("../../src/dropdownValues.json");
-const { locationTypes, stateAbbreviations } = dropdownValues;
-
-function factory(logger, parkLocationService) {
+function factory(logger, invasiveSpeciesReportService) {
   DELETE.apiDoc = {
     summary: "Deletes a record by ID",
-    tags: ["Park Location"],
+    tags: ["Invasive Species Report"],
     parameters: [
       {
-        description: "Park Location Record ID",
+        description: "Invasive Species Report Record ID",
         in: "path",
         minimum: 1,
         name: "id",
@@ -29,12 +26,12 @@ function factory(logger, parkLocationService) {
   };
 
   GET.apiDoc = {
-    summary: "Get Park Location record by ID",
-    tags: ["Park Location"],
+    summary: "Get Invasive Species Report record by ID",
+    tags: ["Invasive Species Report"],
     produces: ["application/json"],
     parameters: [
       {
-        description: "Park Location ID",
+        description: "Invasive Species Report ID",
         in: "path",
         minimum: 1,
         name: "id",
@@ -57,11 +54,11 @@ function factory(logger, parkLocationService) {
 
   PUT.apiDoc = {
     summary: "Update record",
-    tags: ["Park Location"],
+    tags: ["Invasive Species Report"],
     produces: ["application/json"],
     parameters: [
       {
-        description: "Park Location ID",
+        description: "Invasive Species Report ID",
         in: "path",
         minimum: 1,
         name: "id",
@@ -71,55 +68,40 @@ function factory(logger, parkLocationService) {
       {
         description: "updates",
         in: "body",
-        name: "parkLocation",
+        name: "invasiveSpeciesReport",
         required: true,
         schema: {
           properties: {
-            location_name: {
-              description: "Park Location Name",
+            observation_date: {
+              description: "Observation Date",
               type: "string",
             },
-            street_addr_1: {
-              description: "Street Address Line 1",
+            observer_email: {
+              description: "Observer Email",
               type: "string",
             },
-            street_addr_2: {
-              description: "Street Address Line 2",
+            observer_first_name: {
+              description: "Observer First Name",
               type: "string",
             },
-            city: {
-              description: "City",
+            observer_last_name: {
+              description: "Observer Last Name",
               type: "string",
             },
-            state: {
-              description: "State",
-              type: "string",
-              enum: stateAbbreviations,
-            },
-            ZIP: {
-              description: "ZIP Code",
+            observer_phone: {
+              description: "Observer Phone Number",
               type: "string",
             },
-            // make this an enum
-            location_type: {
-              description: "Park Location Type",
-              type: "string",
-              enum: locationTypes,
-            },
-            hrs_of_operation: {
-              description: "Hours of Operation",
+            organism_type: {
+              description: "Invasive Species Type",
               type: "string",
             },
-            url: {
-              description: "Park Location URL",
+            organism_description: {
+              description: "Invasive Species Description",
               type: "string",
             },
-            image_url: {
-              description: "Park Location Image URL",
-              type: "string",
-            },
-            description: {
-              description: "Park Location Description",
+            location_details: {
+              description: "Invasive Species Location Details",
               type: "string",
             },
             geom: {
@@ -158,7 +140,7 @@ function factory(logger, parkLocationService) {
     let record;
     let result;
     try {
-      record = await parkLocationService.get(id);
+      record = await invasiveSpeciesReportService.get(id);
       if (!record) {
         return res.status(404).json({ message: `No record for id: ${id}` });
       }
@@ -167,7 +149,7 @@ function factory(logger, parkLocationService) {
       return res.status(500).json({ message: "Internal Server Error" });
     }
     try {
-      result = await parkLocationService.remove(id);
+      result = await invasiveSpeciesReportService.remove(id);
     } catch (e) {
       console.error(e);
       return res.status(500).json({ message: "Internal Server Error" });
@@ -183,7 +165,7 @@ function factory(logger, parkLocationService) {
 
     let record;
     try {
-      record = await parkLocationService.get(id);
+      record = await invasiveSpeciesReportService.get(id);
     } catch (e) {
       logger.error(e);
       return res.status(500).json({ message: "Server Error" });
@@ -209,7 +191,7 @@ function factory(logger, parkLocationService) {
 
     let record;
     try {
-      record = await parkLocationService.get(id);
+      record = await invasiveSpeciesReportService.get(id);
     } catch (e) {
       logger.error(e);
       return res.status(500).json({ message: "Database error" });
@@ -223,8 +205,8 @@ function factory(logger, parkLocationService) {
 
     let result;
     try {
-      await parkLocationService.update(id, updates);
-      result = await parkLocationService.get(id);
+      await invasiveSpeciesReportService.update(id, updates);
+      result = await invasiveSpeciesReportService.get(id);
     } catch (e) {
       logger.error(e);
       return res.status(500).json({

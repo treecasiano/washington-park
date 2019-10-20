@@ -8,6 +8,7 @@ const path = require("path");
 const pathToSwaggerUi = require("swagger-ui-dist").absolutePath();
 
 const ExampleService = require("./lib/exampleService");
+const InvasiveSpeciesReportService = require("./lib/invasiveSpeciesReportService");
 const ParkLocationService = require("./lib/parkLocationService");
 const TrailService = require("./lib/trailService");
 const TransitStopService = require("./lib/transitStopService");
@@ -27,6 +28,9 @@ process.env.TZ = "UTC";
     });
 
     const exampleService = new ExampleService({ pg });
+    const invasiveSpeciesReportService = new InvasiveSpeciesReportService({
+      pg,
+    });
     const parkLocationService = new ParkLocationService({ pg });
     const trailService = new TrailService({ pg });
     const transitStopService = new TransitStopService({ pg });
@@ -83,6 +87,7 @@ process.env.TZ = "UTC";
       dependencies: {
         env,
         exampleService,
+        invasiveSpeciesReportService,
         parkLocationService,
         trailService,
         transitStopService,

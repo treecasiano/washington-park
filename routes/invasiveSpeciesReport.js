@@ -1,10 +1,7 @@
-const dropdownValues = require("../src/dropdownValues.json");
-const { locationTypes, stateAbbreviations } = dropdownValues;
-
-function factory(logger, parkLocationService) {
+function factory(logger, invasiveSpeciesReportService) {
   GET.apiDoc = {
-    summary: "Gets a list of all Park Locations",
-    tags: ["Park Location"],
+    summary: "Gets a list of all Invasive Species Reports",
+    tags: ["Invasive Species Report"],
     produces: ["application/json"],
     parameters: [],
     responses: {
@@ -18,61 +15,47 @@ function factory(logger, parkLocationService) {
   };
 
   POST.apiDoc = {
-    summary: "Creates a Park Location",
-    tags: ["Park Location"],
+    summary: "Creates an Invasive Species Report",
+    tags: ["Invasive Species Report"],
     produces: ["application/json"],
     parameters: [
       {
         description: "Record attributes",
         in: "body",
-        name: "parkLocation",
+        name: "invasiveSpeciesReport",
         required: true,
         schema: {
           properties: {
-            location_name: {
-              description: "Park Location Name",
+            observation_date: {
+              description: "Observation Date",
               type: "string",
             },
-            street_addr_1: {
-              description: "Street Address Line 1",
+            observer_email: {
+              description: "Observer Email",
               type: "string",
             },
-            street_addr_2: {
-              description: "Street Address Line 2",
+            observer_first_name: {
+              description: "Observer First Name",
               type: "string",
             },
-            city: {
-              description: "City",
+            observer_last_name: {
+              description: "Observer Last Name",
               type: "string",
             },
-            state: {
-              description: "State",
-              type: "string",
-              enum: stateAbbreviations,
-            },
-            ZIP: {
-              description: "ZIP Code",
+            observer_phone: {
+              description: "Observer Phone Number",
               type: "string",
             },
-            location_type: {
-              description: "Park Location Type",
-              type: "string",
-              enum: locationTypes,
-            },
-            hrs_of_operation: {
-              description: "Hours of Operation",
+            organism_type: {
+              description: "Invasive Species Type",
               type: "string",
             },
-            url: {
-              description: "Park Location URL",
+            organism_description: {
+              description: "Invasive Species Description",
               type: "string",
             },
-            image_url: {
-              description: "Park Location Image URL",
-              type: "string",
-            },
-            description: {
-              description: "Park Location Description",
+            location_details: {
+              description: "Invasive Species Location Details",
               type: "string",
             },
             geom: {
@@ -80,7 +63,7 @@ function factory(logger, parkLocationService) {
               type: "string",
             },
           },
-          required: ["location_name", "geom"],
+          required: ["geom"],
           type: "object",
         },
       },
@@ -109,7 +92,7 @@ function factory(logger, parkLocationService) {
   async function GET(req, res) {
     let result;
     try {
-      result = await parkLocationService.list();
+      result = await invasiveSpeciesReportService.list();
     } catch (e) {
       logger.error(e);
       return res.status(500).json({ message: "Server Error" });
@@ -126,8 +109,8 @@ function factory(logger, parkLocationService) {
         .json({ message: "Must include at least one attribute" });
     }
     try {
-      const { user_id } = await parkLocationService.create(params);
-      result = await parkLocationService.get(user_id);
+      const { user_id } = await invasiveSpeciesReportService.create(params);
+      result = await invasiveSpeciesReportService.get(user_id);
     } catch (e) {
       console.error(e);
       return res.status(500).json({ message: "Internal Server Error" });
