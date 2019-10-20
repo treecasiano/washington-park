@@ -149,6 +149,51 @@ ALTER SEQUENCE public.account_user_id_seq OWNED BY public.hello_table.user_id;
 
 
 --
+-- Name: park_location; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.park_location (
+    gid integer NOT NULL,
+    location_name character varying(250) NOT NULL,
+    street_addr_1 character varying(250),
+    street_addr_2 character varying(100),
+    city character varying(100),
+    state character varying(2),
+    zip character varying(10),
+    location_type character varying(50),
+    hrs_of_operation character varying(250),
+    url character varying(250),
+    image_url character varying(250),
+    description character varying(250),
+    geom public.geometry(Point,4326)
+);
+
+
+ALTER TABLE public.park_location OWNER TO postgres;
+
+--
+-- Name: park_location_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.park_location_gid_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.park_location_gid_seq OWNER TO postgres;
+
+--
+-- Name: park_location_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.park_location_gid_seq OWNED BY public.park_location.gid;
+
+
+--
 -- Name: trails; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -264,6 +309,13 @@ ALTER TABLE ONLY public.hello_table ALTER COLUMN user_id SET DEFAULT nextval('pu
 
 
 --
+-- Name: park_location gid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.park_location ALTER COLUMN gid SET DEFAULT nextval('public.park_location_gid_seq'::regclass);
+
+
+--
 -- Name: trails gid; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -289,6 +341,15 @@ COPY public.hello_table (user_id, username, created_on, first_name, last_name, f
 5	melodia	2019-03-23 18:02:41.248391+00	Adalynd	Jones	black	0101000020E610000085EB51B81E155DC0AE47E17A14AE4540
 6	mixolydia	2019-03-23 18:04:01.980239+00	Yzobel	Mirren	green	0101000020E61000003D0AD7A3701D58C07B14AE47E13A4040
 7	craftywench	2019-03-23 18:05:41.260574+00	Evelyn	Dunlap	navy blue	0101000020E6100000CDCCCCCCCC9C5EC09A99999999594740
+\.
+
+
+--
+-- Data for Name: park_location; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.park_location (gid, location_name, street_addr_1, street_addr_2, city, state, zip, location_type, hrs_of_operation, url, image_url, description, geom) FROM stdin;
+1	Stevens Pavilion Picnic Shelter	3119 SW Fairview Blvd.	\N	Portland	OR	97205	Picnic Shelter	5am - 10pm daily	https://www.hoytarboretum.org/visit/rentals/stevens-pavilion/	https://www.hoytarboretum.org/wp-content/uploads/2019/04/Hoyt-Arboretum_Weddings-Rentals_Stevens-Pavilion-1.jpg	\N	0101000020E61000002F4FE78AD2AD5EC0682096CD1CC24640
 \.
 
 
@@ -896,6 +957,13 @@ SELECT pg_catalog.setval('public.account_user_id_seq', 7, true);
 
 
 --
+-- Name: park_location_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.park_location_gid_seq', 1, true);
+
+
+--
 -- Name: trails_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -926,6 +994,22 @@ ALTER TABLE ONLY public.hello_table
 
 
 --
+-- Name: park_location park_location_location_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.park_location
+    ADD CONSTRAINT park_location_location_name_key UNIQUE (location_name);
+
+
+--
+-- Name: park_location park_location_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.park_location
+    ADD CONSTRAINT park_location_pkey PRIMARY KEY (gid);
+
+
+--
 -- Name: trails trails_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -939,6 +1023,13 @@ ALTER TABLE ONLY public.trails
 
 ALTER TABLE ONLY public.transit_stops
     ADD CONSTRAINT transit_stops_pkey PRIMARY KEY (gid);
+
+
+--
+-- Name: park_location_geom_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX park_location_geom_idx ON public.park_location USING gist (geom);
 
 
 --

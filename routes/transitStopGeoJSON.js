@@ -1,6 +1,6 @@
 function factory(logger, transitStopService) {
   GET.apiDoc = {
-    summary: "Get a GeoJSON feature collection.",
+    summary: "Get a GeoJSON feature collection",
     tags: ["Transit Stop"],
     produces: ["application/json"],
     parameters: [],
