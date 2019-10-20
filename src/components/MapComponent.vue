@@ -35,8 +35,8 @@
             </l-popup>
           </l-marker>
         </div>
-        <l-control-zoom position="topright"></l-control-zoom>
-        <l-control position="topleft">
+        <l-control-zoom position="bottomright"></l-control-zoom>
+        <l-control position="topright">
           <v-btn dark color="primary" @click="resetMapView">
             <v-icon>home</v-icon>
           </v-btn>
@@ -47,8 +47,20 @@
 </template>
 
 <script>
-const defaultCenter = [45.5155, -122.6793];
-const defaultZoom = 3;
+import { mapState } from "vuex";
+import parkBoundaries from "../../public/parkBoundaries.json";
+
+const baseMapUrl =
+  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+const attribution =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const defaultCenter = [45.5155, -122.715];
+const defaultZoom = 15;
+
+const popupOptions = {
+  permanent: false,
+  sticky: true,
+};
 
 export default {
   name: "MapComponent",
@@ -56,6 +68,7 @@ export default {
     exampleGeoJSON() {
       return this.$store.state.example.exampleGeoJSON;
     },
+    ...mapState({}),
   },
   async created() {
     this.loading = true;
@@ -65,25 +78,27 @@ export default {
   },
   data() {
     return {
-      url:
-        "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-      zoom: defaultZoom,
-      center: defaultCenter,
+      attribution,
       bounds: null,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: "abcd",
+      center: defaultCenter,
       loading: false,
-      maxZoom: 18,
       markersArray: [],
+      maxZoom: 18,
+      subdomains: "abcd",
+      url: baseMapUrl,
+      zoom: defaultZoom,
     };
   },
   methods: {
-    zoomUpdated(zoom) {
-      this.zoom = zoom;
+    boundsUpdated(bounds) {
+      this.bounds = bounds;
     },
     centerUpdated(center) {
       this.center = center;
+    },
+    createParkBoundariesContent(props) {
+      let propertyString = `<strong>${props.NAME}</strong>`;
+      return propertyString;
     },
     createMarkers() {
       const markersArray = this.exampleGeoJSON["features"].map(feature => {
@@ -99,13 +114,50 @@ export default {
       });
       this.markersArray = markersArray;
     },
-    boundsUpdated(bounds) {
-      this.bounds = bounds;
+    onEachParkBoundariesFeature(feature, layer) {
+      const popupContent = this.createParkBoundariesContent(feature.properties);
+      this.setParkBoundariesStyles(layer, feature);
+      layer.bindPopup(popupContent, popupOptions);
+    },
+    setBaseStyles(layer, defaultStyles, hightlightStyles) {
+      layer.setStyle(defaultStyles);
+      layer.on("mouseover", () => {
+        layer.setStyle(hightlightStyles);
+      });
+      layer.on("mouseout", () => {
+        layer.setStyle(defaultStyles);
+      });
+    },
+    setParkBoundariesStyles(layer) {
+      const defaultStyle = {
+        weight: 2,
+        color: "#236557",
+        opacity: 1,
+        fillColor: "transparent",
+      };
+      const highlightStyle = {
+        weight: 2,
+        color: "#236557",
+        opacity: 0.8,
+        fillColor: "#dce775",
+      };
+      this.setBaseStyles(layer, defaultStyle, highlightStyle);
     },
     resetMapView() {
       this.$refs.map.setCenter(defaultCenter);
       this.$refs.map.setZoom(defaultZoom);
     },
+    zoomUpdated(zoom) {
+      this.zoom = zoom;
+    },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      // had to use Leaflet method directly due to Multi-Polygon
+      L.geoJSON(parkBoundaries, {
+        onEachFeature: this.onEachParkBoundariesFeature,
+      }).addTo(this.$refs.map.mapObject);
+    });
   },
   props: {
     height: String,
@@ -114,6 +166,9 @@ export default {
   },
 };
 </script>
+
+<style >
+</style>
 
 
 

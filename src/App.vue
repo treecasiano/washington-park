@@ -1,29 +1,35 @@
 <template>
   <v-app id="app" app>
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>|
-      <router-link to="/map">Map</router-link>
+    <div>
+      <v-toolbar dense id="nav" dark color="primary">
+        <v-toolbar-title>Washington Park</v-toolbar-title>
+      </v-toolbar>
     </div>
     <router-view />
   </v-app>
 </template>
 
+<script>
+export default {
+  async created() {},
+  data: () => ({}),
+};
+</script>
+
 <style>
+@import url("https://fonts.googleapis.com/css?family=Muli");
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Muli", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: var(--v-primary-base);
-}
-#nav {
-  padding: 30px;
 }
 
 #nav a {
   font-weight: bold;
   color: var(--v-primary-base);
+  display: block;
+  padding: 10px;
 }
 
 #nav a.router-link-exact-active {
