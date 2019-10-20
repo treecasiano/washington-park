@@ -1,15 +1,15 @@
-function factory(logger, transitStopService) {
+function factory(logger, trailService) {
   GET.apiDoc = {
-    summary: "Gets a list of all Transit Stops",
-    tags: ["Transit Stop"],
+    summary: "Get a GeoJSON feature collection.",
+    tags: ["Trail"],
     produces: ["application/json"],
     parameters: [],
     responses: {
       200: {
-        description: "List of records",
+        description: "Line features in geojson format",
       },
       500: {
-        description: "Internal Server Error",
+        description: "Server Error",
       },
     },
   };
@@ -21,10 +21,10 @@ function factory(logger, transitStopService) {
   async function GET(req, res) {
     let result;
     try {
-      result = await transitStopService.list();
+      result = await trailService.getGeoJSON();
     } catch (e) {
       logger.error(e);
-      return res.status(500).json({ message: "Server Error" });
+      return res.status(500).json({ message: "Database error" });
     }
     return res.status(200).json(result);
   }

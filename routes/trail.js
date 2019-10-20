@@ -1,7 +1,7 @@
-function factory(logger, transitStopService) {
+function factory(logger, trailService) {
   GET.apiDoc = {
-    summary: "Gets a list of all Transit Stops",
-    tags: ["Transit Stop"],
+    summary: "Gets a list of all Trails",
+    tags: ["Trail"],
     produces: ["application/json"],
     parameters: [],
     responses: {
@@ -21,7 +21,7 @@ function factory(logger, transitStopService) {
   async function GET(req, res) {
     let result;
     try {
-      result = await transitStopService.list();
+      result = await trailService.list();
     } catch (e) {
       logger.error(e);
       return res.status(500).json({ message: "Server Error" });

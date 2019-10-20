@@ -8,6 +8,7 @@ const path = require("path");
 const pathToSwaggerUi = require("swagger-ui-dist").absolutePath();
 
 const ExampleService = require("./lib/exampleService");
+const TrailService = require("./lib/trailService");
 const TransitStopService = require("./lib/transitStopService");
 const pgFactory = require("./lib/pg");
 
@@ -25,6 +26,7 @@ process.env.TZ = "UTC";
     });
 
     const exampleService = new ExampleService({ pg });
+    const trailService = new TrailService({ pg });
     const transitStopService = new TransitStopService({ pg });
 
     const app = express();
@@ -79,6 +81,7 @@ process.env.TZ = "UTC";
       dependencies: {
         env,
         exampleService,
+        trailService,
         transitStopService,
         logger,
       },

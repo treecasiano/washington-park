@@ -20,7 +20,7 @@ export default {
     });
   },
   put(example) {
-    const url = `/api/example/${example.id}`;
+    const url = `/api/example/${id}`;
     const data = Object.assign({}, example);
 
     return axios({
