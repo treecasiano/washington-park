@@ -14,7 +14,13 @@
       >
         <l-control-scale position="bottomleft"></l-control-scale>
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-
+        <div v-if="displayParkBoundaries">
+          <l-geo-json
+            :geojson="parkBoundaries"
+            :options="optionsParkBoundaries"
+            :options-style="stylesParkBoundaries"
+          ></l-geo-json>
+        </div>
         <div>
           <l-marker
             v-for="(item, index) in markersArray"
@@ -103,7 +109,18 @@ export default {
     exampleGeoJSON() {
       return this.$store.state.example.exampleGeoJSON;
     },
+    optionsParkBoundaries() {
+      return {
+        onEachFeature: this.onEachParkBoundariesFeature,
+      };
+    },
+    stylesParkBoundaries() {
+      return () => {
+        return {};
+      };
+    },
     ...mapState({
+      displayParkBoundaries: state => state.parkBoundaries.displayStatus,
       displayTrails: state => state.trail.displayStatus,
       trailsGeoJSON: state => state.trail.geoJSON,
       trailsLoading: state => state.trail.loading,
@@ -129,6 +146,7 @@ export default {
       loading: false,
       markersArray: [],
       maxZoom: 18,
+      parkBoundaries,
       subdomains: "abcd",
       trailsPolyLineArray: [],
       transitStopMarkersArray: [],
@@ -231,12 +249,7 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(() => {
-      // using Leaflet method directly because Vue2Leaflet would not accept MultiPolygon geojson
-      L.geoJSON(parkBoundaries, {
-        onEachFeature: this.onEachParkBoundariesFeature,
-      }).addTo(this.$refs.map.mapObject);
-    });
+    this.$nextTick(() => {});
   },
   props: {
     height: String,
