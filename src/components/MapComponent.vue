@@ -51,6 +51,25 @@
             </l-popup>
           </l-marker>
         </div>
+        <div v-if="displayTrails && trailsPolyLineArray.length">
+          <l-polyline
+            v-for="(item, index) in trailsPolyLineArray"
+            v-bind:item="item"
+            v-bind:index="index"
+            v-bind:key="index"
+            :lat-lngs="item.latlngs"
+            :color="item.color"
+            :weight="item.weight"
+            :dash-array="item.dashArray"
+          >
+            <l-popup>
+              <div>
+                <strong>Trail Name:</strong>
+                {{item.props.trailname}}
+              </div>
+            </l-popup>
+          </l-polyline>
+        </div>
         <l-control-zoom position="bottomright"></l-control-zoom>
         <l-control position="topright">
           <v-btn dark color="primary" @click="resetMapView">
@@ -85,6 +104,9 @@ export default {
       return this.$store.state.example.exampleGeoJSON;
     },
     ...mapState({
+      displayTrails: state => state.trail.displayStatus,
+      trailsGeoJSON: state => state.trail.geoJSON,
+      trailsLoading: state => state.trail.loading,
       displayTransitStops: state => state.transitStop.displayStatus,
       transitStopGeoJSON: state => state.transitStop.geoJSON,
       transitStopDataLoading: state => state.transitStop.loading,
@@ -93,8 +115,11 @@ export default {
   async created() {
     // TODO: Remove example code
     await this.$store.dispatch("example/getExampleGeoJSON");
+    await this.$store.dispatch("transitStop/getGeoJSON");
+    await this.$store.dispatch("trail/getGeoJSON");
     this.createExampleMarkers(this.exampleGeoJSON);
     this.createTransitStopMarkers(this.transitStopGeoJSON);
+    this.createTrailsPolyLines(this.trailsGeoJSON);
   },
   data() {
     return {
@@ -105,6 +130,7 @@ export default {
       markersArray: [],
       maxZoom: 18,
       subdomains: "abcd",
+      trailsPolyLineArray: [],
       transitStopMarkersArray: [],
       url: baseMapUrl,
       zoom: defaultZoom,
@@ -123,6 +149,32 @@ export default {
     },
     createExampleMarkers(geoJSON) {
       this.markersArray = this.createMarkers(geoJSON);
+    },
+    createTrailsPolyLines(geoJSON) {
+      this.trailsPolyLineArray = this.createPolyLines(geoJSON);
+    },
+    createPolyLines(geoJSON) {
+      const polyLineArray = geoJSON["features"].map(feature => {
+        // eslint-disable-next-line
+        const coordinatesArray = feature["geometry"]["coordinates"][0];
+        let polyLineObjectArray = coordinatesArray.map(coordinates => {
+          // Leaflet requires the order to lat,long; geojson is formatted as long,lat
+          return [coordinates[1], coordinates[0]];
+        });
+        let props = feature["properties"];
+        const polyLineObj = Object.assign(
+          {},
+          {
+            latlngs: polyLineObjectArray,
+            props,
+            color: "grey",
+            dashArray: "4",
+            weight: 2,
+          }
+        );
+        return polyLineObj;
+      });
+      return polyLineArray;
     },
     createMarkers(geoJSON) {
       const markersArray = geoJSON["features"].map(feature => {

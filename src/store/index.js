@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import example from "./example";
+import trail from "./trail";
 import transitStop from "./transitStop";
 
 Vue.use(Vuex);
@@ -9,6 +10,7 @@ Vue.use(Vuex);
 const vuexStore = new Vuex.Store({
   modules: {
     example,
+    trail,
     transitStop,
   },
 });
