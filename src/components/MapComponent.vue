@@ -35,6 +35,22 @@
             </l-popup>
           </l-marker>
         </div>
+        <div v-if="displayTransitStops && transitStopMarkersArray.length">
+          <l-marker
+            v-for="(item, index) in transitStopMarkersArray"
+            v-bind:item="item"
+            v-bind:index="index"
+            v-bind:key="index"
+            :lat-lng="item"
+          >
+            <l-popup>
+              <div>
+                <strong>Route</strong>
+                : {{item.props.rte_desc}}
+              </div>
+            </l-popup>
+          </l-marker>
+        </div>
         <l-control-zoom position="bottomright"></l-control-zoom>
         <l-control position="topright">
           <v-btn dark color="primary" @click="resetMapView">
@@ -68,13 +84,17 @@ export default {
     exampleGeoJSON() {
       return this.$store.state.example.exampleGeoJSON;
     },
-    ...mapState({}),
+    ...mapState({
+      displayTransitStops: state => state.transitStop.displayStatus,
+      transitStopGeoJSON: state => state.transitStop.geoJSON,
+      transitStopDataLoading: state => state.transitStop.loading,
+    }),
   },
   async created() {
-    this.loading = true;
+    // TODO: Remove example code
     await this.$store.dispatch("example/getExampleGeoJSON");
-    this.loading = false;
-    this.createMarkers(this.exampleGeoJSON);
+    this.createExampleMarkers(this.exampleGeoJSON);
+    this.createTransitStopMarkers(this.transitStopGeoJSON);
   },
   data() {
     return {
@@ -85,6 +105,7 @@ export default {
       markersArray: [],
       maxZoom: 18,
       subdomains: "abcd",
+      transitStopMarkersArray: [],
       url: baseMapUrl,
       zoom: defaultZoom,
     };
@@ -100,8 +121,11 @@ export default {
       let propertyString = `<strong>${props.NAME}</strong>`;
       return propertyString;
     },
-    createMarkers() {
-      const markersArray = this.exampleGeoJSON["features"].map(feature => {
+    createExampleMarkers(geoJSON) {
+      this.markersArray = this.createMarkers(geoJSON);
+    },
+    createMarkers(geoJSON) {
+      const markersArray = geoJSON["features"].map(feature => {
         // eslint-disable-next-line
         let markerObject = L.latLng(
           feature["geometry"]["coordinates"][1],
@@ -112,7 +136,10 @@ export default {
         Object.assign(markerObject, { props });
         return markerObject;
       });
-      this.markersArray = markersArray;
+      return markersArray;
+    },
+    createTransitStopMarkers(geoJSON) {
+      this.transitStopMarkersArray = this.createMarkers(geoJSON);
     },
     onEachParkBoundariesFeature(feature, layer) {
       const popupContent = this.createParkBoundariesContent(feature.properties);
@@ -153,7 +180,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      // had to use Leaflet method directly due to Multi-Polygon
+      // using Leaflet method directly because Vue2Leaflet would not accept MultiPolygon geojson
       L.geoJSON(parkBoundaries, {
         onEachFeature: this.onEachParkBoundariesFeature,
       }).addTo(this.$refs.map.mapObject);

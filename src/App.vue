@@ -11,7 +11,10 @@
 
 <script>
 export default {
-  async created() {},
+  async created() {
+    await this.$store.dispatch("transitStop/getGeoJSON");
+    Promise.all([getTransitStopsPromise]);
+  },
   data: () => ({}),
 };
 </script>
