@@ -1,7 +1,10 @@
-function factory(logger, exampleService) {
+const dropdownValues = require("../src/dropdownValues.json");
+const { locationTypes } = dropdownValues;
+
+function factory(logger, parkLocationService) {
   GET.apiDoc = {
-    summary: "Gets a list of all records",
-    tags: ["Example"],
+    summary: "Gets a list of all Park Locations",
+    tags: ["Park Location"],
     produces: ["application/json"],
     parameters: [],
     responses: {
@@ -15,31 +18,63 @@ function factory(logger, exampleService) {
   };
 
   POST.apiDoc = {
-    summary: "Creates a new record",
-    tags: ["Example"],
+    summary: "Creates a Park Location",
+    tags: ["Park Location"],
     produces: ["application/json"],
     parameters: [
       {
         description: "Record attributes",
         in: "body",
-        name: "example",
+        name: "parkLocation",
         required: true,
         schema: {
           properties: {
-            username: {
-              description: "username",
+            location_name: {
+              description: "Park Location Name",
               type: "string",
             },
-            first_name: {
-              description: "First Name",
+            street_addr_1: {
+              description: "Street Address Line 1",
               type: "string",
             },
-            last_name: {
-              description: "Last Name",
+            street_addr_2: {
+              description: "Street Address Line 2",
               type: "string",
             },
-            favorite_color: {
-              description: "Favorite Color",
+            city: {
+              description: "City",
+              type: "string",
+              enum: ["Portland"],
+            },
+            state: {
+              description: "State",
+              type: "string",
+              enum: ["OR"],
+            },
+            ZIP: {
+              description: "ZIP Code",
+              type: "string",
+            },
+            location_type: {
+              description: "Park Location Type",
+              type: "string",
+              enum: locationTypes,
+              default: "Attraction",
+            },
+            hrs_of_operation: {
+              description: "Hours of Operation",
+              type: "string",
+            },
+            url: {
+              description: "Park Location URL",
+              type: "string",
+            },
+            image_url: {
+              description: "Park Location Image URL",
+              type: "string",
+            },
+            description: {
+              description: "Park Location Description",
               type: "string",
             },
             geom: {
@@ -47,6 +82,7 @@ function factory(logger, exampleService) {
               type: "string",
             },
           },
+          required: ["location_name", "geom"],
           type: "object",
         },
       },
@@ -75,7 +111,7 @@ function factory(logger, exampleService) {
   async function GET(req, res) {
     let result;
     try {
-      result = await exampleService.list();
+      result = await parkLocationService.list();
     } catch (e) {
       logger.error(e);
       return res.status(500).json({ message: "Server Error" });
@@ -92,8 +128,8 @@ function factory(logger, exampleService) {
         .json({ message: "Must include at least one attribute" });
     }
     try {
-      const { user_id } = await exampleService.create(params);
-      result = await exampleService.get(user_id);
+      const { user_id } = await parkLocationService.create(params);
+      result = await parkLocationService.get(user_id);
     } catch (e) {
       console.error(e);
       return res.status(500).json({ message: "Internal Server Error" });

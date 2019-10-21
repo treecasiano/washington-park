@@ -5,7 +5,7 @@ describe("Example", () => {
     cy.visit("/map");
   });
 
-  it("Displays 7 markers with popups on a map", () => {
+  it.skip("Displays 7 markers with popups on a map", () => {
     cy.url().should("include", "/map");
     cy.get(markersArray).should("have.length", 7);
     cy.get(markersArray)

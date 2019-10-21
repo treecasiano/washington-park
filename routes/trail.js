@@ -1,15 +1,15 @@
-function factory(logger, exampleService) {
+function factory(logger, trailService) {
   GET.apiDoc = {
-    summary: "Get a GeoJSON feature collection",
-    tags: ["Example"],
+    summary: "Gets a list of all Trails",
+    tags: ["Trail"],
     produces: ["application/json"],
     parameters: [],
     responses: {
       200: {
-        description: "Point features in geojson format",
+        description: "List of records",
       },
       500: {
-        description: "Server Error",
+        description: "Internal Server Error",
       },
     },
   };
@@ -21,10 +21,10 @@ function factory(logger, exampleService) {
   async function GET(req, res) {
     let result;
     try {
-      result = await exampleService.getGeoJSON();
+      result = await trailService.list();
     } catch (e) {
       logger.error(e);
-      return res.status(500).json({ message: "Database error" });
+      return res.status(500).json({ message: "Server Error" });
     }
     return res.status(200).json(result);
   }

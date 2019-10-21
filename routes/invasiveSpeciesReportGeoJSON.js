@@ -1,7 +1,7 @@
-function factory(logger, exampleService) {
+function factory(logger, invasiveSpeciesReportService) {
   GET.apiDoc = {
     summary: "Get a GeoJSON feature collection",
-    tags: ["Example"],
+    tags: ["Invasive Species Report"],
     produces: ["application/json"],
     parameters: [],
     responses: {
@@ -21,7 +21,7 @@ function factory(logger, exampleService) {
   async function GET(req, res) {
     let result;
     try {
-      result = await exampleService.getGeoJSON();
+      result = await invasiveSpeciesReportService.getGeoJSON();
     } catch (e) {
       logger.error(e);
       return res.status(500).json({ message: "Database error" });
