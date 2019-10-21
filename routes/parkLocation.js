@@ -1,5 +1,5 @@
 const dropdownValues = require("../src/dropdownValues.json");
-const { locationTypes, stateAbbreviations } = dropdownValues;
+const { locationTypes } = dropdownValues;
 
 function factory(logger, parkLocationService) {
   GET.apiDoc = {
@@ -44,11 +44,12 @@ function factory(logger, parkLocationService) {
             city: {
               description: "City",
               type: "string",
+              enum: ["Portland"],
             },
             state: {
               description: "State",
               type: "string",
-              enum: stateAbbreviations,
+              enum: ["OR"],
             },
             ZIP: {
               description: "ZIP Code",
@@ -58,6 +59,7 @@ function factory(logger, parkLocationService) {
               description: "Park Location Type",
               type: "string",
               enum: locationTypes,
+              default: "Attraction",
             },
             hrs_of_operation: {
               description: "Hours of Operation",
