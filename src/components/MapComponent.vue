@@ -291,7 +291,10 @@ export default {
 };
 </script>
 
-<style >
+<style>
+.leaflet-container {
+  font-family: "Kreon", sans-serif !important;
+}
 </style>
 
 

@@ -127,6 +127,7 @@ export default {
 }
 
 .mapLayers__heading {
+  font-size: 16px;
   font-weight: bold;
 }
 @media only screen and (max-height: 500px) {
