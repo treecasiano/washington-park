@@ -13,6 +13,9 @@
         v-bind:style="`height: calc(${height}vh - ${offsetHeight}px); width: ${width}%;`"
       >
         <l-control-scale position="bottomleft"></l-control-scale>
+        <l-control position="topright">
+          <MapLayers />
+        </l-control>
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <div v-if="displayParkBoundaries">
           <l-geo-json
@@ -93,7 +96,7 @@
           </l-polyline>
         </div>
         <l-control-zoom position="bottomright"></l-control-zoom>
-        <l-control position="topright">
+        <l-control position="topleft">
           <v-btn dark color="primary" @click="resetMapView">
             <v-icon>home</v-icon>
           </v-btn>
@@ -105,6 +108,7 @@
 
 <script>
 import { mapState } from "vuex";
+import MapLayers from "@/components/MapLayers.vue";
 import parkBoundaries from "../../public/parkBoundaries.json";
 
 const baseMapUrl =
@@ -121,6 +125,9 @@ const popupOptions = {
 
 export default {
   name: "MapComponent",
+  components: {
+    MapLayers,
+  },
   computed: {
     exampleGeoJSON() {
       return this.$store.state.example.exampleGeoJSON;
