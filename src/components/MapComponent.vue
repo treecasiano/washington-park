@@ -41,9 +41,25 @@
             </l-popup>
           </l-marker>
         </div>
-        <div v-if="displayTransitStops && transitStopMarkersArray.length">
+        <div v-if="displayParkLocations && markersArrayParkLocation.length">
           <l-marker
-            v-for="(item, index) in transitStopMarkersArray"
+            v-for="(item, index) in markersArrayParkLocation"
+            v-bind:item="item"
+            v-bind:index="index"
+            v-bind:key="index"
+            :lat-lng="item"
+          >
+            <l-popup>
+              <div>
+                <strong>props</strong>
+                : {{item.props}}
+              </div>
+            </l-popup>
+          </l-marker>
+        </div>
+        <div v-if="displayTransitStops && markersArrayTransitStop.length">
+          <l-marker
+            v-for="(item, index) in markersArrayTransitStop"
             v-bind:item="item"
             v-bind:index="index"
             v-bind:key="index"
@@ -57,9 +73,9 @@
             </l-popup>
           </l-marker>
         </div>
-        <div v-if="displayTrails && trailsPolyLineArray.length">
+        <div v-if="displayTrails && polylineArrayTrails.length">
           <l-polyline
-            v-for="(item, index) in trailsPolyLineArray"
+            v-for="(item, index) in polylineArrayTrails"
             v-bind:item="item"
             v-bind:index="index"
             v-bind:key="index"
@@ -121,12 +137,15 @@ export default {
     },
     ...mapState({
       displayParkBoundaries: state => state.parkBoundaries.displayStatus,
+      displayParkLocations: state => state.parkLocation.displayStatus,
       displayTrails: state => state.trail.displayStatus,
+      displayTransitStops: state => state.transitStop.displayStatus,
+      parkLocationDataLoading: state => state.parkLocation.loading,
+      parkLocationGeoJSON: state => state.parkLocation.geoJSON,
       trailsGeoJSON: state => state.trail.geoJSON,
       trailsLoading: state => state.trail.loading,
-      displayTransitStops: state => state.transitStop.displayStatus,
-      transitStopGeoJSON: state => state.transitStop.geoJSON,
       transitStopDataLoading: state => state.transitStop.loading,
+      transitStopGeoJSON: state => state.transitStop.geoJSON,
     }),
   },
   async created() {
@@ -134,8 +153,10 @@ export default {
     await this.$store.dispatch("example/getExampleGeoJSON");
     await this.$store.dispatch("transitStop/getGeoJSON");
     await this.$store.dispatch("trail/getGeoJSON");
+    await this.$store.dispatch("parkLocation/getGeoJSON");
     this.createExampleMarkers(this.exampleGeoJSON);
     this.createTransitStopMarkers(this.transitStopGeoJSON);
+    this.createParkLocationMarkers(this.parkLocationGeoJSON);
     this.createTrailsPolyLines(this.trailsGeoJSON);
   },
   data() {
@@ -145,11 +166,12 @@ export default {
       center: defaultCenter,
       loading: false,
       markersArray: [],
+      markersArrayParkLocation: [],
+      markersArrayTransitStop: [],
       maxZoom: 18,
       parkBoundaries,
+      polylineArrayTrails: [],
       subdomains: "abcd",
-      trailsPolyLineArray: [],
-      transitStopMarkersArray: [],
       url: baseMapUrl,
       zoom: defaultZoom,
     };
@@ -161,15 +183,22 @@ export default {
     centerUpdated(center) {
       this.center = center;
     },
-    createParkBoundariesContent(props) {
-      let propertyString = `<strong>${props.NAME}</strong>`;
-      return propertyString;
-    },
     createExampleMarkers(geoJSON) {
       this.markersArray = this.createMarkers(geoJSON);
     },
-    createTrailsPolyLines(geoJSON) {
-      this.trailsPolyLineArray = this.createPolyLines(geoJSON);
+    createMarkers(geoJSON) {
+      const markersArray = geoJSON["features"].map(feature => {
+        // eslint-disable-next-line
+        let markerObject = L.latLng(
+          feature["geometry"]["coordinates"][1],
+          feature["geometry"]["coordinates"][0]
+        );
+        let props = feature["properties"];
+
+        Object.assign(markerObject, { props });
+        return markerObject;
+      });
+      return markersArray;
     },
     createPolyLines(geoJSON) {
       const polyLineArray = geoJSON["features"].map(feature => {
@@ -194,22 +223,18 @@ export default {
       });
       return polyLineArray;
     },
-    createMarkers(geoJSON) {
-      const markersArray = geoJSON["features"].map(feature => {
-        // eslint-disable-next-line
-        let markerObject = L.latLng(
-          feature["geometry"]["coordinates"][1],
-          feature["geometry"]["coordinates"][0]
-        );
-        let props = feature["properties"];
-
-        Object.assign(markerObject, { props });
-        return markerObject;
-      });
-      return markersArray;
+    createParkBoundariesContent(props) {
+      let propertyString = `<strong>${props.NAME}</strong>`;
+      return propertyString;
+    },
+    createParkLocationMarkers(geoJSON) {
+      this.markersArrayParkLocation = this.createMarkers(geoJSON);
+    },
+    createTrailsPolyLines(geoJSON) {
+      this.polylineArrayTrails = this.createPolyLines(geoJSON);
     },
     createTransitStopMarkers(geoJSON) {
-      this.transitStopMarkersArray = this.createMarkers(geoJSON);
+      this.markersArrayTransitStop = this.createMarkers(geoJSON);
     },
     onEachParkBoundariesFeature(feature, layer) {
       const popupContent = this.createParkBoundariesContent(feature.properties);

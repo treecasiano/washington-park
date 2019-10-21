@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import example from "./example";
 import parkBoundaries from "./parkBoundaries";
+import parkLocation from "./parkLocation";
 import trail from "./trail";
 import transitStop from "./transitStop";
 
@@ -12,6 +13,7 @@ const vuexStore = new Vuex.Store({
   modules: {
     example,
     parkBoundaries,
+    parkLocation,
     trail,
     transitStop,
   },
