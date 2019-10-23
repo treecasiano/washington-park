@@ -21,7 +21,12 @@
       <template v-slot:form>
         <form v-if="(mode==='edit' || mode==='create') && record">
           <v-text-field v-model="record.location_name" label="Park Location Name" required></v-text-field>
-          <v-text-field v-model="record.location_type" label="Location Type" required></v-text-field>
+          <v-select
+            class="mb-3 text-left"
+            v-model="record.location_type"
+            :items="locationTypes"
+            label="Location Type"
+          ></v-select>
           <v-text-field v-model="record.street_addr_1" label="Street Address 1"></v-text-field>
           <v-text-field v-model="record.street_addr_2" label="Street Address 2"></v-text-field>
           <v-text-field v-model="record.city" label="City"></v-text-field>
@@ -69,6 +74,7 @@
 </template>
 
 <script>
+import { locationTypes } from "../../dropdownValues.json";
 import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import AdminLayout from "./AdminLayout";
 import AdminList from "./AdminList";
@@ -78,6 +84,9 @@ export default {
     AdminList,
   },
   computed: {
+    locationTypes() {
+      return locationTypes;
+    },
     ...mapGetters({
       getById: "parkLocation/getById",
     }),
