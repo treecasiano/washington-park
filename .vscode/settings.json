@@ -1,5 +1,8 @@
 {
   "editor.formatOnSave": true,
+  "[sql]": {
+    "editor.formatOnSave": false
+  },
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
   "files.insertFinalNewline": true,
