@@ -41,24 +41,24 @@ export default {
   methods: {
     notifyFailure() {
       console.log("fail");
-      // this.failureNotification();
+      this.failureNotification();
     },
     notifySuccess() {
       console.log("success");
-      // this.successNotification();
+      this.successNotification();
     },
   },
-  // notifications: {
-  //   successNotification: {
-  //     title: "Succeeded",
-  //     message: "",
-  //     type: "success",
-  //   },
-  //   failureNotification: {
-  //     title: "Failed",
-  //     message: "",
-  //     type: "warn",
-  //   },
-  // },
+  notifications: {
+    successNotification: {
+      title: "Succeeded",
+      message: "",
+      type: "success",
+    },
+    failureNotification: {
+      title: "Failed",
+      message: "",
+      type: "warn",
+    },
+  },
 };
 </script>
