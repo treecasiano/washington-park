@@ -1,10 +1,14 @@
 import parkLocationApi from "../api/parkLocation";
 
 const actions = {
+  async create({ commit, state }) {
+    const record = await parkLocationApi.create(state.record);
+    return commit("setRecord", record);
+  },
   async displayData({ commit, status }) {
     return commit("setDisplayStatus", status);
   },
-  async getList({ commit }) {
+  async list({ commit }) {
     commit("setLoadingStatus", true);
     const result = await parkLocationApi.list();
     commit("setLoadingStatus", false);
@@ -25,6 +29,11 @@ const actions = {
   clearSearchResults({ commit }) {
     return commit("clearSearchResults");
   },
+  async update({ commit, state }) {
+    // TODO: clean up the response object
+    const response = await parkLocationApi.update(state.record);
+    return commit("setRecord", response.data.result);
+  },
 };
 
 const mutations = {
@@ -32,13 +41,16 @@ const mutations = {
     state.displayStatus = status;
   },
   setList(state, data) {
-    state.parkLocationList = data;
+    state.list = data;
   },
   setLoadingStatus(state, loading) {
     state.loading = loading;
   },
   setGeoJSON(state, data) {
     state.geoJSON = data;
+  },
+  setRecord(state, record) {
+    state.record = record;
   },
   setSearchResults(state, data) {
     state.searchResults = data;
@@ -53,10 +65,18 @@ const state = {
   list: [],
   geoJSON: {},
   loading: false,
+  record: {},
   searchResults: [],
 };
 
-const getters = {};
+const getters = {
+  getById: state => id => {
+    return state.list.find(el => {
+      console.log("el", el);
+      return el.gid === id;
+    });
+  },
+};
 
 export default {
   actions,

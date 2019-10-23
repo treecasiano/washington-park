@@ -81,11 +81,11 @@ function factory(logger, parkLocationService) {
             },
             street_addr_1: {
               description: "Street Address Line 1",
-              type: "string",
+              type: ["string", "null"],
             },
             street_addr_2: {
               description: "Street Address Line 2",
-              type: "string",
+              type: ["string", "null"],
             },
             city: {
               description: "City",
@@ -95,12 +95,12 @@ function factory(logger, parkLocationService) {
               description: "State",
               type: "string",
               enum: stateAbbreviations,
+              default: "OR",
             },
             ZIP: {
               description: "ZIP Code",
               type: "string",
             },
-            // make this an enum
             location_type: {
               description: "Park Location Type",
               type: "string",
@@ -108,19 +108,19 @@ function factory(logger, parkLocationService) {
             },
             hrs_of_operation: {
               description: "Hours of Operation",
-              type: "string",
+              type: ["string", "null"],
             },
             url: {
               description: "Park Location URL",
-              type: "string",
+              type: ["string", "null"],
             },
             image_url: {
               description: "Park Location Image URL",
-              type: "string",
+              type: ["string", "null"],
             },
             description: {
               description: "Park Location Description",
-              type: "string",
+              type: ["string", "null"],
             },
             geom: {
               description: "Geometry in the form of 'POINT(long lat)'",
