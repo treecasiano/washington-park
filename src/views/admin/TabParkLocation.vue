@@ -2,16 +2,7 @@
   <v-card flat>
     <admin-layout>
       <template v-slot:list>
-        <v-btn
-          color="primary"
-          small
-          title="Add Park Location"
-          @click="$router.push({
-        name: 'adminObjectCreate',
-        params: { mode: 'create', object: 'parkLocation' },
-      });"
-        >Add Park Location</v-btn>
-        <admin-list id="gid" :list="list" name="parkLocation"></admin-list>
+        <admin-list id="gid" itemName="location_name" :list="list" name="parkLocation"></admin-list>
       </template>
       <template v-slot:form>
         <form v-if="(mode==='edit' || mode==='create') && record">
@@ -26,6 +17,8 @@
           <v-text-field v-model="record.image_url" label="Image URL"></v-text-field>
           <v-text-field v-model="record.hrs_of_operation" label="Hours of Operation"></v-text-field>
           <v-text-field v-model="record.description" label="Description"></v-text-field>
+          <div>The Geometry Field must be in the form of "POINT(long lat)', i.e. POINT(-122.7159755 45.516504)</div>
+          <v-text-field v-model="record.geom" label="Geometry"></v-text-field>
 
           <v-btn
             data-cy="parkLocationForm__cancel"

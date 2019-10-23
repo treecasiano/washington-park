@@ -7,7 +7,7 @@
           v-model="tab"
           @change="(object) => this.$router.push({ name: 'adminObject', params: { object } })"
         >
-          <v-tab href="#parkLocation" ripple>Park Location</v-tab>
+          <v-tab href="#parkLocation" ripple>Park Locations</v-tab>
 
           <v-tab-item key="1" value="parkLocation">
             <tab-park-location
@@ -25,12 +25,10 @@
 
 <script>
 import TabParkLocation from "./TabParkLocation";
-// import TabInvasiveSpeciesReport from "./TabInvasiveSpeciesReport";
 
 export default {
   components: {
     TabParkLocation,
-    // TabInvasiveSpeciesReport,
   },
   created() {
     this.tab = this.$route.params.object;

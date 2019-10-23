@@ -1,13 +1,17 @@
 <template>
   <v-list dense>
+    <v-btn
+      color="primary"
+      small
+      title="Add Park Location"
+      @click="$router.push({
+        name: 'adminObjectCreate',
+        params: { mode: 'create', object: 'parkLocation' },
+      });"
+    >Add Park Location</v-btn>
     <v-list-item v-for="item in list" :key="item.id" @click="goToEditForm(item)">
       <v-list-item-content>
-        <v-list-item-title
-          :class="`${item.active === 0 ? 'adminList__item--inactive' : ''}`"
-          :data-cy="`${name}List__item`"
-          v-text="item.location_name"
-          class="text-left"
-        ></v-list-item-title>
+        <v-list-item-title class="text-left">{{getItemName(item)}}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
   </v-list>
@@ -28,13 +32,11 @@ export default {
         params: { mode: "edit", object: this.name, id: item[this.id] },
       });
     },
+    getItemName(item) {
+      return `${item[this.itemName]}`;
+    },
   },
-  props: ["list", "name", "id"],
+  props: ["itemName", "list", "name", "id"],
 };
 </script>
 
-<style>
-.adminList__item--inactive {
-  text-decoration: line-through;
-}
-</style>
