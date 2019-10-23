@@ -2,7 +2,14 @@
   <v-app id="app" app>
     <div>
       <v-toolbar dense id="nav" dark color="primary">
-        <v-toolbar-title>Washington Park</v-toolbar-title>
+        <v-toolbar-title>
+          <a
+            alt="Link to Home"
+            href="/"
+            class="white--text"
+            style="text-decoration: none;"
+          >Washington Park</a>
+        </v-toolbar-title>
       </v-toolbar>
     </div>
     <router-view />
