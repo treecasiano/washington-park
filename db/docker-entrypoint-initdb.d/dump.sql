@@ -203,7 +203,7 @@ CREATE TABLE public.park_location (
     city character varying(100) DEFAULT 'Portland'::character varying,
     state character varying(2) DEFAULT 'OR'::character varying,
     zip character varying(10) DEFAULT ''::character varying,
-    location_type character varying(50) DEFAULT 'Attraction'::character varying,
+    location_type character varying(50) DEFAULT 'attraction'::character varying,
     hrs_of_operation character varying(250) DEFAULT ''::character varying,
     url character varying(250) DEFAULT ''::character varying,
     image_url character varying(250) DEFAULT ''::character varying,
@@ -408,8 +408,8 @@ COPY public.invasive_species_report (gid, date_created, observation_date, observ
 --
 
 COPY public.park_location (gid, location_name, street_addr_1, street_addr_2, city, state, zip, location_type, hrs_of_operation, url, image_url, description, geom) FROM stdin;
-2	World Forestry Center	4033 SW Canyon Rd.		Portland	OR	97221	Attraction	10am - 5pm, closed Tues and Wed	https://www.worldforestry.org/	https://www.worldforestry.org/wp-content/uploads/2015/07/Museum-Exterior_Front.jpg	From WFC website: Founded in 1966, the World Forestry Center (WFC) is a nonprofit organization dedicated to creating and inspiring champions of sustainable forestry.	0101000020E6100000F29881CAF8AD5EC027F911BF62C14640
-1	Stevens Pavilion Picnic Shelter	3119 SW Fairview Blvd.		Portland	OR	97205	Picnic Shelter	5am - 10pm daily	https://www.hoytarboretum.org/visit/rentals/stevens-pavilion/	https://www.hoytarboretum.org/wp-content/uploads/2019/04/Hoyt-Arboretum_Weddings-Rentals_Stevens-Pavilion-1.jpg		0101000020E61000002F4FE78AD2AD5EC0682096CD1CC24640
+2	World Forestry Center	4033 SW Canyon Rd.		Portland	OR	97221	attraction	10am - 5pm, closed Tues and Wed	https://www.worldforestry.org/	https://www.worldforestry.org/wp-content/uploads/2015/07/Museum-Exterior_Front.jpg	From WFC website: Founded in 1966, the World Forestry Center (WFC) is a nonprofit organization dedicated to creating and inspiring champions of sustainable forestry.	0101000020E6100000F29881CAF8AD5EC027F911BF62C14640
+1	Stevens Pavilion Picnic Shelter	3119 SW Fairview Blvd.		Portland	OR	97205	picnic shelter	5am - 10pm daily	https://www.hoytarboretum.org/visit/rentals/stevens-pavilion/	https://www.hoytarboretum.org/wp-content/uploads/2019/04/Hoyt-Arboretum_Weddings-Rentals_Stevens-Pavilion-1.jpg		0101000020E61000002F4FE78AD2AD5EC0682096CD1CC24640
 \.
 
 
