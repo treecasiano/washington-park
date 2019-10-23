@@ -19,7 +19,7 @@ export default {
       url: `/api/exampleGeoJSON`,
     });
   },
-  put(example) {
+  put(example, id) {
     const url = `/api/example/${id}`;
     const data = Object.assign({}, example);
 

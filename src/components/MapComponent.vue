@@ -12,7 +12,18 @@
         :options="{zoomControl: false}"
         v-bind:style="`height: calc(${height}vh - ${offsetHeight}px); width: ${width}%;`"
       >
+        <l-control position="topleft">
+          <v-btn light @click="resetMapView" style="width: 80px;">
+            <v-icon color="primary">home</v-icon>
+          </v-btn>
+        </l-control>
+        <l-control position="topleft">
+          <MapControls />
+        </l-control>
         <l-control-scale position="bottomleft"></l-control-scale>
+        <l-control position="topright">
+          <MapLayers />
+        </l-control>
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <div v-if="displayParkBoundaries">
           <l-geo-json
@@ -41,9 +52,25 @@
             </l-popup>
           </l-marker>
         </div>
-        <div v-if="displayTransitStops && transitStopMarkersArray.length">
+        <div v-if="displayParkLocations && markersArrayParkLocation.length">
           <l-marker
-            v-for="(item, index) in transitStopMarkersArray"
+            v-for="(item, index) in markersArrayParkLocation"
+            v-bind:item="item"
+            v-bind:index="index"
+            v-bind:key="index"
+            :lat-lng="item"
+          >
+            <l-popup>
+              <div>
+                <strong>props</strong>
+                : {{item.props}}
+              </div>
+            </l-popup>
+          </l-marker>
+        </div>
+        <div v-if="displayTransitStops && markersArrayTransitStop.length">
+          <l-marker
+            v-for="(item, index) in markersArrayTransitStop"
             v-bind:item="item"
             v-bind:index="index"
             v-bind:key="index"
@@ -57,9 +84,9 @@
             </l-popup>
           </l-marker>
         </div>
-        <div v-if="displayTrails && trailsPolyLineArray.length">
+        <div v-if="displayTrails && polylineArrayTrails.length">
           <l-polyline
-            v-for="(item, index) in trailsPolyLineArray"
+            v-for="(item, index) in polylineArrayTrails"
             v-bind:item="item"
             v-bind:index="index"
             v-bind:key="index"
@@ -77,11 +104,6 @@
           </l-polyline>
         </div>
         <l-control-zoom position="bottomright"></l-control-zoom>
-        <l-control position="topright">
-          <v-btn dark color="primary" @click="resetMapView">
-            <v-icon>home</v-icon>
-          </v-btn>
-        </l-control>
       </l-map>
     </v-layout>
   </div>
@@ -89,6 +111,8 @@
 
 <script>
 import { mapState } from "vuex";
+import MapControls from "@/components/MapControls.vue";
+import MapLayers from "@/components/MapLayers.vue";
 import parkBoundaries from "../../public/parkBoundaries.json";
 
 const baseMapUrl =
@@ -105,6 +129,10 @@ const popupOptions = {
 
 export default {
   name: "MapComponent",
+  components: {
+    MapControls,
+    MapLayers,
+  },
   computed: {
     exampleGeoJSON() {
       return this.$store.state.example.exampleGeoJSON;
@@ -121,12 +149,15 @@ export default {
     },
     ...mapState({
       displayParkBoundaries: state => state.parkBoundaries.displayStatus,
+      displayParkLocations: state => state.parkLocation.displayStatus,
       displayTrails: state => state.trail.displayStatus,
+      displayTransitStops: state => state.transitStop.displayStatus,
+      parkLocationDataLoading: state => state.parkLocation.loading,
+      parkLocationGeoJSON: state => state.parkLocation.geoJSON,
       trailsGeoJSON: state => state.trail.geoJSON,
       trailsLoading: state => state.trail.loading,
-      displayTransitStops: state => state.transitStop.displayStatus,
-      transitStopGeoJSON: state => state.transitStop.geoJSON,
       transitStopDataLoading: state => state.transitStop.loading,
+      transitStopGeoJSON: state => state.transitStop.geoJSON,
     }),
   },
   async created() {
@@ -134,8 +165,10 @@ export default {
     await this.$store.dispatch("example/getExampleGeoJSON");
     await this.$store.dispatch("transitStop/getGeoJSON");
     await this.$store.dispatch("trail/getGeoJSON");
+    await this.$store.dispatch("parkLocation/getGeoJSON");
     this.createExampleMarkers(this.exampleGeoJSON);
     this.createTransitStopMarkers(this.transitStopGeoJSON);
+    this.createParkLocationMarkers(this.parkLocationGeoJSON);
     this.createTrailsPolyLines(this.trailsGeoJSON);
   },
   data() {
@@ -145,11 +178,12 @@ export default {
       center: defaultCenter,
       loading: false,
       markersArray: [],
+      markersArrayParkLocation: [],
+      markersArrayTransitStop: [],
       maxZoom: 18,
       parkBoundaries,
+      polylineArrayTrails: [],
       subdomains: "abcd",
-      trailsPolyLineArray: [],
-      transitStopMarkersArray: [],
       url: baseMapUrl,
       zoom: defaultZoom,
     };
@@ -161,15 +195,22 @@ export default {
     centerUpdated(center) {
       this.center = center;
     },
-    createParkBoundariesContent(props) {
-      let propertyString = `<strong>${props.NAME}</strong>`;
-      return propertyString;
-    },
     createExampleMarkers(geoJSON) {
       this.markersArray = this.createMarkers(geoJSON);
     },
-    createTrailsPolyLines(geoJSON) {
-      this.trailsPolyLineArray = this.createPolyLines(geoJSON);
+    createMarkers(geoJSON) {
+      const markersArray = geoJSON["features"].map(feature => {
+        // eslint-disable-next-line
+        let markerObject = L.latLng(
+          feature["geometry"]["coordinates"][1],
+          feature["geometry"]["coordinates"][0]
+        );
+        let props = feature["properties"];
+
+        Object.assign(markerObject, { props });
+        return markerObject;
+      });
+      return markersArray;
     },
     createPolyLines(geoJSON) {
       const polyLineArray = geoJSON["features"].map(feature => {
@@ -194,22 +235,18 @@ export default {
       });
       return polyLineArray;
     },
-    createMarkers(geoJSON) {
-      const markersArray = geoJSON["features"].map(feature => {
-        // eslint-disable-next-line
-        let markerObject = L.latLng(
-          feature["geometry"]["coordinates"][1],
-          feature["geometry"]["coordinates"][0]
-        );
-        let props = feature["properties"];
-
-        Object.assign(markerObject, { props });
-        return markerObject;
-      });
-      return markersArray;
+    createParkBoundariesContent(props) {
+      let propertyString = `<strong>${props.NAME}</strong>`;
+      return propertyString;
+    },
+    createParkLocationMarkers(geoJSON) {
+      this.markersArrayParkLocation = this.createMarkers(geoJSON);
+    },
+    createTrailsPolyLines(geoJSON) {
+      this.polylineArrayTrails = this.createPolyLines(geoJSON);
     },
     createTransitStopMarkers(geoJSON) {
-      this.transitStopMarkersArray = this.createMarkers(geoJSON);
+      this.markersArrayTransitStop = this.createMarkers(geoJSON);
     },
     onEachParkBoundariesFeature(feature, layer) {
       const popupContent = this.createParkBoundariesContent(feature.properties);
@@ -259,7 +296,10 @@ export default {
 };
 </script>
 
-<style >
+<style>
+.leaflet-container {
+  font-family: "Kreon", sans-serif !important;
+}
 </style>
 
 
