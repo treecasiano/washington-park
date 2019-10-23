@@ -12,6 +12,14 @@
         :options="{zoomControl: false}"
         v-bind:style="`height: calc(${height}vh - ${offsetHeight}px); width: ${width}%;`"
       >
+        <l-control position="topleft">
+          <v-btn light @click="resetMapView" style="width: 80px;">
+            <v-icon color="primary">home</v-icon>
+          </v-btn>
+        </l-control>
+        <l-control position="topleft">
+          <MapControls />
+        </l-control>
         <l-control-scale position="bottomleft"></l-control-scale>
         <l-control position="topright">
           <MapLayers />
@@ -96,11 +104,6 @@
           </l-polyline>
         </div>
         <l-control-zoom position="bottomright"></l-control-zoom>
-        <l-control position="topleft">
-          <v-btn dark color="primary" @click="resetMapView">
-            <v-icon>home</v-icon>
-          </v-btn>
-        </l-control>
       </l-map>
     </v-layout>
   </div>
@@ -108,6 +111,7 @@
 
 <script>
 import { mapState } from "vuex";
+import MapControls from "@/components/MapControls.vue";
 import MapLayers from "@/components/MapLayers.vue";
 import parkBoundaries from "../../public/parkBoundaries.json";
 
@@ -126,6 +130,7 @@ const popupOptions = {
 export default {
   name: "MapComponent",
   components: {
+    MapControls,
     MapLayers,
   },
   computed: {
