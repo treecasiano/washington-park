@@ -29,8 +29,6 @@
           ></v-select>
           <v-text-field v-model="record.street_addr_1" label="Street Address 1"></v-text-field>
           <v-text-field v-model="record.street_addr_2" label="Street Address 2"></v-text-field>
-          <v-text-field v-model="record.city" label="City"></v-text-field>
-          <v-text-field v-model="record.state" label="State"></v-text-field>
           <v-text-field v-model="record.zip" label="ZIP"></v-text-field>
           <v-text-field v-model="record.url" label="Website"></v-text-field>
           <v-text-field v-model="record.image_url" label="Image URL"></v-text-field>

@@ -90,6 +90,8 @@ function factory(logger, parkLocationService) {
             city: {
               description: "City",
               type: "string",
+              enum: ["Portland"],
+              default: "Portland",
             },
             state: {
               description: "State",
