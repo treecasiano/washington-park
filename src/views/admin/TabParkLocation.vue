@@ -1,5 +1,19 @@
 <template>
   <v-card flat>
+    <div class="d-flex justify-end">
+      <v-btn
+        rounded
+        color="primary"
+        class="mr-5"
+        title="Add Park Location"
+        @click="$router.push({
+        name: 'adminObjectCreate',
+        params: { mode: 'create', object: 'parkLocation' },
+      });"
+      >
+        <v-icon>add</v-icon>&nbsp;Add Park Location
+      </v-btn>
+    </div>
     <admin-layout>
       <template v-slot:list>
         <admin-list id="gid" itemName="location_name" :list="list" name="parkLocation"></admin-list>
@@ -20,26 +34,34 @@
           <div>The Geometry Field must be in the form of "POINT(long lat)', i.e. POINT(-122.7159755 45.516504)</div>
           <v-text-field v-model="record.geom" label="Geometry"></v-text-field>
 
-          <v-btn
-            data-cy="parkLocationForm__cancel"
-            outlined
-            @click="$router.push({
+          <div class="d-flex justify-start">
+            <v-btn
+              class="mr-3"
+              rounded
+              data-cy="parkLocationForm__cancel"
+              outlined
+              @click="$router.push({
               name: 'adminObject',
               params: { object: 'parkLocation' },
             });"
-          >Cancel</v-btn>
-          <v-btn
-            v-if="mode==='edit'"
-            data-cy="parkLocationForm__button--update"
-            color="primary"
-            @click="update"
-          >Update</v-btn>
-          <v-btn
-            v-if="mode==='create'"
-            data-cy="parkLocationForm__button--create"
-            color="primary"
-            @click="create"
-          >Submit</v-btn>
+            >Cancel</v-btn>
+
+            <v-btn
+              rounded
+              v-if="mode==='edit'"
+              data-cy="parkLocationForm__button--update"
+              color="primary"
+              @click="update"
+            >Update</v-btn>
+
+            <v-btn
+              rounded
+              v-if="mode==='create'"
+              data-cy="parkLocationForm__button--create"
+              color="primary"
+              @click="create"
+            >Submit</v-btn>
+          </div>
         </form>
       </template>
     </admin-layout>

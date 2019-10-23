@@ -1,14 +1,5 @@
 <template>
   <v-list dense>
-    <v-btn
-      color="primary"
-      small
-      title="Add Park Location"
-      @click="$router.push({
-        name: 'adminObjectCreate',
-        params: { mode: 'create', object: 'parkLocation' },
-      });"
-    >Add Park Location</v-btn>
     <v-list-item v-for="item in list" :key="item.id" @click="goToEditForm(item)">
       <v-list-item-content>
         <v-list-item-title class="text-left">{{getItemName(item)}}</v-list-item-title>
