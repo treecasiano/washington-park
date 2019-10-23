@@ -40,11 +40,9 @@ export default {
   },
   methods: {
     notifyFailure() {
-      console.log("fail");
       this.failureNotification();
     },
     notifySuccess() {
-      console.log("success");
       this.successNotification();
     },
   },

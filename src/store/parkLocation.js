@@ -72,7 +72,6 @@ const state = {
 const getters = {
   getById: state => id => {
     return state.list.find(el => {
-      console.log("el", el);
       return el.gid === id;
     });
   },

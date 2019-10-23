@@ -113,6 +113,7 @@ export default {
       try {
         await this.createRecord();
       } catch (e) {
+        // eslint-disable-next-line
         console.error(e);
         return this.$emit("failure");
       }
@@ -127,6 +128,7 @@ export default {
       try {
         await this.updateRecord();
       } catch (e) {
+        // eslint-disable-next-line
         console.error(e);
         return this.$emit("failure");
       }
