@@ -156,13 +156,13 @@ CREATE TABLE public.invasive_species_report (
     gid integer NOT NULL,
     date_created timestamp with time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     observation_date date DEFAULT CURRENT_DATE NOT NULL,
-    observer_email character varying(50),
-    observer_first_name character varying(100),
-    observer_last_name character varying(100),
-    observer_phone character varying(15),
-    organism_type character varying(150),
-    organism_description character varying(250),
-    location_details character varying(250),
+    observer_email character varying(50) DEFAULT '',
+    observer_first_name character varying(100) DEFAULT '',
+    observer_last_name character varying(100) DEFAULT '',
+    observer_phone character varying(15) DEFAULT '',
+    organism_type character varying(150) DEFAULT '',
+    organism_description character varying(250) DEFAULT '',
+    location_details character varying(250) DEFAULT '',
     geom public.geometry(Point,4326)
 );
 
@@ -198,16 +198,16 @@ ALTER SEQUENCE public.invasive_species_report_gid_seq OWNED BY public.invasive_s
 CREATE TABLE public.park_location (
     gid integer NOT NULL,
     location_name character varying(250) NOT NULL,
-    street_addr_1 character varying(250),
-    street_addr_2 character varying(100),
-    city character varying(100),
-    state character varying(2),
-    zip character varying(10),
-    location_type character varying(50),
-    hrs_of_operation character varying(250),
-    url character varying(250),
-    image_url character varying(250),
-    description character varying(250),
+    street_addr_1 character varying(250) DEFAULT '',
+    street_addr_2 character varying(100) DEFAULT '',
+    city character varying(100) DEFAULT 'Portland',
+    state character varying(2) DEFAULT 'OR',
+    zip character varying(10) DEFAULT '',
+    location_type character varying(50) DEFAULT 'Attraction',
+    hrs_of_operation character varying(250) DEFAULT '',
+    url character varying(250) DEFAULT '',
+    image_url character varying(250) DEFAULT '',
+    description character varying(250) DEFAULT '',
     geom public.geometry(Point,4326)
 );
 
