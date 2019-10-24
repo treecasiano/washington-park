@@ -1,40 +1,65 @@
 <template>
   <v-card flat>
-    <div class="d-flex justify-end">
-      <v-btn
-        rounded
-        color="primary"
-        class="mr-5"
-        title="Add Park Location"
-        @click="$router.push({
+    <admin-layout>
+      <template v-slot:list>
+        <div class="d-flex justify-left mt-2">
+          <v-btn
+            rounded
+            color="primary"
+            class="mr-5"
+            title="Add Park Location"
+            @click="$router.push({
         name: 'adminObjectCreate',
         params: { mode: 'create', object: 'parkLocation' },
       });"
-      >
-        <v-icon>add</v-icon>&nbsp;Add Park Location
-      </v-btn>
-    </div>
-    <admin-layout>
-      <template v-slot:list>
+          >
+            <v-icon>add</v-icon>&nbsp;Add Park Location
+          </v-btn>
+        </div>
         <admin-list id="gid" itemName="location_name" :list="list" name="parkLocation"></admin-list>
       </template>
       <template v-slot:form>
         <form v-if="(mode==='edit' || mode==='create') && record">
-          <v-text-field v-model="record.location_name" label="Park Location Name" required></v-text-field>
+          <v-text-field
+            v-model="record.location_name"
+            label="Park Location Name"
+            required
+            class="mr-1"
+          ></v-text-field>
+
           <v-select
-            class="mb-3 text-left"
             v-model="record.location_type"
             :items="locationTypes"
             label="Location Type"
+            item-color="primary"
           ></v-select>
-          <v-text-field v-model="record.street_addr_1" label="Street Address 1"></v-text-field>
-          <v-text-field v-model="record.street_addr_2" label="Street Address 2"></v-text-field>
+
+          <v-text-field class="mr-1" v-model="record.street_addr_1" label="Street Address 1"></v-text-field>
+          <v-text-field class="mr-1" v-model="record.street_addr_2" label="Street Address 2"></v-text-field>
           <v-text-field v-model="record.zip" label="ZIP"></v-text-field>
-          <v-text-field v-model="record.url" label="Website"></v-text-field>
-          <v-text-field v-model="record.image_url" label="Image URL"></v-text-field>
+          <v-textarea auto-grow clearable dense rows="2" v-model="record.url" label="Website"></v-textarea>
+          <v-textarea
+            auto-grow
+            clearable
+            dense
+            rows="2"
+            v-model="record.image_url"
+            label="Image URL"
+          ></v-textarea>
           <v-text-field v-model="record.hrs_of_operation" label="Hours of Operation"></v-text-field>
-          <v-text-field v-model="record.description" label="Description"></v-text-field>
-          <div>The Geometry Field must be in the form of "POINT(long lat)', i.e. POINT(-122.7159755 45.516504)</div>
+          <v-textarea
+            auto-grow
+            clearable
+            dense
+            rows="2"
+            v-model="record.description"
+            label="Description"
+          ></v-textarea>
+          <div class="d-flex column justify-left mt-2">
+            <div
+              class="text-left mb-1"
+            >The Geometry Field must be in the form of "POINT(long lat)', i.e. POINT(-122.7159755 45.516504)</div>
+          </div>
           <v-text-field v-model="record.geom" label="Geometry"></v-text-field>
 
           <div class="d-flex justify-start">
@@ -154,3 +179,4 @@ export default {
   },
 };
 </script>
+

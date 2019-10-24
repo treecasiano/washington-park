@@ -4,7 +4,7 @@
       <v-flex xs12 sm4 pa-3>
         <slot name="list"></slot>
       </v-flex>
-      <v-flex xs8 sm8 pa-3>
+      <v-flex xs12 sm8 pa-3>
         <slot name="form"></slot>
       </v-flex>
     </v-layout>
