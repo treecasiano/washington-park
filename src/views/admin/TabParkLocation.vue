@@ -19,12 +19,13 @@
         <admin-list id="gid" itemName="location_name" :list="list" name="parkLocation"></admin-list>
       </template>
       <template v-slot:form>
-        <form v-if="(mode==='edit' || mode==='create') && record">
+        <v-form v-if="(mode==='edit' || mode==='create') && record" v-model="valid">
           <v-text-field
             v-model="record.location_name"
             label="Park Location Name"
             required
             class="mr-1"
+            :rules="nameRules"
           ></v-text-field>
 
           <v-select
@@ -32,7 +33,21 @@
             :items="locationTypes"
             label="Location Type"
             item-color="primary"
+            :rules="locationTypeRules"
+            required
           ></v-select>
+          <div class="d-flex column justify-left mt-2">
+            <div
+              class="text-left mb-1"
+            >The Geometry Field must be in the form of "POINT(long lat)', i.e. POINT(-122.7159755 45.516504)</div>
+          </div>
+          <v-text-field
+            v-model="record.geom"
+            label="Geometry"
+            :rules="geomRules"
+            validate-on-blur
+            required
+          ></v-text-field>
 
           <v-text-field class="mr-1" v-model="record.street_addr_1" label="Street Address 1"></v-text-field>
           <v-text-field class="mr-1" v-model="record.street_addr_2" label="Street Address 2"></v-text-field>
@@ -46,7 +61,14 @@
             v-model="record.image_url"
             label="Image URL"
           ></v-textarea>
-          <v-text-field v-model="record.hrs_of_operation" label="Hours of Operation"></v-text-field>
+          <v-textarea
+            auto-grow
+            clearable
+            dense
+            rows="2"
+            v-model="record.hrs_of_operation"
+            label="Hours of Operation"
+          ></v-textarea>
           <v-textarea
             auto-grow
             clearable
@@ -55,14 +77,8 @@
             v-model="record.description"
             label="Description"
           ></v-textarea>
-          <div class="d-flex column justify-left mt-2">
-            <div
-              class="text-left mb-1"
-            >The Geometry Field must be in the form of "POINT(long lat)', i.e. POINT(-122.7159755 45.516504)</div>
-          </div>
-          <v-text-field v-model="record.geom" label="Geometry"></v-text-field>
 
-          <div class="d-flex justify-start">
+          <div class="d-flex justify-start mt-3">
             <v-btn
               class="mr-3"
               rounded
@@ -80,6 +96,7 @@
               data-cy="parkLocationForm__button--update"
               color="primary"
               @click="update"
+              :disabled="!valid"
             >Update</v-btn>
 
             <v-btn
@@ -88,9 +105,10 @@
               data-cy="parkLocationForm__button--create"
               color="primary"
               @click="create"
+              :disabled="!valid"
             >Submit</v-btn>
           </div>
-        </form>
+        </v-form>
       </template>
     </admin-layout>
   </v-card>
@@ -122,6 +140,15 @@ export default {
     await this.fetchList();
     this.changeRecord();
   },
+  data: () => ({
+    geomRules: [
+      v => !!v || "Geometry is required",
+      v => v.slice(0, 6) === "POINT(" || "Use the correct format",
+      v => v.slice(-1) === ")" || "Use the correct format.",
+    ],
+    locationTypeRules: [v => !!v || "Location Type is required"],
+    nameRules: [v => !!v || "Name is required"],
+  }),
   methods: {
     changeRecord() {
       const id = this.$route.params.id;
