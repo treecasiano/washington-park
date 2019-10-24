@@ -22,32 +22,28 @@
         <v-form v-if="(mode==='edit' || mode==='create') && record" v-model="valid">
           <v-text-field
             v-model="record.location_name"
-            label="Park Location Name"
+            label="Park Location Name (REQUIRED)"
             required
             class="mr-1"
             :rules="nameRules"
+            validate-on-blur
           ></v-text-field>
 
           <v-select
             v-model="record.location_type"
             :items="locationTypes"
-            label="Location Type"
+            label="Location Type (REQUIRED)"
             item-color="primary"
             :rules="locationTypeRules"
             required
+            validate-on-blur
           ></v-select>
           <div class="d-flex column justify-left mt-2">
             <div
-              class="text-left mb-1"
-            >The Geometry Field must be in the form of "POINT(long lat)', i.e. POINT(-122.7159755 45.516504)</div>
+              class="text-left mb-1 primary--text"
+            >The Geometry Field must be in the form of "POINT(long lat)', i.e. POINT(-122.7159755 45.516504).</div>
           </div>
-          <v-text-field
-            v-model="record.geom"
-            label="Geometry"
-            :rules="geomRules"
-            validate-on-blur
-            required
-          ></v-text-field>
+          <v-text-field v-model="record.geom" label="Geometry" :rules="geomRules" required></v-text-field>
 
           <v-text-field class="mr-1" v-model="record.street_addr_1" label="Street Address 1"></v-text-field>
           <v-text-field class="mr-1" v-model="record.street_addr_2" label="Street Address 2"></v-text-field>
@@ -141,10 +137,11 @@ export default {
     this.changeRecord();
   },
   data: () => ({
+    valid: false,
     geomRules: [
       v => !!v || "Geometry is required",
-      v => v.slice(0, 6) === "POINT(" || "Use the correct format",
-      v => v.slice(-1) === ")" || "Use the correct format.",
+      v => v.slice(-1) === ")" || "Geometry must be in valid format.",
+      v => v.slice(0, 6) === "POINT(" || "Geometry must be in valid format.",
     ],
     locationTypeRules: [v => !!v || "Location Type is required"],
     nameRules: [v => !!v || "Name is required"],
