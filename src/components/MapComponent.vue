@@ -25,6 +25,16 @@
           <MapLayers />
         </l-control>
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+        <div v-if="userLatitude && displayUserLocation">
+          <l-marker :lat-lng="userMarker">
+            <l-popup>
+              <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
+              <div>latitude: {{userMarker.props.latitude.toFixed(4)}}</div>
+              <div>longitude: {{userMarker.props.longitude.toFixed(4)}}</div>
+            </l-popup>
+          </l-marker>
+        </div>
+
         <div v-if="displayParkBoundaries">
           <l-geo-json
             :geojson="parkBoundaries"
@@ -134,7 +144,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import MapControls from "@/components/MapControls.vue";
 import MapLayers from "@/components/MapLayers.vue";
 import parkBoundaries from "../../public/parkBoundaries.json";
@@ -143,7 +153,7 @@ const baseMapUrl =
   "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
 const attribution =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
-const defaultCenter = [45.5155, -122.715];
+
 const defaultZoom = 15;
 
 const popupOptions = {
@@ -171,17 +181,32 @@ export default {
         return {};
       };
     },
+    userMarker() {
+      const userLat = this.$store.state.map.userLatitude;
+      const userLong = this.$store.state.map.userLongitude;
+      const markerObject = L.latLng(userLat, userLong);
+      const props = {
+        latitude: userLat,
+        longitude: userLong,
+      };
+      Object.assign(markerObject, { props });
+      return markerObject;
+    },
     ...mapState({
+      center: state => state.map.center,
       displayParkBoundaries: state => state.parkBoundaries.displayStatus,
       displayParkLocations: state => state.parkLocation.displayStatus,
       displayTrails: state => state.trail.displayStatus,
       displayTransitStops: state => state.transitStop.displayStatus,
+      displayUserLocation: state => state.map.displayStatus,
       parkLocationDataLoading: state => state.parkLocation.loading,
       parkLocationGeoJSON: state => state.parkLocation.geoJSON,
       trailsGeoJSON: state => state.trail.geoJSON,
       trailsLoading: state => state.trail.loading,
       transitStopDataLoading: state => state.transitStop.loading,
       transitStopGeoJSON: state => state.transitStop.geoJSON,
+      userLatitude: state => state.map.userLatitude,
+      userLongitude: state => state.map.userLongitude,
     }),
   },
   async created() {
@@ -199,7 +224,6 @@ export default {
     return {
       attribution,
       bounds: null,
-      center: defaultCenter,
       loading: false,
       markersArray: [],
       markersArrayParkLocation: [],
@@ -217,7 +241,7 @@ export default {
       this.bounds = bounds;
     },
     centerUpdated(center) {
-      this.center = center;
+      this.setCenter(center);
     },
     createExampleMarkers(geoJSON) {
       this.markersArray = this.createMarkers(geoJSON);
@@ -308,6 +332,9 @@ export default {
     zoomUpdated(zoom) {
       this.zoom = zoom;
     },
+    ...mapMutations({
+      setCenter: "map/setCenter",
+    }),
   },
   mounted() {
     this.$nextTick(() => {});
