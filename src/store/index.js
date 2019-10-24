@@ -6,7 +6,7 @@ import parkBoundaries from "./parkBoundaries";
 import parkLocation from "./parkLocation";
 import trail from "./trail";
 import transitStop from "./transitStop";
-import userLocation from "./userLocation";
+import map from "./map";
 
 Vue.use(Vuex);
 
@@ -17,7 +17,7 @@ const vuexStore = new Vuex.Store({
     parkLocation,
     trail,
     transitStop,
-    userLocation,
+    map,
   },
 });
 

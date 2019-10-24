@@ -32,9 +32,9 @@ import { mapMutations, mapState } from "vuex";
 export default {
   computed: {
     ...mapState({
-      displayUserLocation: state => state.userLocation.displayStatus,
-      userLatitude: state => state.userLocation.userLatitude,
-      userLongitude: state => state.userLocation.userLongitude,
+      displayUserLocation: state => state.map.displayStatus,
+      userLatitude: state => state.map.userLatitude,
+      userLongitude: state => state.map.userLongitude,
     }),
   },
   created() {
@@ -71,34 +71,16 @@ export default {
       this.setCenter([this.userLatitude, this.userLongitude]);
     },
     ...mapMutations({
-      setCenter: "userLocation/setCenter",
-      setUserCoordinates: "userLocation/setUserCoordinates",
-      setUserLocationDisplayStatus: "userLocation/setDisplayStatus",
+      setCenter: "map/setCenter",
+      setUserCoordinates: "map/setUserCoordinates",
+      setUserLocationDisplayStatus: "map/setDisplayStatus",
     }),
   },
 };
 </script>
 
 <style>
-.mapControls__heading,
-.mapControls__results {
+.mapControls__heading {
   font-weight: bold;
-}
-@media only screen and (max-width: 500px) {
-  .checkbox--chart {
-    display: none;
-  }
-}
-
-@media only screen and (max-height: 400px) {
-  .checkbox--chart {
-    display: none;
-  }
-  .mapControls__results {
-    display: none;
-  }
-  .mapControls__heading {
-    display: none;
-  }
 }
 </style>

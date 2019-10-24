@@ -182,8 +182,8 @@ export default {
       };
     },
     userMarker() {
-      const userLat = this.$store.state.userLocation.userLatitude;
-      const userLong = this.$store.state.userLocation.userLongitude;
+      const userLat = this.$store.state.map.userLatitude;
+      const userLong = this.$store.state.map.userLongitude;
       const markerObject = L.latLng(userLat, userLong);
       const props = {
         latitude: userLat,
@@ -193,20 +193,20 @@ export default {
       return markerObject;
     },
     ...mapState({
-      center: state => state.userLocation.center,
+      center: state => state.map.center,
       displayParkBoundaries: state => state.parkBoundaries.displayStatus,
       displayParkLocations: state => state.parkLocation.displayStatus,
       displayTrails: state => state.trail.displayStatus,
       displayTransitStops: state => state.transitStop.displayStatus,
-      displayUserLocation: state => state.userLocation.displayStatus,
+      displayUserLocation: state => state.map.displayStatus,
       parkLocationDataLoading: state => state.parkLocation.loading,
       parkLocationGeoJSON: state => state.parkLocation.geoJSON,
       trailsGeoJSON: state => state.trail.geoJSON,
       trailsLoading: state => state.trail.loading,
       transitStopDataLoading: state => state.transitStop.loading,
       transitStopGeoJSON: state => state.transitStop.geoJSON,
-      userLatitude: state => state.userLocation.userLatitude,
-      userLongitude: state => state.userLocation.userLongitude,
+      userLatitude: state => state.map.userLatitude,
+      userLongitude: state => state.map.userLongitude,
     }),
   },
   async created() {
@@ -333,7 +333,7 @@ export default {
       this.zoom = zoom;
     },
     ...mapMutations({
-      setCenter: "userLocation/setCenter",
+      setCenter: "map/setCenter",
     }),
   },
   mounted() {
