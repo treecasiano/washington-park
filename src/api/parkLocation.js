@@ -1,22 +1,30 @@
 import axios from "axios";
 
 export default {
+  async create(data) {
+    const response = await axios({
+      data,
+      method: "post",
+      url: `/api/parkLocation`,
+    });
+    return response.data.result;
+  },
   get(id) {
     return axios({
       method: "get",
       url: `/api/parkLocation/${id}`,
     });
   },
-  list() {
-    return axios({
-      method: "get",
-      url: `/api/parkLocation`,
-    });
-  },
   getGeoJSON() {
     return axios({
       method: "get",
       url: `/api/parkLocationGeoJSON`,
+    });
+  },
+  list() {
+    return axios({
+      method: "get",
+      url: `/api/parkLocation`,
     });
   },
   search(params) {
@@ -26,10 +34,9 @@ export default {
       url: `/api/parkLocation/search`,
     });
   },
-  put(updates, id) {
-    const url = `/api/parkLocation/${id}`;
+  update(updates) {
+    const url = `/api/parkLocation/${updates.gid}`;
     const data = Object.assign({}, updates);
-
     return axios({
       data,
       method: "put",

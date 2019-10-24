@@ -62,8 +62,32 @@
           >
             <l-popup>
               <div>
-                <strong>props</strong>
-                : {{item.props}}
+                <strong>Location:&nbsp;</strong>
+                {{item.props.location_name}}
+              </div>
+              <div>
+                <strong>Address:&nbsp;</strong>
+                {{item.props.street_addr_1}},
+                <span
+                  v-if="item.props.street_addr_2"
+                >{{item.props.street_addr_2}},</span>
+                {{item.props.city}}, {{item.props.state}} {{item.props.zip}}
+              </div>
+              <div>
+                <strong>Type of Location:&nbsp;</strong>
+                {{item.props.location_type}}
+              </div>
+              <div v-if="item.props.hrs_of_operation">
+                <strong>Hours of Operation:&nbsp;</strong>
+                {{item.props.hrs_of_operation}}
+              </div>
+              <div v-if="item.props.description">
+                <strong>Description:&nbsp;</strong>
+                {{item.props.description}}
+              </div>
+              <div v-if="item.props.url">
+                <strong>Website:&nbsp;</strong>
+                <a :href="item.props.url">{{item.props.url}}</a>
               </div>
             </l-popup>
           </l-marker>

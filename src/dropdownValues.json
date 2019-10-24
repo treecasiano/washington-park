@@ -53,14 +53,14 @@
     "WY"
   ],
   "locationTypes": [
-    "Attraction",
-    "Bathroom",
-    "Garden",
-    "Picnic Shelter",
-    "Playground",
-    "Public Art",
-    "Recreation Facility",
-    "Restaurant",
-    "Store"
+    "attraction",
+    "bathroom",
+    "garden",
+    "picnic shelter",
+    "playground",
+    "public art",
+    "recreation facility",
+    "restaurant",
+    "store"
   ]
 }
