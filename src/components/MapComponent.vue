@@ -154,6 +154,7 @@ const baseMapUrl =
 const attribution =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
+const defaultCenter = [45.5155, -122.715];
 const defaultZoom = 15;
 
 const popupOptions = {
