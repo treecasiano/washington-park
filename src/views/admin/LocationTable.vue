@@ -8,12 +8,13 @@
         <div class="d-flex justify-left ma-4">
           <v-btn
             rounded
+            small
             color="primary"
             class="ml-5"
-            title="Add Park Location"
+            title="Add Location"
             @click="goToCreateForm"
           >
-            <v-icon>add</v-icon>&nbsp;Add Park Location
+            <v-icon>add</v-icon>&nbsp;Add Location
           </v-btn>
         </div>
       </v-card-title>
