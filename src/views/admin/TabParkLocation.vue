@@ -35,7 +35,12 @@
                     class="text-left mb-1 primary--text"
                   >The Geometry Field must be in the form of "POINT(long lat)', i.e. POINT(-122.7159755 45.516504).</div>
                 </div>
-                <v-text-field v-model="record.geom" label="Geometry" :rules="geomRules" required></v-text-field>
+                <v-text-field
+                  v-model="record.geom"
+                  label="Geometry (REQUIRED)"
+                  :rules="geomRules"
+                  required
+                ></v-text-field>
 
                 <v-text-field class="mr-1" v-model="record.street_addr_1" label="Street Address 1"></v-text-field>
                 <v-text-field class="mr-1" v-model="record.street_addr_2" label="Street Address 2"></v-text-field>
