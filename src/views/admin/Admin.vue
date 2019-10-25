@@ -1,6 +1,13 @@
 <template>
   <v-container fluid>
-    <h1 class="pl-2 font-weight-thin primary--text">Admin Console</h1>
+    <h1 class="pl-2 font-weight-thin primary--text">
+      <router-link
+        alt="Link to Home"
+        to="/admin/parkLocation"
+        class="primary--text"
+        style="text-decoration: none;"
+      >Admin Console</router-link>
+    </h1>
     <v-layout row wrap>
       <v-flex xs12 pa-2>
         <v-tabs
