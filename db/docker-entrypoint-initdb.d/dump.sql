@@ -409,7 +409,9 @@ COPY public.invasive_species_report (gid, date_created, observation_date, observ
 
 COPY public.park_location (gid, location_name, street_addr_1, street_addr_2, city, state, zip, location_type, hrs_of_operation, url, image_url, description, geom) FROM stdin;
 2	World Forestry Center	4033 SW Canyon Rd.		Portland	OR	97221	attraction	10am - 5pm, closed Tues and Wed	https://www.worldforestry.org/	https://www.worldforestry.org/wp-content/uploads/2015/07/Museum-Exterior_Front.jpg	From WFC website: Founded in 1966, the World Forestry Center (WFC) is a nonprofit organization dedicated to creating and inspiring champions of sustainable forestry.	0101000020E6100000F29881CAF8AD5EC027F911BF62C14640
-1	Stevens Pavilion Picnic Shelter	3119 SW Fairview Blvd.		Portland	OR	97205	picnic shelter	5am - 10pm daily	https://www.hoytarboretum.org/visit/rentals/stevens-pavilion/	https://www.hoytarboretum.org/wp-content/uploads/2019/04/Hoyt-Arboretum_Weddings-Rentals_Stevens-Pavilion-1.jpg		0101000020E61000002F4FE78AD2AD5EC0682096CD1CC24640
+4	Washington Park Tennis Courts	392-498 SW Kingston Ave		Portland	OR	97205	recreation facility	5am - 10pm	http://explorewashingtonpark.org/exploring#		Free; generally first come, first serve.	0101000020E6100000B0B37CB83FAD5EC0F9426DC08CC24640
+1	Stevens Pavilion Picnic Shelter	3119 SW Fairview Blvd.		Portland	OR	97205	picnic shelter	5am - 10pm daily	https://www.hoytarboretum.org/visit/rentals/stevens-pavilion/	https://www.hoytarboretum.org/wp-content/uploads/2019/04/Hoyt-Arboretum_Weddings-Rentals_Stevens-Pavilion-1.jpg	Iconic picnic shelter; ADA accessible; 100 guest capacity	0101000020E61000002F4FE78AD2AD5EC0682096CD1CC24640
+3	Washington Park Archery Range	SW Kingston Dr.		Portland	OR	97221	recreation facility	5am - 10pm	http://explorewashingtonpark.org/archery-range-0		Free, first-come first-serve outdoor archery range.	0101000020E61000007920B24893AD5EC00044B060D1C14640
 \.
 
 
@@ -1027,7 +1029,7 @@ SELECT pg_catalog.setval('public.invasive_species_report_gid_seq', 1, true);
 -- Name: park_location_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.park_location_gid_seq', 2, true);
+SELECT pg_catalog.setval('public.park_location_gid_seq', 4, true);
 
 
 --
