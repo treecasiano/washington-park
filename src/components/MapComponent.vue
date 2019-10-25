@@ -96,8 +96,7 @@
                 {{item.props.description}}
               </div>
               <div v-if="item.props.url">
-                <strong>Website:&nbsp;</strong>
-                <a :href="item.props.url">{{item.props.url}}</a>
+                <a :href="item.props.url" class="primary--text font-weight-bold">>>> Visit Website</a>
               </div>
             </l-popup>
           </l-marker>
@@ -144,7 +143,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import MapControls from "@/components/MapControls.vue";
 import MapLayers from "@/components/MapLayers.vue";
 import parkBoundaries from "../../public/parkBoundaries.json";
@@ -220,6 +219,7 @@ export default {
     this.createTransitStopMarkers(this.transitStopGeoJSON);
     this.createParkLocationMarkers(this.parkLocationGeoJSON);
     this.createTrailsPolyLines(this.trailsGeoJSON);
+    this.fetchReportList();
   },
   data() {
     return {
@@ -333,6 +333,9 @@ export default {
     zoomUpdated(zoom) {
       this.zoom = zoom;
     },
+    ...mapActions({
+      fetchReportList: "invasiveSpeciesReport/list",
+    }),
     ...mapMutations({
       setCenter: "map/setCenter",
     }),
@@ -351,6 +354,7 @@ export default {
 <style>
 .leaflet-container {
   font-family: "Kreon", sans-serif !important;
+  font-size: 0.98rem;
 }
 </style>
 

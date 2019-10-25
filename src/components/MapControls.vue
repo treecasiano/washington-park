@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-navigation-drawer v-model="drawer" :mini-variant.sync="mini" permanent width="400">
+    <v-navigation-drawer v-model="drawer" :mini-variant.sync="mini" permanent width="350">
       <template v-slot:prepend>
         <v-list-item v-if="mini" dense>
           <v-btn icon @click.stop="mini = !mini">
@@ -13,7 +13,7 @@
             <v-icon color="primary">mdi-chevron-left</v-icon>
           </v-btn>
         </v-list-item>
-        <v-container v-if="!mini" style="height: 300px;">
+        <v-container v-if="!mini" style="height: 400px;">
           <v-tabs v-model="tab" centered active-class="mapControls__tabs--active">
             <v-tab href="#welcome" ripple>
               <v-icon>eco</v-icon>
@@ -22,22 +22,39 @@
               <v-icon>search</v-icon>
             </v-tab>
             <v-tab href="#form" ripple>
-              <v-icon>bug_report</v-icon>
+              <v-icon>note_add</v-icon>
             </v-tab>
             <v-tab-item key="1" value="welcome">
-              <v-layout mt-5>Welcome to Washington Park and Hoyt Arboretum</v-layout>
+              <v-layout column mt-2>
+                <h2 class="primary--text mb-2">Welcome to Washington Park!</h2>
+                <p>
+                  This application will help you learn more about the park's miles of trails, beautiful gardens, the Hoyt Arboretum, and many other attractions before or during your visit. For more information, visit the park's
+                  <a
+                    color="secondary"
+                    href="http://explorewashingtonpark.org/"
+                  >website</a>.
+                </p>
+                <p>Use the tabs above to locate yourself withint he park or search for park locations closest to you. You can even help us keep the park healthy by filing an invasive species report.</p>
+              </v-layout>
             </v-tab-item>
             <v-tab-item key="2" value="search">
-              <v-layout column mt-5>
-                <v-btn small color="primary" dark @click="showUserLocation">Show My Location!</v-btn>
-                <div v-if="displayUserLocation">
-                  <div class="text-left">User Longitude: {{userLongitude.toFixed(4)}}</div>
-                  <div class="text-left">User Latitude: {{userLatitude.toFixed(4)}}</div>
-                </div>
+              <v-layout column mt-2>
+                <h2 class="primary--text mb-2">Find Locations Near You!</h2>
+                <p>Click the button below to locate yourself within the park. To see the points nearest you, use the input to select a search radius.</p>
+                <v-btn
+                  large
+                  rounded
+                  class="mx-5"
+                  color="primary"
+                  dark
+                  @click="showUserLocation"
+                >FIND ME!</v-btn>
               </v-layout>
             </v-tab-item>
             <v-tab-item key="3" value="form">
-              <v-layout mt-5>Form</v-layout>
+              <v-layout mt-2>
+                <report-form @closeMapControls="mini=true"></report-form>
+              </v-layout>
             </v-tab-item>
           </v-tabs>
         </v-container>
@@ -47,8 +64,13 @@
 </template>
 <script>
 import { mapMutations, mapState } from "vuex";
+import ReportForm from "@/components/ReportForm.vue";
+const defaultCenter = [45.5155, -122.715];
 
 export default {
+  components: {
+    ReportForm,
+  },
   computed: {
     ...mapState({
       displayUserLocation: state => state.map.displayStatus,
@@ -105,5 +127,8 @@ export default {
 }
 .mapControls__tabs--active {
   background-color: var(--v-accent-lighten4);
+}
+.v-dialog__content {
+  z-index: 1000000 !important;
 }
 </style>
