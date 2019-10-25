@@ -2,7 +2,6 @@
   <v-card flat>
     <admin-layout>
       <template v-slot:list>
-        <!-- <admin-list id="gid" itemName="location_name" :list="list" name="parkLocation"></admin-list> -->
         <location-table id="gid" itemName="location_name" :list="list" name="parkLocation"></location-table>
       </template>
       <template v-slot:form>
