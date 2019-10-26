@@ -75,17 +75,19 @@
             </v-row>
 
             <v-text-field
-              label="Organism Description"
-              v-model="record.organism_description"
-              required
               :rules="fieldRules"
+              counter="250"
+              label="Organism Description"
+              required
+              v-model="record.organism_description"
             ></v-text-field>
             <v-textarea
               auto-grow
               clearable
+              counter="250"
+              label="Location Details"
               rows="2"
               v-model="record.location_details"
-              label="Location Details"
             ></v-textarea>
             <v-text-field label="Geometry" v-model="record.geom" required :rules="fieldRules"></v-text-field>
             <div class="d-flex justify-end mt-3">

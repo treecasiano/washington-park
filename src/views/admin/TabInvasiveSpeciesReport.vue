@@ -30,6 +30,7 @@
                 ></v-checkbox>
                 <v-textarea
                   auto-grow
+                  counter="250"
                   clearable
                   dense
                   rows="2"
