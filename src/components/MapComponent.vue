@@ -42,26 +42,6 @@
             :options-style="stylesParkBoundaries"
           ></l-geo-json>
         </div>
-        <div>
-          <l-marker
-            v-for="(item, index) in markersArray"
-            v-bind:item="item"
-            v-bind:index="index"
-            v-bind:key="index"
-            :lat-lng="item"
-          >
-            <l-popup>
-              <div>
-                <strong>name</strong>
-                : {{item.props.first_name}} {{item.props.last_name}}
-              </div>
-              <div>
-                <strong>favorite color:</strong>
-                {{item.props.favorite_color}}
-              </div>
-            </l-popup>
-          </l-marker>
-        </div>
         <div v-if="displayParkLocations && markersArrayParkLocation.length">
           <l-marker
             v-for="(item, index) in markersArrayParkLocation"
@@ -196,9 +176,6 @@ export default {
     MapLayers,
   },
   computed: {
-    exampleGeoJSON() {
-      return this.$store.state.example.exampleGeoJSON;
-    },
     optionsParkBoundaries() {
       return {
         onEachFeature: this.onEachParkBoundariesFeature,
@@ -244,27 +221,21 @@ export default {
     }),
   },
   async created() {
-    // TODO: Remove example code
     // TODO: Implement Promise.all
-    await this.$store.dispatch("example/getExampleGeoJSON");
     await this.$store.dispatch("invasiveSpeciesReport/getGeoJSON");
     await this.$store.dispatch("transitStop/getGeoJSON");
     await this.$store.dispatch("trail/getGeoJSON");
     await this.$store.dispatch("parkLocation/getGeoJSON");
-    this.createExampleMarkers(this.exampleGeoJSON);
     this.createInvasiveSpeciesReportMarkers(this.invasiveSpeciesReportGeoJSON);
     this.createTransitStopMarkers(this.transitStopGeoJSON);
     this.createParkLocationMarkers(this.parkLocationGeoJSON);
     this.createTrailsPolyLines(this.trailsGeoJSON);
-    // TODO: Move this fetch to the admin console? Also, fetch after user adds report.
-    this.fetchReportList();
   },
   data() {
     return {
       attribution,
       bounds: null,
       loading: false,
-      markersArray: [],
       markersArrayInvasiveSpeciesReport: [],
       markersArrayParkLocation: [],
       markersArrayTransitStop: [],
@@ -282,9 +253,6 @@ export default {
     },
     centerUpdated(center) {
       this.setCenter(center);
-    },
-    createExampleMarkers(geoJSON) {
-      this.markersArray = this.createMarkers(geoJSON);
     },
     createMarkers(geoJSON) {
       const markersArray = geoJSON["features"].map(feature => {
@@ -375,9 +343,6 @@ export default {
     zoomUpdated(zoom) {
       this.zoom = zoom;
     },
-    ...mapActions({
-      fetchReportList: "invasiveSpeciesReport/list",
-    }),
     ...mapMutations({
       setCenter: "map/setCenter",
     }),

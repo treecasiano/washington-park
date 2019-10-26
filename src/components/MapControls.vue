@@ -65,7 +65,6 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 import ReportForm from "@/components/ReportForm.vue";
-const defaultCenter = [45.5155, -122.715];
 
 export default {
   components: {
@@ -93,7 +92,8 @@ export default {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(this.setUserLocation);
       } else {
-        console.log("Geolocation is not supported by this browser.");
+        // eslint-disable-next-line
+        console.error("Geolocation is not supported by this browser.");
       }
     },
     setUserLocation(position) {
@@ -107,7 +107,7 @@ export default {
       };
       this.setUserCoordinates(coordinates);
     },
-    showUserLocation(position) {
+    showUserLocation() {
       this.getLocation();
       this.setUserLocationDisplayStatus(true);
       this.setCenter([this.userLatitude, this.userLongitude]);

@@ -2,7 +2,7 @@ import reportApi from "../api/invasiveSpeciesReport";
 
 const actions = {
   async create({ commit, state }) {
-    const record = await reportApi.create(state.record);
+    await reportApi.create(state.record);
     return commit("clearRecord");
   },
   async displayData({ commit, status }) {

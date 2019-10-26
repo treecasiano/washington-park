@@ -94,6 +94,7 @@ export default {
       if (dateCreated) {
         return dateCreated.slice(0, -14);
       }
+      return;
     },
     dateObserved() {
       const dateObserved = this.$store.state.invasiveSpeciesReport.record
@@ -101,6 +102,7 @@ export default {
       if (dateObserved) {
         return dateObserved.slice(0, -14);
       }
+      return;
     },
     ...mapGetters({
       getById: "invasiveSpeciesReport/getById",
