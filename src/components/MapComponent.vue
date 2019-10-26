@@ -101,6 +101,34 @@
             </l-popup>
           </l-marker>
         </div>
+        <div v-if="displayInvasiveSpeciesReports && markersArrayInvasiveSpeciesReport.length">
+          <l-marker
+            v-for="(item, index) in markersArrayInvasiveSpeciesReport"
+            v-bind:item="item"
+            v-bind:index="index"
+            v-bind:key="index"
+            :lat-lng="item"
+          >
+            <l-popup>
+              <div>
+                <strong>Observation Date:&nbsp;</strong>
+                {{item.props.observation_date}}
+              </div>
+              <div>
+                <strong>Organism Type:&nbsp;</strong>
+                {{item.props.organism_type}}
+              </div>
+              <div>
+                <strong>Organism Description:&nbsp;</strong>
+                {{item.props.organism_description}}
+              </div>
+              <div>
+                <strong>Location Details:&nbsp;</strong>
+                {{item.props.location_details}}
+              </div>
+            </l-popup>
+          </l-marker>
+        </div>
         <div v-if="displayTransitStops && markersArrayTransitStop.length">
           <l-marker
             v-for="(item, index) in markersArrayTransitStop"
@@ -194,6 +222,8 @@ export default {
     },
     ...mapState({
       center: state => state.map.center,
+      displayInvasiveSpeciesReports: state =>
+        state.invasiveSpeciesReport.displayStatus,
       displayParkBoundaries: state => state.parkBoundaries.displayStatus,
       displayParkLocations: state => state.parkLocation.displayStatus,
       displayTrails: state => state.trail.displayStatus,
@@ -201,6 +231,10 @@ export default {
       displayUserLocation: state => state.map.displayStatus,
       parkLocationDataLoading: state => state.parkLocation.loading,
       parkLocationGeoJSON: state => state.parkLocation.geoJSON,
+      invasiveSpeciesReportGeoJSON: state =>
+        state.invasiveSpeciesReport.geoJSON,
+      invasiveSpeciesReportsLoading: state =>
+        state.invasiveSpeciesReport.loading,
       trailsGeoJSON: state => state.trail.geoJSON,
       trailsLoading: state => state.trail.loading,
       transitStopDataLoading: state => state.transitStop.loading,
@@ -211,14 +245,18 @@ export default {
   },
   async created() {
     // TODO: Remove example code
+    // TODO: Implement Promise.all
     await this.$store.dispatch("example/getExampleGeoJSON");
+    await this.$store.dispatch("invasiveSpeciesReport/getGeoJSON");
     await this.$store.dispatch("transitStop/getGeoJSON");
     await this.$store.dispatch("trail/getGeoJSON");
     await this.$store.dispatch("parkLocation/getGeoJSON");
     this.createExampleMarkers(this.exampleGeoJSON);
+    this.createInvasiveSpeciesReportMarkers(this.invasiveSpeciesReportGeoJSON);
     this.createTransitStopMarkers(this.transitStopGeoJSON);
     this.createParkLocationMarkers(this.parkLocationGeoJSON);
     this.createTrailsPolyLines(this.trailsGeoJSON);
+    // TODO: Move this fetch to the admin console? Also, fetch after user adds report.
     this.fetchReportList();
   },
   data() {
@@ -227,6 +265,7 @@ export default {
       bounds: null,
       loading: false,
       markersArray: [],
+      markersArrayInvasiveSpeciesReport: [],
       markersArrayParkLocation: [],
       markersArrayTransitStop: [],
       maxZoom: 18,
@@ -287,6 +326,9 @@ export default {
     createParkBoundariesContent(props) {
       let propertyString = `<strong>${props.NAME}</strong>`;
       return propertyString;
+    },
+    createInvasiveSpeciesReportMarkers(geoJSON) {
+      this.markersArrayInvasiveSpeciesReport = this.createMarkers(geoJSON);
     },
     createParkLocationMarkers(geoJSON) {
       this.markersArrayParkLocation = this.createMarkers(geoJSON);
