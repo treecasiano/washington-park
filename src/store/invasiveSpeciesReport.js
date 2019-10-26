@@ -3,7 +3,6 @@ import reportApi from "../api/invasiveSpeciesReport";
 const actions = {
   async create({ commit, state }) {
     const record = await reportApi.create(state.record);
-    console.log("record", record);
     return commit("clearRecord");
   },
   async displayData({ commit, status }) {
@@ -32,7 +31,16 @@ const actions = {
   },
   async update({ commit, state }) {
     // TODO: clean up the response object
-    const response = await reportApi.update(state.record);
+    // only allowing updates to active status and admin notes from the front-end
+    const filteredUpdates = Object.assign(
+      {},
+      {
+        gid: state.record.gid,
+        active: state.record.active,
+        admin_notes: state.record.admin_notes,
+      }
+    );
+    const response = await reportApi.update(filteredUpdates);
     return commit("setRecord", response.data.result);
   },
 };
