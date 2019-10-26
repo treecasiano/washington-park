@@ -163,7 +163,9 @@ CREATE TABLE public.invasive_species_report (
     organism_type character varying(150),
     organism_description character varying(250),
     location_details character varying(250),
-    geom public.geometry(Point,4326)
+    geom public.geometry(Point,4326),
+    admin_notes character varying(255) DEFAULT NULL::character varying,
+    active smallint DEFAULT 1 NOT NULL
 );
 
 
@@ -398,8 +400,9 @@ COPY public.hello_table (user_id, username, created_on, first_name, last_name, f
 -- Data for Name: invasive_species_report; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.invasive_species_report (gid, date_created, observation_date, observer_email, observer_first_name, observer_last_name, observer_phone, organism_type, organism_description, location_details, geom) FROM stdin;
-1	2019-10-20 22:23:00.255833+00	2019-10-20	fakemail@fakemail.com	Mariana	Triano	555-555-5555	English Ivy	Ivy has grown about 15 feet up a few trees.	The trees are few feet east of Stevens Pavilion	0101000020E61000001AA721AAF0AD5EC0F8A8BF5E61C14640
+COPY public.invasive_species_report (gid, date_created, observation_date, observer_email, observer_first_name, observer_last_name, observer_phone, organism_type, organism_description, location_details, geom, admin_notes, active) FROM stdin;
+2	2019-10-26 19:28:31.356808+00	2019-10-26	email@email.org	Jacob	Schmidt	\N	animal	Red-eared slider	Spotted between the archery range and SW Kingston Drive 	0101000020E6100000817B9E3F6DAD5EC0A04FE449D2C14640	\N	1
+1	2019-10-20 22:23:00.255833+00	2019-10-20	fakemail@fakemail.com	Mariana	Borgia	555-555-5555	plant	Ivy has grown about 15 feet up a few trees.	The trees are few feet east of Stevens Pavilion	0101000020E61000001AA721AAF0AD5EC0F8A8BF5E61C14640	\N	1
 \.
 
 
@@ -1022,7 +1025,7 @@ SELECT pg_catalog.setval('public.account_user_id_seq', 7, true);
 -- Name: invasive_species_report_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.invasive_species_report_gid_seq', 1, true);
+SELECT pg_catalog.setval('public.invasive_species_report_gid_seq', 2, true);
 
 
 --

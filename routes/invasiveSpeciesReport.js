@@ -26,6 +26,16 @@ function factory(logger, invasiveSpeciesReportService) {
         required: true,
         schema: {
           properties: {
+            active: {
+              description: "Report Active Status",
+              enum: [0, 1],
+              type: "integer",
+              default: 1,
+            },
+            admin_notes: {
+              description: "Admin Notes",
+              type: ["string"],
+            },
             observation_date: {
               description: "Observation Date",
               type: "string",
