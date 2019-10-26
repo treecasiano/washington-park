@@ -68,7 +68,7 @@
                   label="Description"
                 ></v-textarea>
 
-                <div class="d-flex justify-start mt-3">
+                <div class="d-flex justify-start my-3">
                   <v-btn
                     class="mr-3"
                     rounded

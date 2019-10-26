@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat v-if="record">
     <admin-layout>
       <template v-slot:list>
         <invasive-species-report-table id="gid" :list="list" name="invasiveSpeciesReport"></invasive-species-report-table>
@@ -12,14 +12,22 @@
               <v-card-title v-if="mode==='create'">Create Report</v-card-title>
               <v-container>
                 <div class="d-flex flex-column justify-start text-left">
-                  <div>Date Created: {{record.date_created.slice(0, -14)}}</div>
-                  <div>Observation Date: {{record.observation_date.slice(0, -14)}}</div>
+                  <div>Report ID: {{record.gid}}</div>
+                  <div>Date Created: {{dateCreated}}</div>
+                  <div>Observation Date: {{dateObserved}}</div>
                   <div>Observer: {{record.observer_first_name}} {{record.observer_last_name}}</div>
                   <div>Observer Email: {{record.observer_email}}</div>
                   <div>Observer Phone: {{record.organism_type}}</div>
                   <div>Organism Description: {{record.organism_description}}</div>
                   <div>Location Description: {{record.location_details}}</div>
+                  <div>Geometry: {{record.geom}}</div>
                 </div>
+                <v-checkbox
+                  v-model="record.active"
+                  :label="`Active Status: ${record.active ? 'Active' : 'Inactive'}`"
+                  :false-value="0"
+                  :true-value="1"
+                ></v-checkbox>
                 <v-textarea
                   auto-grow
                   clearable
@@ -29,7 +37,7 @@
                   label="Admin Notes"
                 ></v-textarea>
 
-                <div class="d-flex justify-start mt-3">
+                <div class="d-flex justify-start my-3">
                   <v-btn
                     class="mr-3"
                     rounded
@@ -79,6 +87,20 @@ export default {
     InvasiveSpeciesReportTable,
   },
   computed: {
+    dateCreated() {
+      const dateCreated = this.$store.state.invasiveSpeciesReport.record
+        .date_created;
+      if (dateCreated) {
+        return dateCreated.slice(0, -14);
+      }
+    },
+    dateObserved() {
+      const dateObserved = this.$store.state.invasiveSpeciesReport.record
+        .observation_date;
+      if (dateObserved) {
+        return dateObserved.slice(0, -14);
+      }
+    },
     ...mapGetters({
       getById: "invasiveSpeciesReport/getById",
     }),

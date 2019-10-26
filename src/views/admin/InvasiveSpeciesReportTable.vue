@@ -5,18 +5,6 @@
         Invasive Species Reports
         <v-spacer></v-spacer>
         <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
-        <!-- <div class="d-flex justify-left ma-4">
-          <v-btn
-            rounded
-            small
-            color="primary"
-            class="ml-5"
-            title="Add Location"
-            @click="goToCreateForm"
-          >
-            <v-icon>add</v-icon>&nbsp;Add Location
-          </v-btn>
-        </div>-->
       </v-card-title>
       <template>
         <v-data-table class="elevation-1 mt-4" :headers="headers" :items="list" :search="search">
@@ -31,7 +19,7 @@
                 tabindex="0"
               >
                 <td>{{ item.gid }}</td>
-                <td>{{ item.active }}</td>
+                <td>{{ `${item.active ? 'Active' : 'Inactive'}` }}</td>
                 <td>{{ item.date_created.slice(0, -14) }}</td>
                 <td>{{ item.observation_date.slice(0, -14) }}</td>
                 <td>{{ item.organism_type }}</td>
