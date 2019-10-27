@@ -106,6 +106,10 @@
                 <strong>Location Details:&nbsp;</strong>
                 {{item.props.location_details}}
               </div>
+              <div v-if="item.props.admin_notes">
+                <strong>Notes from Park Administration:&nbsp;</strong>
+                {{item.props.admin_notes}}
+              </div>
             </l-popup>
           </l-marker>
         </div>
