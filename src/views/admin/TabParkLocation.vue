@@ -52,6 +52,7 @@
                   label="Image URL"
                 ></v-textarea>
                 <v-textarea
+                  counter="250"
                   auto-grow
                   clearable
                   dense

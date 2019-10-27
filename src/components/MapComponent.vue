@@ -285,6 +285,13 @@ export default {
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
+      playgroundIcon: L.icon({
+        iconUrl: "leaflet/map_marker_playground.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
       recreationFacilityIcon: L.icon({
         iconUrl: "leaflet/map_marker_rec.svg",
         iconSize: [40, 40],
@@ -339,6 +346,9 @@ export default {
           }
           if (props.location_type === "garden") {
             icon = this.gardenIcon;
+          }
+          if (props.location_type === "playground") {
+            icon = this.playgroundIcon;
           }
           if (props.location_type === "picnic shelter") {
             icon = this.picnicShelterIcon;
