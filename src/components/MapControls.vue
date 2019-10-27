@@ -13,8 +13,8 @@
             <v-icon color="primary">mdi-chevron-left</v-icon>
           </v-btn>
         </v-list-item>
-        <v-container v-if="!mini" style="height: 400px;">
-          <v-tabs v-model="tab" centered active-class="mapControls__tabs--active">
+        <v-container v-if="!mini">
+          <v-tabs v-model="tab" centered active-class="mapControls__tabs--active" height="30">
             <v-tab href="#welcome" ripple>
               <v-icon>eco</v-icon>
             </v-tab>
