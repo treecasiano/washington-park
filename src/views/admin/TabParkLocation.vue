@@ -62,6 +62,7 @@
                 <v-textarea
                   auto-grow
                   clearable
+                  counter="250"
                   dense
                   rows="2"
                   v-model="record.description"
