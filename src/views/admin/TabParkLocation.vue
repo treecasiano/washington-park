@@ -17,7 +17,6 @@
                   required
                   class="mr-1"
                   :rules="nameRules"
-                  validate-on-blur
                 ></v-text-field>
 
                 <v-select
@@ -27,7 +26,6 @@
                   item-color="primary"
                   :rules="locationTypeRules"
                   required
-                  validate-on-blur
                 ></v-select>
                 <div class="d-flex column justify-left mt-2">
                   <div
@@ -70,7 +68,7 @@
                   label="Description"
                 ></v-textarea>
 
-                <div class="d-flex justify-start mt-3">
+                <div class="d-flex justify-start my-3">
                   <v-btn
                     class="mr-3"
                     rounded
@@ -137,11 +135,7 @@ export default {
   },
   data: () => ({
     valid: false,
-    geomRules: [
-      v => !!v || "Geometry is required",
-      v => v.slice(-1) === ")" || "Geometry must be in valid format.",
-      v => v.slice(0, 6) === "POINT(" || "Geometry must be in valid format.",
-    ],
+    geomRules: [v => !!v || "Geometry is required"],
     locationTypeRules: [v => !!v || "Location Type is required"],
     nameRules: [v => !!v || "Name is required"],
   }),

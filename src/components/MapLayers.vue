@@ -48,6 +48,13 @@
                 v-if="transitStops.features"
                 v-model="displayStatusTransitStops"
               ></v-checkbox>
+              <v-checkbox
+                :label="`Invasive Species Reports`"
+                color="primary"
+                data-cy="checkbox--invasiveSpeciesReports"
+                v-if="invasiveSpeciesReports.features"
+                v-model="displayStatusInvasiveSpeciesReports"
+              ></v-checkbox>
             </v-flex>
           </v-layout>
         </v-container>
@@ -62,6 +69,14 @@ import { mapMutations, mapState } from "vuex";
 export default {
   name: "MapLayers",
   computed: {
+    displayStatusInvasiveSpeciesReports: {
+      get() {
+        return this.$store.state.invasiveSpeciesReport.displayStatus;
+      },
+      set(value) {
+        this.displayInvasiveSpeciesReports(value);
+      },
+    },
     displayStatusParkBoundaries: {
       get() {
         return this.$store.state.parkBoundaries.displayStatus;
@@ -95,6 +110,7 @@ export default {
       },
     },
     ...mapState({
+      invasiveSpeciesReports: state => state.invasiveSpeciesReport.geoJSON,
       parkLocations: state => state.parkLocation.geoJSON,
       transitStops: state => state.transitStop.geoJSON,
       trails: state => state.trail.geoJSON,
@@ -108,6 +124,7 @@ export default {
   },
   methods: {
     ...mapMutations({
+      displayInvasiveSpeciesReports: "invasiveSpeciesReport/setDisplayStatus",
       displayParkBoundaries: "parkBoundaries/setDisplayStatus",
       displayParkLocations: "parkLocation/setDisplayStatus",
       displayTrails: "trail/setDisplayStatus",

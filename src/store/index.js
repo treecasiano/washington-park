@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import example from "./example";
+import invasiveSpeciesReport from "./invasiveSpeciesReport";
 import parkBoundaries from "./parkBoundaries";
 import parkLocation from "./parkLocation";
 import trail from "./trail";
@@ -13,6 +14,7 @@ Vue.use(Vuex);
 const vuexStore = new Vuex.Store({
   modules: {
     example,
+    invasiveSpeciesReport,
     parkBoundaries,
     parkLocation,
     trail,

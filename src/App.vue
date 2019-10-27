@@ -8,7 +8,7 @@
             href="/"
             class="white--text"
             style="text-decoration: none;"
-          >Washington Park</a>
+          >Washington Park & Hoyt Arboretum</a>
         </v-toolbar-title>
       </v-toolbar>
     </div>

@@ -6,6 +6,7 @@
         :zoom="zoom"
         :center="center"
         :maxZoom="maxZoom"
+        :minZoom="minZoom"
         @update:zoom="zoomUpdated"
         @update:center="centerUpdated"
         @update:bounds="boundsUpdated"
@@ -42,26 +43,6 @@
             :options-style="stylesParkBoundaries"
           ></l-geo-json>
         </div>
-        <div>
-          <l-marker
-            v-for="(item, index) in markersArray"
-            v-bind:item="item"
-            v-bind:index="index"
-            v-bind:key="index"
-            :lat-lng="item"
-          >
-            <l-popup>
-              <div>
-                <strong>name</strong>
-                : {{item.props.first_name}} {{item.props.last_name}}
-              </div>
-              <div>
-                <strong>favorite color:</strong>
-                {{item.props.favorite_color}}
-              </div>
-            </l-popup>
-          </l-marker>
-        </div>
         <div v-if="displayParkLocations && markersArrayParkLocation.length">
           <l-marker
             v-for="(item, index) in markersArrayParkLocation"
@@ -96,8 +77,39 @@
                 {{item.props.description}}
               </div>
               <div v-if="item.props.url">
-                <strong>Website:&nbsp;</strong>
-                <a :href="item.props.url">{{item.props.url}}</a>
+                <a :href="item.props.url" class="primary--text font-weight-bold">>>> Visit Website</a>
+              </div>
+            </l-popup>
+          </l-marker>
+        </div>
+        <div v-if="displayInvasiveSpeciesReports && markersArrayInvasiveSpeciesReport.length">
+          <l-marker
+            v-for="(item, index) in markersArrayInvasiveSpeciesReport"
+            v-bind:item="item"
+            v-bind:index="index"
+            v-bind:key="index"
+            :lat-lng="item"
+          >
+            <l-popup>
+              <div>
+                <strong>Observation Date:&nbsp;</strong>
+                {{item.props.observation_date}}
+              </div>
+              <div>
+                <strong>Organism Type:&nbsp;</strong>
+                {{item.props.organism_type}}
+              </div>
+              <div>
+                <strong>Organism Description:&nbsp;</strong>
+                {{item.props.organism_description}}
+              </div>
+              <div>
+                <strong>Location Details:&nbsp;</strong>
+                {{item.props.location_details}}
+              </div>
+              <div v-if="item.props.admin_notes">
+                <strong>Notes from Park Administration:&nbsp;</strong>
+                {{item.props.admin_notes}}
               </div>
             </l-popup>
           </l-marker>
@@ -144,7 +156,9 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
+import { latLngBounds } from "leaflet";
+
 import MapControls from "@/components/MapControls.vue";
 import MapLayers from "@/components/MapLayers.vue";
 import parkBoundaries from "../../public/parkBoundaries.json";
@@ -169,9 +183,6 @@ export default {
     MapLayers,
   },
   computed: {
-    exampleGeoJSON() {
-      return this.$store.state.example.exampleGeoJSON;
-    },
     optionsParkBoundaries() {
       return {
         onEachFeature: this.onEachParkBoundariesFeature,
@@ -195,6 +206,8 @@ export default {
     },
     ...mapState({
       center: state => state.map.center,
+      displayInvasiveSpeciesReports: state =>
+        state.invasiveSpeciesReport.displayStatus,
       displayParkBoundaries: state => state.parkBoundaries.displayStatus,
       displayParkLocations: state => state.parkLocation.displayStatus,
       displayTrails: state => state.trail.displayStatus,
@@ -202,21 +215,26 @@ export default {
       displayUserLocation: state => state.map.displayStatus,
       parkLocationDataLoading: state => state.parkLocation.loading,
       parkLocationGeoJSON: state => state.parkLocation.geoJSON,
+      invasiveSpeciesReportGeoJSON: state =>
+        state.invasiveSpeciesReport.geoJSON,
+      invasiveSpeciesReportsLoading: state =>
+        state.invasiveSpeciesReport.loading,
       trailsGeoJSON: state => state.trail.geoJSON,
       trailsLoading: state => state.trail.loading,
       transitStopDataLoading: state => state.transitStop.loading,
       transitStopGeoJSON: state => state.transitStop.geoJSON,
       userLatitude: state => state.map.userLatitude,
       userLongitude: state => state.map.userLongitude,
+      zoom: state => state.map.zoom,
     }),
   },
   async created() {
-    // TODO: Remove example code
-    await this.$store.dispatch("example/getExampleGeoJSON");
+    // TODO: Implement Promise.all
+    await this.$store.dispatch("invasiveSpeciesReport/getGeoJSON");
     await this.$store.dispatch("transitStop/getGeoJSON");
     await this.$store.dispatch("trail/getGeoJSON");
     await this.$store.dispatch("parkLocation/getGeoJSON");
-    this.createExampleMarkers(this.exampleGeoJSON);
+    this.createInvasiveSpeciesReportMarkers(this.invasiveSpeciesReportGeoJSON);
     this.createTransitStopMarkers(this.transitStopGeoJSON);
     this.createParkLocationMarkers(this.parkLocationGeoJSON);
     this.createTrailsPolyLines(this.trailsGeoJSON);
@@ -226,15 +244,16 @@ export default {
       attribution,
       bounds: null,
       loading: false,
-      markersArray: [],
+      markersArrayInvasiveSpeciesReport: [],
       markersArrayParkLocation: [],
       markersArrayTransitStop: [],
       maxZoom: 18,
+      minZoom: 4,
       parkBoundaries,
       polylineArrayTrails: [],
       subdomains: "abcd",
       url: baseMapUrl,
-      zoom: defaultZoom,
+      // zoom: defaultZoom,
     };
   },
   methods: {
@@ -243,9 +262,6 @@ export default {
     },
     centerUpdated(center) {
       this.setCenter(center);
-    },
-    createExampleMarkers(geoJSON) {
-      this.markersArray = this.createMarkers(geoJSON);
     },
     createMarkers(geoJSON) {
       const markersArray = geoJSON["features"].map(feature => {
@@ -288,6 +304,9 @@ export default {
       let propertyString = `<strong>${props.NAME}</strong>`;
       return propertyString;
     },
+    createInvasiveSpeciesReportMarkers(geoJSON) {
+      this.markersArrayInvasiveSpeciesReport = this.createMarkers(geoJSON);
+    },
     createParkLocationMarkers(geoJSON) {
       this.markersArrayParkLocation = this.createMarkers(geoJSON);
     },
@@ -327,18 +346,25 @@ export default {
       this.setBaseStyles(layer, defaultStyle, highlightStyle);
     },
     resetMapView() {
-      this.$refs.map.setCenter(defaultCenter);
-      this.$refs.map.setZoom(defaultZoom);
+      // this.$refs.map.setCenter(defaultCenter);
+      // this.$refs.map.setZoom(defaultZoom);
+      this.setCenter(defaultCenter);
+      this.setZoom(defaultZoom);
     },
     zoomUpdated(zoom) {
-      this.zoom = zoom;
+      this.setZoom(zoom);
     },
     ...mapMutations({
       setCenter: "map/setCenter",
+      setZoom: "map/setZoom",
     }),
   },
   mounted() {
-    this.$nextTick(() => {});
+    this.$nextTick(() => {
+      this.$refs.map.mapObject.on("zoomend", () => {
+        console.log(this.$refs.map.mapObject.getBounds());
+      });
+    });
   },
   props: {
     height: String,
@@ -351,6 +377,7 @@ export default {
 <style>
 .leaflet-container {
   font-family: "Kreon", sans-serif !important;
+  font-size: 0.98rem;
 }
 </style>
 
