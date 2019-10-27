@@ -98,7 +98,7 @@
             <div v-if="userLatitude && userLongitude" class="text-left">
               <span
                 v-if="userLatitude && userLongitude"
-              >Lat: {{userLatitude.toFixed(4)}}, Long: {{userLongitude.toFixed(4)}}</span>
+              >Lat: {{userLatitude}}, Long: {{userLongitude}}</span>
             </div>
             <div v-else>Your location is unknown. Please enter coordinates below.</div>
             <v-checkbox v-model="useOtherLatLng" label="Use Other Coordinates"></v-checkbox>
@@ -170,7 +170,12 @@ export default {
         this.dialog = false;
         this.closeMapControls();
         this.notifySuccess();
-        this.setCenter([this.userLatitude, this.userLongitude]);
+        if (this.useOtherLatLng) {
+          this.setCenter([this.otherLatitude, this.otherLongitude]);
+        } else {
+          this.setCenter([this.userLatitude, this.userLongitude]);
+        }
+        this.setZoom(18);
       } catch (e) {
         // eslint-disable-next-line
         this.notifyFailure();
@@ -196,10 +201,10 @@ export default {
       // fake latitude for demo: 45.5145948
       // fake longitude for demo: -122.7104008
       const coordinates = {
-        // latitude: position.coords.latitude,
-        // longitude: position.coords.longitude,
-        latitude: 45.5145948,
-        longitude: -122.7104008,
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        // latitude: 45.5145948,
+        // longitude: -122.7104008,
       };
       this.setUserCoordinates(coordinates);
       this.showUserLatLng = true;
@@ -213,6 +218,7 @@ export default {
       setRecord: "invasiveSpeciesReport/setRecord",
       setCenter: "map/setCenter",
       setUserCoordinates: "map/setUserCoordinates",
+      setZoom: "map/setZoom",
     }),
   },
   notifications: {

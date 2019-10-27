@@ -11,6 +11,9 @@ const mutations = {
     state.userLatitude = coordinates.latitude;
     state.userLongitude = coordinates.longitude;
   },
+  setZoom(state, zoom) {
+    state.zoom = zoom;
+  },
 };
 
 const state = {
@@ -23,6 +26,7 @@ const state = {
   loading: false,
   record: {},
   searchResults: [],
+  zoom: 15,
 };
 
 const getters = {};

@@ -5,7 +5,6 @@
         ref="map"
         :zoom="zoom"
         :center="center"
-        :maxBounds="maxBounds"
         :maxZoom="maxZoom"
         :minZoom="minZoom"
         @update:zoom="zoomUpdated"
@@ -226,6 +225,7 @@ export default {
       transitStopGeoJSON: state => state.transitStop.geoJSON,
       userLatitude: state => state.map.userLatitude,
       userLongitude: state => state.map.userLongitude,
+      zoom: state => state.map.zoom,
     }),
   },
   async created() {
@@ -247,17 +247,13 @@ export default {
       markersArrayInvasiveSpeciesReport: [],
       markersArrayParkLocation: [],
       markersArrayTransitStop: [],
-      maxBounds: latLngBounds([
-        [45.67332792076273, -122.55017682909968],
-        [45.475304314948275, -123.0122892558575],
-      ]),
       maxZoom: 18,
       minZoom: 4,
       parkBoundaries,
       polylineArrayTrails: [],
       subdomains: "abcd",
       url: baseMapUrl,
-      zoom: defaultZoom,
+      // zoom: defaultZoom,
     };
   },
   methods: {
@@ -350,14 +346,17 @@ export default {
       this.setBaseStyles(layer, defaultStyle, highlightStyle);
     },
     resetMapView() {
-      this.$refs.map.setCenter(defaultCenter);
-      this.$refs.map.setZoom(defaultZoom);
+      // this.$refs.map.setCenter(defaultCenter);
+      // this.$refs.map.setZoom(defaultZoom);
+      this.setCenter(defaultCenter);
+      this.setZoom(defaultZoom);
     },
     zoomUpdated(zoom) {
-      this.zoom = zoom;
+      this.setZoom(zoom);
     },
     ...mapMutations({
       setCenter: "map/setCenter",
+      setZoom: "map/setZoom",
     }),
   },
   mounted() {
