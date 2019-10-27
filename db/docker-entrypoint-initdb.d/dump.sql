@@ -420,6 +420,9 @@ COPY public.park_location (gid, location_name, street_addr_1, street_addr_2, cit
 6	Shakespeare Garden	SW Sherwood Blvd.		Portland	OR	97205	garden	7:30am - 9pm			A small garden that honors William Shakespeare by featuring herbs, flowers, and trees mentioned in his plays.	0101000020E6100000A9DBD9571EAD5EC09D57868263C24640
 7	International Rose Test Garden	400 SW Kingston Avenue		Portland	OR	97205	garden	7:30am - 9pm daily; free public tours offered daily at 1pm (Memorial Day weekend through Labor Day weekend)	https://www.portlandoregon.gov/parks/finder/index.cfm?action=ViewPark&PropertyID=1113		A public garden featuring a fountain, gift shop, paved paths, public art, and a vista point. Pay to Park.	0101000020E6100000750B13FC25AD5EC0EE85B82869C24640
 8	Elephant House Picnic Shelter	1800 SW Sherwood Blvd.		Portland	OR	97205	picnic shelter		https://www.portlandoregon.gov/parks/38301			0101000020E6100000DAC70A7E1BAD5EC0F9484A7A18C24640
+9	Washington Park Playground	1715 Sherwood Blvd.		Portland	OR	97221	playground	5am - 10pm daily	https://www.portlandoregon.gov/parks/finder/index.cfm?&propertyid=841&action=ViewPark&searchtext=washington%20park		Accessible play area and accessible restroom. Paved and unpaved paths. Pay to Park. 	0101000020E6100000B1E1444F25AD5EC0C76A4EB91DC24640
+10	Wedding Meadow	Hoyt Arboretum		Portland	OR	97205	attraction		https://www.hoytarboretum.org/visit/rentals/wedding-meadow/		A peaceful, grassy setting surrounded by stately conifers and fringed with white-blooming shrubs like snowberry and ocean spray, the Wedding Meadow offers a bucolic retreat near the city.	0101000020E6100000AEF5A0FBCDAD5EC00C2659E25CC24640
+11	Redwood Observation Deck	Wildwood Trail		Portland	OR	97205	attraction		https://www.hoytarboretum.org/visit/rentals/redwood-deck/		Overlooking Johnson Creek, the deck provides a respite amongst the towering redwoods. 	0101000020E6100000AEF5A0FBCDAD5EC00C2659E25CC24640
 \.
 
 
@@ -1037,7 +1040,7 @@ SELECT pg_catalog.setval('public.invasive_species_report_gid_seq', 3, true);
 -- Name: park_location_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.park_location_gid_seq', 8, true);
+SELECT pg_catalog.setval('public.park_location_gid_seq', 11, true);
 
 
 --
