@@ -30,8 +30,8 @@
           <l-marker :lat-lng="userMarker" :icon="userIcon">
             <l-popup>
               <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
-              <div>latitude: {{userMarker.props.latitude.toFixed(4)}}</div>
-              <div>longitude: {{userMarker.props.longitude.toFixed(4)}}</div>
+              <div>latitude: {{userMarker.props.latitude}}</div>
+              <div>longitude: {{userMarker.props.longitude}}</div>
             </l-popup>
           </l-marker>
         </div>
@@ -260,56 +260,56 @@ export default {
       attractionIcon: L.icon({
         iconUrl: "leaflet/map_marker_attraction.svg",
         iconSize: [34, 34],
-        // iconAnchor: [0, 0],
+        iconAnchor: [17, 17],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       gardenIcon: L.icon({
         iconUrl: "leaflet/map_marker_garden.svg",
         iconSize: [34, 34],
-        // iconAnchor: [0, 0],
+        iconAnchor: [17, 17],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       genericIcon: L.icon({
         iconUrl: "leaflet/map_marker_generic.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 34],
+        iconAnchor: [17, 17],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       picnicShelterIcon: L.icon({
         iconUrl: "leaflet/map_marker_picnic.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 34],
+        iconAnchor: [17, 17],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       recreationFacilityIcon: L.icon({
         iconUrl: "leaflet/map_marker_rec.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 34],
+        iconAnchor: [17, 17],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       transitStopIcon: L.icon({
         iconUrl: "leaflet/map_marker_transit.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 34],
+        iconAnchor: [17, 17],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       userIcon: L.icon({
         iconUrl: "leaflet/map_marker_star.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 34],
+        iconAnchor: [17, 17],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       userReportIcon: L.icon({
         iconUrl: "leaflet/map_marker_bug.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 34],
+        iconAnchor: [17, 17],
         popupAnchor: [25, -40],
       }),
     };
@@ -428,8 +428,6 @@ export default {
       this.setBaseStyles(layer, defaultStyle, highlightStyle);
     },
     resetMapView() {
-      // this.$refs.map.setCenter(defaultCenter);
-      // this.$refs.map.setZoom(defaultZoom);
       this.setCenter(defaultCenter);
       this.setZoom(defaultZoom);
     },
