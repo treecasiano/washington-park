@@ -259,57 +259,57 @@ export default {
       // eslint-disable-next-line
       attractionIcon: L.icon({
         iconUrl: "leaflet/map_marker_attraction.svg",
-        iconSize: [34, 34],
-        iconAnchor: [17, 17],
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       gardenIcon: L.icon({
         iconUrl: "leaflet/map_marker_garden.svg",
-        iconSize: [34, 34],
-        iconAnchor: [17, 17],
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       genericIcon: L.icon({
         iconUrl: "leaflet/map_marker_generic.svg",
-        iconSize: [34, 34],
-        iconAnchor: [17, 17],
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       picnicShelterIcon: L.icon({
         iconUrl: "leaflet/map_marker_picnic.svg",
-        iconSize: [34, 34],
-        iconAnchor: [17, 17],
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       recreationFacilityIcon: L.icon({
         iconUrl: "leaflet/map_marker_rec.svg",
-        iconSize: [34, 34],
-        iconAnchor: [17, 17],
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       transitStopIcon: L.icon({
         iconUrl: "leaflet/map_marker_transit.svg",
-        iconSize: [34, 34],
-        iconAnchor: [17, 17],
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       userIcon: L.icon({
         iconUrl: "leaflet/map_marker_star.svg",
-        iconSize: [34, 34],
-        iconAnchor: [17, 17],
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       userReportIcon: L.icon({
         iconUrl: "leaflet/map_marker_bug.svg",
-        iconSize: [34, 34],
-        iconAnchor: [17, 17],
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
         popupAnchor: [25, -40],
       }),
     };
@@ -336,6 +336,9 @@ export default {
           let icon = alternateIcon;
           if (props.location_type === "attraction") {
             icon = this.attractionIcon;
+          }
+          if (props.location_type === "garden") {
+            icon = this.gardenIcon;
           }
           if (props.location_type === "picnic shelter") {
             icon = this.picnicShelterIcon;
