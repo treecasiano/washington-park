@@ -401,9 +401,9 @@ COPY public.hello_table (user_id, username, created_on, first_name, last_name, f
 --
 
 COPY public.invasive_species_report (gid, date_created, observation_date, observer_email, observer_first_name, observer_last_name, observer_phone, organism_type, organism_description, location_details, geom, admin_notes, active) FROM stdin;
-3	2019-10-26 19:38:19.410622+00	2019-10-28	fakemail@fakemail.com	Terenia	Kolidowski	\N	plant	English Ivy	Ivy, ivy everywhere! 	0101000020E61000000000000000805EC00000000000804640	\N	1
 2	2019-10-26 19:28:31.356808+00	2019-10-26	email@email.org	Jacob	Schmidt	\N	animal	Red-eared slider	Spotted between the archery range and SW Kingston Drive 	0101000020E6100000817B9E3F6DAD5EC0A04FE449D2C14640	Stewardship crew scheduled to investigate on 10/30/2019.	1
 1	2019-10-20 22:23:00.255833+00	2019-10-20	fakemail@fakemail.com	Mariana	Borgia	555-555-5555	plant	Ivy has grown about 15 feet up a few trees.	The trees are east of Stevens Pavilion, near SW Knights Blvd.	0101000020E61000001AA721AAF0AD5EC0F8A8BF5E61C14640	\N	1
+3	2019-10-26 19:38:19.410622+00	2019-10-28	fakemail@fakemail.com	Terenia	Kolidowski	\N	plant	Garlic Mustard	South of the Winter Garden, near the Wildwood Trail	0101000020E61000004A9A3FA6B5AD5EC0C2D9AD6532C24640	\N	1
 \.
 
 
