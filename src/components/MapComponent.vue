@@ -159,8 +159,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
-import { latLngBounds } from "leaflet";
+import { mapMutations, mapState } from "vuex";
 
 import MapControls from "@/components/MapControls.vue";
 import MapLayers from "@/components/MapLayers.vue";
@@ -199,6 +198,7 @@ export default {
     userMarker() {
       const userLat = this.$store.state.map.userLatitude;
       const userLong = this.$store.state.map.userLongitude;
+      // eslint-disable-next-line
       const markerObject = L.latLng(userLat, userLong);
       const props = {
         latitude: userLat,
@@ -256,48 +256,56 @@ export default {
       polylineArrayTrails: [],
       subdomains: "abcd",
       url: baseMapUrl,
+      // eslint-disable-next-line
       attractionIcon: L.icon({
         iconUrl: "leaflet/map_marker_attraction.svg",
         iconSize: [34, 34],
         iconAnchor: [0, 0],
         popupAnchor: [25, -40],
       }),
+      // eslint-disable-next-line
       gardenIcon: L.icon({
         iconUrl: "leaflet/map_marker_garden.svg",
         iconSize: [34, 34],
         iconAnchor: [0, 0],
         popupAnchor: [25, -40],
       }),
+      // eslint-disable-next-line
       genericIcon: L.icon({
         iconUrl: "leaflet/map_marker_generic.svg",
         iconSize: [34, 34],
         iconAnchor: [0, 0],
         popupAnchor: [25, -40],
       }),
+      // eslint-disable-next-line
       picnicShelterIcon: L.icon({
         iconUrl: "leaflet/map_marker_picnic.svg",
         iconSize: [34, 34],
         iconAnchor: [0, 0],
         popupAnchor: [25, -40],
       }),
+      // eslint-disable-next-line
       recreationFacilityIcon: L.icon({
         iconUrl: "leaflet/map_marker_rec.svg",
         iconSize: [34, 34],
         iconAnchor: [0, 0],
         popupAnchor: [25, -40],
       }),
+      // eslint-disable-next-line
       transitStopIcon: L.icon({
         iconUrl: "leaflet/map_marker_transit.svg",
         iconSize: [34, 34],
         iconAnchor: [0, 0],
         popupAnchor: [25, -40],
       }),
+      // eslint-disable-next-line
       userIcon: L.icon({
         iconUrl: "leaflet/map_marker_star.svg",
         iconSize: [34, 34],
         iconAnchor: [0, 0],
         popupAnchor: [25, -40],
       }),
+      // eslint-disable-next-line
       userReportIcon: L.icon({
         iconUrl: "leaflet/map_marker_bug.svg",
         iconSize: [34, 34],
@@ -370,7 +378,6 @@ export default {
       return propertyString;
     },
     createInvasiveSpeciesReportMarkers(geoJSON) {
-      console.log("this.userReportIcon", this.userReportIcon);
       this.markersArrayInvasiveSpeciesReport = this.createMarkers(
         geoJSON,
         this.userReportIcon
@@ -435,11 +442,7 @@ export default {
     }),
   },
   mounted() {
-    this.$nextTick(() => {
-      this.$refs.map.mapObject.on("zoomend", () => {
-        console.log(this.$refs.map.mapObject.getBounds());
-      });
-    });
+    this.$nextTick(() => {});
   },
   props: {
     height: String,
