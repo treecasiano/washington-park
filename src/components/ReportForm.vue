@@ -2,13 +2,30 @@
   <div>
     <v-dialog v-model="dialog" scrollable max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-layout column>
+        <v-layout column class="text-left">
           <h2 class="primary--text mb-2">Help us Combat Invasive Species!</h2>
           <p>If you see an invasive species while you are in the park, please submit a quick report. We will use the geolocation feature in your browser to get your current location and send the coordinates along with your report submission so we know exactly where you saw the organism.</p>
           <p>If you are not currently near the location where you spotted the invasive species or you do not have a geolocation service enabled, you will need to input the latitude and longitude manually.</p>
-          <v-btn large rounded color="primary" dark v-on="on" class="ma-0">
-            <v-icon>note_add</v-icon>&nbsp;Submit Report
-          </v-btn>
+          <p>
+            For more information visit:
+            <v-list dense>
+              <v-list-item>
+                <v-list-item-subtitle>
+                  <a href="https://www.portlandoregon.gov/bes/55085">Invasive Animals</a>
+                </v-list-item-subtitle>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-subtitle>
+                  <a href="https://www.portlandoregon.gov/parks/article/200906">Invasive Plants</a>
+                </v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
+          </p>
+          <div class="d-flex justify-center">
+            <v-btn rounded color="primary" dark v-on="on">
+              <v-icon>note_add</v-icon>&nbsp;Submit Report
+            </v-btn>
+          </div>
         </v-layout>
       </template>
       <v-form v-model="valid" style="z-index: 100000; height: 800px;">
