@@ -90,6 +90,7 @@
             v-bind:index="index"
             v-bind:key="index"
             :lat-lng="item"
+            :icon="item.icon"
           >
             <l-popup>
               <div>
@@ -285,6 +286,12 @@ export default {
         iconAnchor: [0, 50],
         popupAnchor: [25, -40],
       }),
+      userReportIcon: L.icon({
+        iconUrl: "leaflet/map_marker_bug.svg",
+        iconSize: [50, 50],
+        iconAnchor: [0, 50],
+        popupAnchor: [25, -40],
+      }),
     };
   },
   methods: {
@@ -348,7 +355,11 @@ export default {
       return propertyString;
     },
     createInvasiveSpeciesReportMarkers(geoJSON) {
-      this.markersArrayInvasiveSpeciesReport = this.createMarkers(geoJSON);
+      console.log("this.userReportIcon", this.userReportIcon);
+      this.markersArrayInvasiveSpeciesReport = this.createMarkers(
+        geoJSON,
+        this.userReportIcon
+      );
     },
     createParkLocationMarkers(geoJSON) {
       this.markersArrayParkLocation = this.createMarkers(
