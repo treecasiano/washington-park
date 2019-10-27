@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg width="100%" height="100%" viewBox="0 0 800 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-    <g transform="matrix(-2.60129,0.000312633,-0.000271081,-2.25555,737.004,766.846)">
+    <g transform="matrix(-2.60129,0.000312633,-0.000271081,-2.25555,741.597,766.846)">
         <path d="M130.314,82.513C130.314,82.513 47.591,187.974 47.591,233.171C47.591,285.826 84.658,328.574 130.314,328.574C175.97,328.574 213.037,285.826 213.037,233.171C213.037,187.974 130.314,82.513 130.314,82.513Z" style="fill:rgb(5,97,125);stroke:rgb(185,195,194);stroke-width:4.93px;"/>
     </g>
-    <g transform="matrix(1,0,0,1,-150.718,-6.35876)">
-        <ellipse cx="550.196" cy="227.795" rx="119.979" ry="118.877" style="fill:rgb(240,250,254);"/>
+    <g id="iconfinder_tennis_1118202" transform="matrix(4.18739,0,0,4.08168,397.093,224.217)">
+        <g transform="matrix(1,0,0,1,-50,-50)">
+            <g>
+                <path d="M72.687,29.287C66.843,34.597 63.5,42.094 63.5,50C63.5,57.905 66.843,65.403 72.686,70.713C77.833,65.329 81,58.037 81,50C81,41.963 77.833,34.671 72.687,29.287Z" style="fill:white;fill-rule:nonzero;"/>
+                <path d="M38.5,50C38.5,42.094 35.157,34.597 29.313,29.287C24.167,34.671 21,41.963 21,50C21,58.037 24.167,65.329 29.314,70.713C35.157,65.403 38.5,57.905 38.5,50Z" style="fill:white;fill-rule:nonzero;"/>
+                <path d="M59.5,50C59.5,41.087 63.215,32.627 69.724,26.575C64.591,22.466 58.087,20 51,20C43.913,20 37.409,22.466 32.276,26.575C38.785,32.627 42.5,41.087 42.5,50C42.5,58.913 38.785,67.372 32.276,73.425C37.409,77.533 43.913,80 51,80C58.087,80 64.591,77.533 69.724,73.425C63.215,67.372 59.5,58.913 59.5,50Z" style="fill:white;fill-rule:nonzero;"/>
+            </g>
+        </g>
     </g>
 </svg>

@@ -256,6 +256,12 @@ export default {
       polylineArrayTrails: [],
       subdomains: "abcd",
       url: baseMapUrl,
+      attractionIcon: L.icon({
+        iconUrl: "leaflet/map_marker_attraction.svg",
+        iconSize: [50, 50],
+        iconAnchor: [0, 50],
+        popupAnchor: [25, -40],
+      }),
       genericIcon: L.icon({
         iconUrl: "leaflet/map_marker_generic.svg",
         iconSize: [50, 50],
@@ -314,6 +320,9 @@ export default {
 
         if (alternateIcon) {
           let icon = alternateIcon;
+          if (props.location_type === "attraction") {
+            icon = this.attractionIcon;
+          }
           if (props.location_type === "picnic shelter") {
             icon = this.picnicShelterIcon;
           }
@@ -364,7 +373,7 @@ export default {
     createParkLocationMarkers(geoJSON) {
       this.markersArrayParkLocation = this.createMarkers(
         geoJSON,
-        this.transitStopIcon
+        this.attractionIcon
       );
     },
     createTrailsPolyLines(geoJSON) {
