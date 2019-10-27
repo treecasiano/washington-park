@@ -260,56 +260,56 @@ export default {
       attractionIcon: L.icon({
         iconUrl: "leaflet/map_marker_attraction.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 0],
+        // iconAnchor: [0, 0],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       gardenIcon: L.icon({
         iconUrl: "leaflet/map_marker_garden.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 0],
+        // iconAnchor: [0, 0],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       genericIcon: L.icon({
         iconUrl: "leaflet/map_marker_generic.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 0],
+        iconAnchor: [0, 34],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       picnicShelterIcon: L.icon({
         iconUrl: "leaflet/map_marker_picnic.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 0],
+        iconAnchor: [0, 34],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       recreationFacilityIcon: L.icon({
         iconUrl: "leaflet/map_marker_rec.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 0],
+        iconAnchor: [0, 34],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       transitStopIcon: L.icon({
         iconUrl: "leaflet/map_marker_transit.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 0],
+        iconAnchor: [0, 34],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       userIcon: L.icon({
         iconUrl: "leaflet/map_marker_star.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 0],
+        iconAnchor: [0, 34],
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
       userReportIcon: L.icon({
         iconUrl: "leaflet/map_marker_bug.svg",
         iconSize: [34, 34],
-        iconAnchor: [0, 0],
+        iconAnchor: [0, 34],
         popupAnchor: [25, -40],
       }),
     };
