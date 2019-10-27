@@ -5,7 +5,9 @@
         ref="map"
         :zoom="zoom"
         :center="center"
+        :maxBounds="maxBounds"
         :maxZoom="maxZoom"
+        :minZoom="minZoom"
         @update:zoom="zoomUpdated"
         @update:center="centerUpdated"
         @update:bounds="boundsUpdated"
@@ -156,6 +158,8 @@
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
+import { latLngBounds } from "leaflet";
+
 import MapControls from "@/components/MapControls.vue";
 import MapLayers from "@/components/MapLayers.vue";
 import parkBoundaries from "../../public/parkBoundaries.json";
@@ -243,7 +247,12 @@ export default {
       markersArrayInvasiveSpeciesReport: [],
       markersArrayParkLocation: [],
       markersArrayTransitStop: [],
+      maxBounds: latLngBounds([
+        [45.67332792076273, -122.55017682909968],
+        [45.475304314948275, -123.0122892558575],
+      ]),
       maxZoom: 18,
+      minZoom: 4,
       parkBoundaries,
       polylineArrayTrails: [],
       subdomains: "abcd",
@@ -352,7 +361,11 @@ export default {
     }),
   },
   mounted() {
-    this.$nextTick(() => {});
+    this.$nextTick(() => {
+      this.$refs.map.mapObject.on("zoomend", () => {
+        console.log(this.$refs.map.mapObject.getBounds());
+      });
+    });
   },
   props: {
     height: String,
