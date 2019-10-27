@@ -169,10 +169,11 @@ export default {
         await this.createRecord();
         this.dialog = false;
         this.closeMapControls();
-        // TODO: Show success message
+        this.notifySuccess();
         this.setCenter([this.userLatitude, this.userLongitude]);
       } catch (e) {
         // eslint-disable-next-line
+        this.notifyFailure();
         console.error(e);
       }
       await this.fetchList();
@@ -184,6 +185,12 @@ export default {
         // eslint-disable-next-line
         console.error("Geolocation is not supported by this browser.");
       }
+    },
+    notifyFailure() {
+      this.failureNotification();
+    },
+    notifySuccess() {
+      this.successNotification();
     },
     setUserLocation(position) {
       // fake latitude for demo: 45.5145948
@@ -207,6 +214,19 @@ export default {
       setCenter: "map/setCenter",
       setUserCoordinates: "map/setUserCoordinates",
     }),
+  },
+  notifications: {
+    successNotification: {
+      title: "Success!",
+      message: "Thank you for submitting a report.",
+      type: "success",
+    },
+    failureNotification: {
+      title: "Submission failed!",
+      message:
+        "Please try again later or contact park administration for assistance.",
+      type: "warn",
+    },
   },
 };
 </script>
