@@ -194,8 +194,8 @@ export default {
         }
         this.setZoom(18);
       } catch (e) {
-        // eslint-disable-next-line
         this.notifyFailure();
+        // eslint-disable-next-line
         console.error(e);
       }
       await this.fetchList();
