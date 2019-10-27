@@ -105,7 +105,7 @@
                 <strong>Organism Description:&nbsp;</strong>
                 {{item.props.organism_description}}
               </div>
-              <div>
+              <div v-if="item.props.location_details">
                 <strong>Location Details:&nbsp;</strong>
                 {{item.props.location_details}}
               </div>
@@ -459,6 +459,15 @@ export default {
     height: String,
     offsetHeight: String,
     width: String,
+  },
+  watch: {
+    // whenever object changes, this function will run
+    invasiveSpeciesReportGeoJSON: function(newVal, oldVal) {
+      this.createInvasiveSpeciesReportMarkers(
+        this.invasiveSpeciesReportGeoJSON,
+        this.userReportIcon
+      );
+    },
   },
 };
 </script>

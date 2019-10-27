@@ -184,6 +184,8 @@ export default {
           this.record.geom = `POINT(${this.userLongitude} ${this.userLatitude})`;
         }
         await this.createRecord();
+        await this.fetchGeoJSON();
+
         this.dialog = false;
         this.closeMapControls();
         this.notifySuccess();
@@ -198,7 +200,6 @@ export default {
         // eslint-disable-next-line
         console.error(e);
       }
-      await this.fetchList();
     },
     getLocation() {
       if (navigator.geolocation) {
@@ -228,7 +229,7 @@ export default {
     },
     ...mapActions({
       createRecord: "invasiveSpeciesReport/create",
-      fetchList: "invasiveSpeciesReport/list",
+      fetchGeoJSON: "invasiveSpeciesReport/getGeoJSON",
     }),
     ...mapMutations({
       clearRecord: "invasiveSpeciesReport/clearRecord",
