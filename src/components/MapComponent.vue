@@ -27,11 +27,11 @@
         </l-control>
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <div v-if="userLatitude && displayUserLocation">
-          <l-marker :lat-lng="userMarker">
+          <l-marker :lat-lng="userMarker" :icon="userIcon">
             <l-popup>
               <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
-              <div>latitude: {{userMarker.props.latitude.toFixed(4)}}</div>
-              <div>longitude: {{userMarker.props.longitude.toFixed(4)}}</div>
+              <div>latitude: {{userMarker.props.latitude}}</div>
+              <div>longitude: {{userMarker.props.longitude}}</div>
             </l-popup>
           </l-marker>
         </div>
@@ -50,6 +50,7 @@
             v-bind:index="index"
             v-bind:key="index"
             :lat-lng="item"
+            :icon="item.icon"
           >
             <l-popup>
               <div>
@@ -89,6 +90,7 @@
             v-bind:index="index"
             v-bind:key="index"
             :lat-lng="item"
+            :icon="item.icon"
           >
             <l-popup>
               <div>
@@ -121,6 +123,7 @@
             v-bind:index="index"
             v-bind:key="index"
             :lat-lng="item"
+            :icon="item.icon"
           >
             <l-popup>
               <div>
@@ -156,8 +159,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
-import { latLngBounds } from "leaflet";
+import { mapMutations, mapState } from "vuex";
 
 import MapControls from "@/components/MapControls.vue";
 import MapLayers from "@/components/MapLayers.vue";
@@ -196,6 +198,7 @@ export default {
     userMarker() {
       const userLat = this.$store.state.map.userLatitude;
       const userLong = this.$store.state.map.userLongitude;
+      // eslint-disable-next-line
       const markerObject = L.latLng(userLat, userLong);
       const props = {
         latitude: userLat,
@@ -253,7 +256,69 @@ export default {
       polylineArrayTrails: [],
       subdomains: "abcd",
       url: baseMapUrl,
-      // zoom: defaultZoom,
+      // eslint-disable-next-line
+      attractionIcon: L.icon({
+        iconUrl: "leaflet/map_marker_attraction.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      gardenIcon: L.icon({
+        iconUrl: "leaflet/map_marker_garden.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      genericIcon: L.icon({
+        iconUrl: "leaflet/map_marker_generic.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      picnicShelterIcon: L.icon({
+        iconUrl: "leaflet/map_marker_picnic.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      playgroundIcon: L.icon({
+        iconUrl: "leaflet/map_marker_playground.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      recreationFacilityIcon: L.icon({
+        iconUrl: "leaflet/map_marker_rec.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      transitStopIcon: L.icon({
+        iconUrl: "leaflet/map_marker_transit.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      userIcon: L.icon({
+        iconUrl: "leaflet/map_marker_star.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      userReportIcon: L.icon({
+        iconUrl: "leaflet/map_marker_bug.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
     };
   },
   methods: {
@@ -263,7 +328,7 @@ export default {
     centerUpdated(center) {
       this.setCenter(center);
     },
-    createMarkers(geoJSON) {
+    createMarkers(geoJSON, alternateIcon) {
       const markersArray = geoJSON["features"].map(feature => {
         // eslint-disable-next-line
         let markerObject = L.latLng(
@@ -273,6 +338,27 @@ export default {
         let props = feature["properties"];
 
         Object.assign(markerObject, { props });
+
+        if (alternateIcon) {
+          let icon = alternateIcon;
+          if (props.location_type === "attraction") {
+            icon = this.attractionIcon;
+          }
+          if (props.location_type === "garden") {
+            icon = this.gardenIcon;
+          }
+          if (props.location_type === "playground") {
+            icon = this.playgroundIcon;
+          }
+          if (props.location_type === "picnic shelter") {
+            icon = this.picnicShelterIcon;
+          }
+          if (props.location_type === "recreation facility") {
+            icon = this.recreationFacilityIcon;
+          }
+
+          Object.assign(markerObject, { icon });
+        }
         return markerObject;
       });
       return markersArray;
@@ -305,16 +391,25 @@ export default {
       return propertyString;
     },
     createInvasiveSpeciesReportMarkers(geoJSON) {
-      this.markersArrayInvasiveSpeciesReport = this.createMarkers(geoJSON);
+      this.markersArrayInvasiveSpeciesReport = this.createMarkers(
+        geoJSON,
+        this.userReportIcon
+      );
     },
     createParkLocationMarkers(geoJSON) {
-      this.markersArrayParkLocation = this.createMarkers(geoJSON);
+      this.markersArrayParkLocation = this.createMarkers(
+        geoJSON,
+        this.attractionIcon
+      );
     },
     createTrailsPolyLines(geoJSON) {
       this.polylineArrayTrails = this.createPolyLines(geoJSON);
     },
     createTransitStopMarkers(geoJSON) {
-      this.markersArrayTransitStop = this.createMarkers(geoJSON);
+      this.markersArrayTransitStop = this.createMarkers(
+        geoJSON,
+        this.transitStopIcon
+      );
     },
     onEachParkBoundariesFeature(feature, layer) {
       const popupContent = this.createParkBoundariesContent(feature.properties);
@@ -346,8 +441,6 @@ export default {
       this.setBaseStyles(layer, defaultStyle, highlightStyle);
     },
     resetMapView() {
-      // this.$refs.map.setCenter(defaultCenter);
-      // this.$refs.map.setZoom(defaultZoom);
       this.setCenter(defaultCenter);
       this.setZoom(defaultZoom);
     },
@@ -360,11 +453,7 @@ export default {
     }),
   },
   mounted() {
-    this.$nextTick(() => {
-      this.$refs.map.mapObject.on("zoomend", () => {
-        console.log(this.$refs.map.mapObject.getBounds());
-      });
-    });
+    this.$nextTick(() => {});
   },
   props: {
     height: String,

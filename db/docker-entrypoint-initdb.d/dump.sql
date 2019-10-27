@@ -401,9 +401,9 @@ COPY public.hello_table (user_id, username, created_on, first_name, last_name, f
 --
 
 COPY public.invasive_species_report (gid, date_created, observation_date, observer_email, observer_first_name, observer_last_name, observer_phone, organism_type, organism_description, location_details, geom, admin_notes, active) FROM stdin;
-3	2019-10-26 19:38:19.410622+00	2019-10-28	fakemail@fakemail.com	Terenia	Kolidowski	\N	plant	English Ivy	Ivy, ivy everywhere! 	0101000020E61000000000000000805EC00000000000804640	\N	1
 2	2019-10-26 19:28:31.356808+00	2019-10-26	email@email.org	Jacob	Schmidt	\N	animal	Red-eared slider	Spotted between the archery range and SW Kingston Drive 	0101000020E6100000817B9E3F6DAD5EC0A04FE449D2C14640	Stewardship crew scheduled to investigate on 10/30/2019.	1
 1	2019-10-20 22:23:00.255833+00	2019-10-20	fakemail@fakemail.com	Mariana	Borgia	555-555-5555	plant	Ivy has grown about 15 feet up a few trees.	The trees are east of Stevens Pavilion, near SW Knights Blvd.	0101000020E61000001AA721AAF0AD5EC0F8A8BF5E61C14640	\N	1
+3	2019-10-26 19:38:19.410622+00	2019-10-28	fakemail@fakemail.com	Terenia	Kolidowski	\N	plant	Garlic Mustard	South of the Winter Garden, near the Wildwood Trail	0101000020E61000004A9A3FA6B5AD5EC0C2D9AD6532C24640	\N	1
 \.
 
 
@@ -413,9 +413,16 @@ COPY public.invasive_species_report (gid, date_created, observation_date, observ
 
 COPY public.park_location (gid, location_name, street_addr_1, street_addr_2, city, state, zip, location_type, hrs_of_operation, url, image_url, description, geom) FROM stdin;
 2	World Forestry Center	4033 SW Canyon Rd.		Portland	OR	97221	attraction	10am - 5pm, closed Tues and Wed	https://www.worldforestry.org/	https://www.worldforestry.org/wp-content/uploads/2015/07/Museum-Exterior_Front.jpg	From WFC website: Founded in 1966, the World Forestry Center (WFC) is a nonprofit organization dedicated to creating and inspiring champions of sustainable forestry.	0101000020E6100000F29881CAF8AD5EC027F911BF62C14640
-4	Washington Park Tennis Courts	392-498 SW Kingston Ave		Portland	OR	97205	recreation facility	5am - 10pm	http://explorewashingtonpark.org/exploring#		Free; generally first come, first serve.	0101000020E6100000B0B37CB83FAD5EC0F9426DC08CC24640
 1	Stevens Pavilion Picnic Shelter	3119 SW Fairview Blvd.		Portland	OR	97205	picnic shelter	5am - 10pm daily	https://www.hoytarboretum.org/visit/rentals/stevens-pavilion/	https://www.hoytarboretum.org/wp-content/uploads/2019/04/Hoyt-Arboretum_Weddings-Rentals_Stevens-Pavilion-1.jpg	Iconic picnic shelter; ADA accessible; 100 guest capacity	0101000020E61000002F4FE78AD2AD5EC0682096CD1CC24640
-3	Washington Park Archery Range	SW Kingston Dr.		Portland	OR	97221	recreation facility	5am - 10pm	http://explorewashingtonpark.org/archery-range-0		Free, first-come first-serve outdoor archery range.	0101000020E61000007920B24893AD5EC00044B060D1C14640
+5	Winter Garden	SW Upper Cascade Drive		Portland	OR	97205	garden	5am - 10pm daily			A collection of plants that are particularly showy during winter.	0101000020E61000001ACEEB3EB6AD5EC08D98D9E731C24640
+4	Washington Park Tennis Courts	392-498 SW Kingston Ave		Portland	OR	97205	recreation facility	5am - 10pm daily	http://explorewashingtonpark.org/exploring#		Free; generally first come, first serve.	0101000020E6100000B0B37CB83FAD5EC0F9426DC08CC24640
+3	Washington Park Archery Range	SW Kingston Dr.		Portland	OR	97221	recreation facility	5am - 10pm daily	http://explorewashingtonpark.org/archery-range-0		Free, first-come first-serve outdoor archery range.	0101000020E61000007920B24893AD5EC00044B060D1C14640
+6	Shakespeare Garden	SW Sherwood Blvd.		Portland	OR	97205	garden	7:30am - 9pm			A small garden that honors William Shakespeare by featuring herbs, flowers, and trees mentioned in his plays.	0101000020E6100000A9DBD9571EAD5EC09D57868263C24640
+7	International Rose Test Garden	400 SW Kingston Avenue		Portland	OR	97205	garden	7:30am - 9pm daily; free public tours offered daily at 1pm (Memorial Day weekend through Labor Day weekend)	https://www.portlandoregon.gov/parks/finder/index.cfm?action=ViewPark&PropertyID=1113		A public garden featuring a fountain, gift shop, paved paths, public art, and a vista point. Pay to Park.	0101000020E6100000750B13FC25AD5EC0EE85B82869C24640
+8	Elephant House Picnic Shelter	1800 SW Sherwood Blvd.		Portland	OR	97205	picnic shelter		https://www.portlandoregon.gov/parks/38301			0101000020E6100000DAC70A7E1BAD5EC0F9484A7A18C24640
+9	Washington Park Playground	1715 Sherwood Blvd.		Portland	OR	97221	playground	5am - 10pm daily	https://www.portlandoregon.gov/parks/finder/index.cfm?&propertyid=841&action=ViewPark&searchtext=washington%20park		Accessible play area and accessible restroom. Paved and unpaved paths. Pay to Park. 	0101000020E6100000B1E1444F25AD5EC0C76A4EB91DC24640
+10	Wedding Meadow	Hoyt Arboretum		Portland	OR	97205	attraction		https://www.hoytarboretum.org/visit/rentals/wedding-meadow/		A peaceful, grassy setting surrounded by stately conifers and fringed with white-blooming shrubs like snowberry and ocean spray, the Wedding Meadow offers a bucolic retreat near the city.	0101000020E6100000AEF5A0FBCDAD5EC00C2659E25CC24640
+11	Redwood Observation Deck	Wildwood Trail		Portland	OR	97205	attraction		https://www.hoytarboretum.org/visit/rentals/redwood-deck/		Overlooking Johnson Creek, the deck provides a respite amongst the towering redwoods. 	0101000020E6100000AEF5A0FBCDAD5EC00C2659E25CC24640
 \.
 
 
@@ -1033,7 +1040,7 @@ SELECT pg_catalog.setval('public.invasive_species_report_gid_seq', 3, true);
 -- Name: park_location_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.park_location_gid_seq', 4, true);
+SELECT pg_catalog.setval('public.park_location_gid_seq', 11, true);
 
 
 --
