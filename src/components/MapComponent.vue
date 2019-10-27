@@ -27,7 +27,7 @@
         </l-control>
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <div v-if="userLatitude && displayUserLocation">
-          <l-marker :lat-lng="userMarker">
+          <l-marker :lat-lng="userMarker" :icon="userIcon">
             <l-popup>
               <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
               <div>latitude: {{userMarker.props.latitude.toFixed(4)}}</div>
@@ -50,6 +50,7 @@
             v-bind:index="index"
             v-bind:key="index"
             :lat-lng="item"
+            :icon="item.icon"
           >
             <l-popup>
               <div>
@@ -121,6 +122,7 @@
             v-bind:index="index"
             v-bind:key="index"
             :lat-lng="item"
+            :icon="item.icon"
           >
             <l-popup>
               <div>
@@ -253,7 +255,36 @@ export default {
       polylineArrayTrails: [],
       subdomains: "abcd",
       url: baseMapUrl,
-      // zoom: defaultZoom,
+      genericIcon: L.icon({
+        iconUrl: "leaflet/map_marker_generic.svg",
+        iconSize: [50, 50],
+        iconAnchor: [0, 50],
+        popupAnchor: [25, -40],
+      }),
+      picnicShelterIcon: L.icon({
+        iconUrl: "leaflet/map_marker_picnic.svg",
+        iconSize: [50, 50],
+        iconAnchor: [0, 50],
+        popupAnchor: [25, -40],
+      }),
+      recreationFacilityIcon: L.icon({
+        iconUrl: "leaflet/map_marker_rec.svg",
+        iconSize: [50, 50],
+        iconAnchor: [0, 50],
+        popupAnchor: [25, -40],
+      }),
+      transitStopIcon: L.icon({
+        iconUrl: "leaflet/map_marker_transit.svg",
+        iconSize: [50, 50],
+        iconAnchor: [0, 50],
+        popupAnchor: [25, -40],
+      }),
+      userIcon: L.icon({
+        iconUrl: "leaflet/map_marker_star.svg",
+        iconSize: [50, 50],
+        iconAnchor: [0, 50],
+        popupAnchor: [25, -40],
+      }),
     };
   },
   methods: {
@@ -263,7 +294,7 @@ export default {
     centerUpdated(center) {
       this.setCenter(center);
     },
-    createMarkers(geoJSON) {
+    createMarkers(geoJSON, alternateIcon) {
       const markersArray = geoJSON["features"].map(feature => {
         // eslint-disable-next-line
         let markerObject = L.latLng(
@@ -273,6 +304,18 @@ export default {
         let props = feature["properties"];
 
         Object.assign(markerObject, { props });
+
+        if (alternateIcon) {
+          let icon = alternateIcon;
+          if (props.location_type === "picnic shelter") {
+            icon = this.picnicShelterIcon;
+          }
+          if (props.location_type === "recreation facility") {
+            icon = this.recreationFacilityIcon;
+          }
+
+          Object.assign(markerObject, { icon });
+        }
         return markerObject;
       });
       return markersArray;
@@ -308,13 +351,19 @@ export default {
       this.markersArrayInvasiveSpeciesReport = this.createMarkers(geoJSON);
     },
     createParkLocationMarkers(geoJSON) {
-      this.markersArrayParkLocation = this.createMarkers(geoJSON);
+      this.markersArrayParkLocation = this.createMarkers(
+        geoJSON,
+        this.transitStopIcon
+      );
     },
     createTrailsPolyLines(geoJSON) {
       this.polylineArrayTrails = this.createPolyLines(geoJSON);
     },
     createTransitStopMarkers(geoJSON) {
-      this.markersArrayTransitStop = this.createMarkers(geoJSON);
+      this.markersArrayTransitStop = this.createMarkers(
+        geoJSON,
+        this.transitStopIcon
+      );
     },
     onEachParkBoundariesFeature(feature, layer) {
       const popupContent = this.createParkBoundariesContent(feature.properties);
