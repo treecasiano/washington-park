@@ -462,7 +462,7 @@ export default {
   },
   watch: {
     // whenever object changes, this function will run
-    invasiveSpeciesReportGeoJSON: function(newVal, oldVal) {
+    invasiveSpeciesReportGeoJSON: function() {
       this.createInvasiveSpeciesReportMarkers(
         this.invasiveSpeciesReportGeoJSON,
         this.userReportIcon

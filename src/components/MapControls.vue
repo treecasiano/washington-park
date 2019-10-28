@@ -51,7 +51,22 @@
                     dark
                     @click="showUserLocation"
                   >FIND ME!</v-btn>
+                  <v-text-field
+                    label="Distance in kilometers"
+                    type="number"
+                    step=".1"
+                    v-model="searchRadius"
+                  ></v-text-field>
                 </div>
+                <v-layout scrollable v-if="searchResultsParkLocations">
+                  <ul class="text-left">
+                    <li
+                      v-for="(item) in searchResultsParkLocations"
+                      v-bind:item="item"
+                      v-bind:key="item.gid"
+                    >{{item.location_name}}, {{(item.distance/1000).toFixed(2)}}km</li>
+                  </ul>
+                </v-layout>
               </v-layout>
             </v-tab-item>
             <v-tab-item key="3" value="form">
@@ -66,7 +81,7 @@
   </v-card>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import ReportForm from "@/components/ReportForm.vue";
 
 export default {
@@ -76,6 +91,7 @@ export default {
   computed: {
     ...mapState({
       displayUserLocation: state => state.map.displayStatus,
+      searchResultsParkLocations: state => state.parkLocation.searchResults,
       userLatitude: state => state.map.userLatitude,
       userLongitude: state => state.map.userLongitude,
     }),
@@ -88,6 +104,7 @@ export default {
       drawer: true,
       mini: false,
       tab: null,
+      searchRadius: null,
     };
   },
   methods: {
@@ -103,10 +120,10 @@ export default {
       // fake latitude for demo: 45.5145948
       // fake longitude for demo: -122.7104008
       const coordinates = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        // latitude: 45.5145948,
-        // longitude: -122.7104008,
+        // latitude: position.coords.latitude,
+        // longitude: position.coords.longitude,
+        latitude: 45.5145948,
+        longitude: -122.7104008,
       };
       this.setUserCoordinates(coordinates);
     },
@@ -114,11 +131,25 @@ export default {
       this.getLocation();
       this.setUserLocationDisplayStatus(true);
       this.setCenter([this.userLatitude, this.userLongitude]);
+      if (this.searchRadius) {
+        // fetch list of points near user
+        const geom = `${this.userLongitude}, ${this.userLatitude}`;
+        const distance = this.searchRadius * 1000;
+        this.fetchLocationsNearUser({
+          geom,
+          distance,
+        });
+      }
+      this.setZoom(18);
     },
+    ...mapActions({
+      fetchLocationsNearUser: "parkLocation/search",
+    }),
     ...mapMutations({
       setCenter: "map/setCenter",
       setUserCoordinates: "map/setUserCoordinates",
       setUserLocationDisplayStatus: "map/setDisplayStatus",
+      setZoom: "map/setZoom",
     }),
   },
 };
