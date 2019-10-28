@@ -7,19 +7,11 @@
           <p>If you see an invasive species while you are in the park, please submit a quick report. We will use the geolocation feature in your browser to get your current location and send the coordinates along with your report submission so we know exactly where you saw the organism.</p>
           <p>If you are not currently near the location where you spotted the invasive species or you do not have a geolocation service enabled, you will need to input the latitude and longitude manually.</p>
           <p>
-            For more information visit:
-            <v-list dense>
-              <v-list-item>
-                <v-list-item-subtitle>
-                  <a href="https://www.portlandoregon.gov/bes/55085">Invasive Animals</a>
-                </v-list-item-subtitle>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-subtitle>
-                  <a href="https://www.portlandoregon.gov/parks/article/200906">Invasive Plants</a>
-                </v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
+            For more information visit
+            <a
+              href="https://www.portlandoregon.gov/bes/55085"
+            >Invasive Animals</a> and
+            <a href="https://www.portlandoregon.gov/parks/article/200906">Invasive Plants</a>.
           </p>
           <div class="d-flex justify-center">
             <v-btn rounded color="primary" dark v-on="on">
@@ -184,6 +176,8 @@ export default {
           this.record.geom = `POINT(${this.userLongitude} ${this.userLatitude})`;
         }
         await this.createRecord();
+        await this.fetchGeoJSON();
+
         this.dialog = false;
         this.closeMapControls();
         this.notifySuccess();
@@ -198,7 +192,6 @@ export default {
         // eslint-disable-next-line
         console.error(e);
       }
-      await this.fetchList();
     },
     getLocation() {
       if (navigator.geolocation) {
@@ -228,7 +221,7 @@ export default {
     },
     ...mapActions({
       createRecord: "invasiveSpeciesReport/create",
-      fetchList: "invasiveSpeciesReport/list",
+      fetchGeoJSON: "invasiveSpeciesReport/getGeoJSON",
     }),
     ...mapMutations({
       clearRecord: "invasiveSpeciesReport/clearRecord",

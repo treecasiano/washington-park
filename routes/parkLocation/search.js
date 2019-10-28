@@ -13,11 +13,11 @@ function factory(logger, parkLocationService) {
         schema: {
           properties: {
             geom: {
-              description: "longitude, latitude",
+              description: "Coordinates in format 'longitude, latitude'",
               type: "string",
             },
             distance: {
-              description: "kilometers",
+              description: "meters",
               type: "number",
             },
           },
