@@ -1,6 +1,11 @@
 <template>
   <v-card>
-    <v-navigation-drawer v-model="drawer" :mini-variant.sync="mini" permanent width="250">
+    <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant.sync="mini"
+      permanent
+      class="navDrawer--layers"
+    >
       <template v-slot:prepend>
         <div v-if="mini">
           <v-btn icon @click.stop="mini = !mini">
@@ -60,69 +65,76 @@
                 v-if="parkLocations.features"
                 v-model="displayStatusParkLocations"
               ></v-checkbox>
-              <v-radio-group
-                v-if="displayStatusParkLocations"
-                v-model="radiosParkLocationType"
-                class="pa-0"
-                style="margin: 0 0 -15px 32px;"
-                @change="filterParkLocations"
-              >
-                <v-radio color="accent" label="All" value="all" class="layerControls--radioButtons"></v-radio>
-                <v-radio
-                  color="accent"
-                  label="Attraction"
-                  value="attraction"
-                  class="layerControls--radioButtons"
-                ></v-radio>
-                <v-radio
-                  color="accent"
-                  label="Bathroom"
-                  value="bathroom"
-                  class="layerControls--radioButtons"
-                ></v-radio>
-                <v-radio
-                  color="accent"
-                  label="Gardens"
-                  value="garden"
-                  class="layerControls--radioButtons"
-                ></v-radio>
-                <v-radio
-                  color="accent"
-                  label="Picnic Shelter"
-                  value="picnic shelter"
-                  class="layerControls--radioButtons"
-                ></v-radio>
-                <v-radio
-                  color="accent"
-                  label="Playground"
-                  value="playground"
-                  class="layerControls--radioButtons"
-                ></v-radio>
-                <v-radio
-                  color="accent"
-                  label="Public Art"
-                  value="public art"
-                  class="layerControls--radioButtons"
-                ></v-radio>
-                <v-radio
-                  color="accent"
-                  label="Recreation Facility"
-                  value="recreation facility"
-                  class="layerControls--radioButtons"
-                ></v-radio>
-                <v-radio
-                  color="accent"
-                  label="Restaurant"
-                  value="restaurant"
-                  class="layerControls--radioButtons"
-                ></v-radio>
-                <v-radio
-                  color="accent"
-                  label="Store"
-                  value="store"
-                  class="layerControls--radioButtons"
-                ></v-radio>
-              </v-radio-group>
+              <div class="radioButtonGroup scrollBox">
+                <v-radio-group
+                  v-if="displayStatusParkLocations"
+                  v-model="radiosParkLocationType"
+                  class="pa-0"
+                  style="margin: 0 0 -15px 32px;"
+                  @change="filterParkLocations"
+                >
+                  <v-radio
+                    color="accent"
+                    label="All"
+                    value="all"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Attraction"
+                    value="attraction"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Bathroom"
+                    value="bathroom"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Gardens"
+                    value="garden"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Picnic Shelter"
+                    value="picnic shelter"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Playground"
+                    value="playground"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Public Art"
+                    value="public art"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Recreation Facility"
+                    value="recreation facility"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Restaurant"
+                    value="restaurant"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Store"
+                    value="store"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                </v-radio-group>
+              </div>
             </v-flex>
           </v-layout>
         </v-container>
@@ -222,8 +234,8 @@ export default {
   padding: 0 !important;
 }
 
-.pdx-layerControls--radioButtons {
-  height: 20px !important;
+.layerControls--radioButtons {
+  height: 22px !important;
   padding: 0;
 }
 
@@ -231,16 +243,6 @@ export default {
   .v-input--selection-controls:not(.v-input--hide-details)
   .v-input__slot {
   margin: -0 !important;
-}
-
-.mapLayers__heading {
-  font-size: 16px;
-  font-weight: bold;
-}
-@media only screen and (min-height: 360px) {
-  .mapLayers__heading {
-    display: none;
-  }
 }
 </style>
 

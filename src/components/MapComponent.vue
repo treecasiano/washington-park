@@ -453,7 +453,9 @@ export default {
     }),
   },
   mounted() {
-    this.$nextTick(() => {});
+    this.$nextTick(() => {
+      this.$refs.map.mapObject.scrollWheelZoom.disable();
+    });
   },
   props: {
     height: String,
@@ -478,6 +480,40 @@ export default {
 .leaflet-container {
   font-family: "Kreon", sans-serif !important;
   font-size: 0.98rem;
+}
+
+.scrollBox {
+  overflow: auto;
+}
+
+.radioButtonGroup.scrollBox {
+  border: 1px solid gray;
+  height: 165px;
+  padding-top: 5px;
+}
+
+.searchResults.scrollBox {
+  overflow: auto;
+  max-height: 165px;
+}
+
+.mapLayers__heading {
+  font-size: 16px;
+  font-weight: bold;
+  /* hiding headings on small screens by default */
+  display: none;
+}
+
+/* when screen height is taller than 700px */
+@media only screen and (min-height: 700px) {
+  .mapLayers__heading {
+    display: block;
+  }
+
+  .radioButtonGroup.scrollBox {
+    border: 1px solid transparent;
+    height: 350px;
+  }
 }
 </style>
 

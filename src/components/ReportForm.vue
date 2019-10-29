@@ -2,9 +2,9 @@
   <div>
     <v-dialog v-model="dialog" scrollable max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-layout column class="text-left">
-          <h2 class="primary--text mb-2">Help us Combat Invasive Species!</h2>
-          <p>If you see an invasive species while you are in the park, please submit a quick report. We will use the geolocation feature in your browser to get your current location and send the coordinates along with your report submission so we know exactly where you saw the organism.</p>
+        <v-layout column class="text-left searchInstructions">
+          <h2 class="primary--text mb-2">Combat Invasive Species!</h2>
+          <p>If you see an invasive species while you are in the park, please submit a quick report.</p>
           <p>If you are not currently near the location where you spotted the invasive species or you do not have a geolocation service enabled, you will need to input the latitude and longitude manually.</p>
           <p>
             For more information visit
@@ -20,7 +20,7 @@
           </div>
         </v-layout>
       </template>
-      <v-form v-model="valid" style="z-index: 100000; height: 800px;">
+      <v-form v-model="valid" style="z-index: 100000; height: 780px;">
         <v-card class="elevation-0 pb-6">
           <v-container>
             <v-row>
@@ -63,34 +63,12 @@
                 ></v-select>
               </v-col>
             </v-row>
-            <v-text-field dense label="Your Email" v-model="record.observer_email" required></v-text-field>
-            <v-row>
-              <v-col>
-                <v-text-field
-                  cols="6"
-                  dense
-                  label="Your First Name"
-                  required
-                  v-model="record.observer_first_name"
-                ></v-text-field>
-              </v-col>
-              <v-col>
-                <v-text-field
-                  cols="6"
-                  dense
-                  label="Your Last Name"
-                  required
-                  v-model="record.observer_last_name"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-
             <v-textarea
               auto-grow
               :rules="fieldRules"
               clearable
               counter="250"
-              label="Organism Description"
+              label="Organism Description (Required)"
               required
               rows="1"
               v-model="record.organism_description"
@@ -120,10 +98,31 @@
                 <v-text-field label="Longitude:" v-model="otherLongitude" :rules="fieldRules"></v-text-field>
               </div>
             </div>
+            <v-text-field dense label="Your Email" v-model="record.observer_email" required></v-text-field>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  cols="6"
+                  dense
+                  label="Your First Name"
+                  required
+                  v-model="record.observer_first_name"
+                ></v-text-field>
+              </v-col>
+              <v-col>
+                <v-text-field
+                  cols="6"
+                  dense
+                  label="Your Last Name"
+                  required
+                  v-model="record.observer_last_name"
+                ></v-text-field>
+              </v-col>
+            </v-row>
             <div
               v-show="!valid"
               class="text-left warning--text font-weight-bold caption"
-            >Observation date, organism type, lat/long, and organism description are required.</div>
+            >Observation date, organism type, organism, lat/long, and description are required.</div>
             <div class="d-flex justify-end mt-3">
               <v-btn class="mr-3" rounded outlined @click="cancel">Cancel</v-btn>
               <v-btn rounded color="primary" @click="create" :disabled="!valid">Submit</v-btn>
