@@ -258,7 +258,14 @@ export default {
       url: baseMapUrl,
       // eslint-disable-next-line
       attractionIcon: L.icon({
-        iconUrl: "leaflet/map_marker_attraction.svg",
+        iconUrl: "leaflet/map_marker_star.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      bathroomIcon: L.icon({
+        iconUrl: "leaflet/map_marker_bathroom.svg",
         iconSize: [40, 40],
         iconAnchor: [20, 20],
         popupAnchor: [25, -40],
@@ -292,8 +299,29 @@ export default {
         popupAnchor: [25, -40],
       }),
       // eslint-disable-next-line
+      publicArtIcon: L.icon({
+        iconUrl: "leaflet/map_marker_public_art.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
       recreationFacilityIcon: L.icon({
         iconUrl: "leaflet/map_marker_rec.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      restaurantIcon: L.icon({
+        iconUrl: "leaflet/map_marker_restaurant.svg",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [25, -40],
+      }),
+      // eslint-disable-next-line
+      storeIcon: L.icon({
+        iconUrl: "leaflet/map_marker_store.svg",
         iconSize: [40, 40],
         iconAnchor: [20, 20],
         popupAnchor: [25, -40],
@@ -307,7 +335,7 @@ export default {
       }),
       // eslint-disable-next-line
       userIcon: L.icon({
-        iconUrl: "leaflet/map_marker_star.svg",
+        iconUrl: "leaflet/map_marker_star2.svg",
         iconSize: [40, 40],
         iconAnchor: [20, 20],
         popupAnchor: [25, -40],
@@ -344,6 +372,9 @@ export default {
           if (props.location_type === "attraction") {
             icon = this.attractionIcon;
           }
+          if (props.location_type === "bathroom") {
+            icon = this.bathroomIcon;
+          }
           if (props.location_type === "garden") {
             icon = this.gardenIcon;
           }
@@ -353,8 +384,17 @@ export default {
           if (props.location_type === "picnic shelter") {
             icon = this.picnicShelterIcon;
           }
+          if (props.location_type === "public art") {
+            icon = this.publicArtIcon;
+          }
           if (props.location_type === "recreation facility") {
             icon = this.recreationFacilityIcon;
+          }
+          if (props.location_type === "restaurant") {
+            icon = this.restaurantIcon;
+          }
+          if (props.location_type === "store") {
+            icon = this.storeIcon;
           }
 
           Object.assign(markerObject, { icon });
