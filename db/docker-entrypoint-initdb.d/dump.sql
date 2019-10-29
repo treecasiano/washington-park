@@ -438,6 +438,7 @@ COPY public.park_location (gid, location_name, street_addr_1, street_addr_2, cit
 24	Washington Park Amphitheater	410 SW Kingston Ave		Portland	OR	97205	attraction				Small outdoor theater with bleachers surrounded by gardens, the site of the Summer Festival.	0101000020E61000005305A3923AAD5EC0FB3A70CE88C24640
 25	Portland Japanese Garden Gift Shop	611 SW Kingston Ave		Portland	OR	97205	store	10am - 4pm	https://japanesegarden.org/gift-shop/		Compact gift shop, part of a park, specializing in Japanese-inspired decor for home & garden.	0101000020E6100000B7627FD93DAD5EC06DC5FEB27BC24640
 26	Rose Garden Store	850 SW Rose Garden Way		Portland	OR	97205	store	9am - 7pm daily (closed Jan and Feb)	http://www.rosefestival.org/buy/rose-garden-store			0101000020E610000029ED0DBE30AD5EC0C364AA6054C24640
+27	Cascade Grill	4001 SW Canyon Rd.		Portland	OR	97221	restaurant		https://www.oregonzoo.org/visit/food-zoo		Soups, salads & sandwiches in a woodsy-lodge space with a patio, at the entrance to the Oregon Zoo.	0101000020E6100000D26F5F07CEAD5EC01AC05B2041C14640
 \.
 
 
@@ -1055,7 +1056,7 @@ SELECT pg_catalog.setval('public.invasive_species_report_gid_seq', 3, true);
 -- Name: park_location_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.park_location_gid_seq', 26, true);
+SELECT pg_catalog.setval('public.park_location_gid_seq', 27, true);
 
 
 --
