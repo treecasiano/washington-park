@@ -18,7 +18,7 @@
             <v-flex class="mb-4">
               <div class="mapLayers__heading">
                 <v-divider></v-divider>
-                <div>Park Attractions and Amenities</div>
+                <div>Park Features</div>
                 <v-divider class="mb-4"></v-divider>
               </div>
               <v-checkbox
