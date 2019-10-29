@@ -423,6 +423,21 @@ COPY public.park_location (gid, location_name, street_addr_1, street_addr_2, cit
 9	Washington Park Playground	1715 Sherwood Blvd.		Portland	OR	97221	playground	5am - 10pm daily	https://www.portlandoregon.gov/parks/finder/index.cfm?&propertyid=841&action=ViewPark&searchtext=washington%20park		Accessible play area and accessible restroom. Paved and unpaved paths. Pay to Park. 	0101000020E6100000B1E1444F25AD5EC0C76A4EB91DC24640
 10	Wedding Meadow	Hoyt Arboretum		Portland	OR	97205	attraction		https://www.hoytarboretum.org/visit/rentals/wedding-meadow/		A peaceful, grassy setting surrounded by stately conifers and fringed with white-blooming shrubs like snowberry and ocean spray, the Wedding Meadow offers a bucolic retreat near the city.	0101000020E6100000AEF5A0FBCDAD5EC00C2659E25CC24640
 11	Redwood Observation Deck	Wildwood Trail		Portland	OR	97205	attraction		https://www.hoytarboretum.org/visit/rentals/redwood-deck/		Overlooking Johnson Creek, the deck provides a respite amongst the towering redwoods. 	0101000020E6100000AEF5A0FBCDAD5EC00C2659E25CC24640
+14	Bamboo Garden in Hoyt Arboretum	148 SW Fischer Ln.		Portland	OR	97205	garden				The largest bamboo garden in the Pacific Northwest, featuring over 30 species.	0101000020E6100000533E045523AE5EC0847C75FAE6C14640
+15	Oregon Holocaust Memorial	95205 SW Washington Way		Portland	OR	97205	attraction		https://www.ojmche.org/educate/education/holocaust-memorial			0101000020E61000006605D03909AD5EC0D48448E1D5C24640
+13	Western Forestry and Conservation Association	4033 SW Canyon Rd.		Portland	OR	97221	attraction		https://westernforestry.org/		A non-profit organization dedicated to promoting forest stewardship in western North America.	0101000020E61000003106D671FCAD5EC0DEAAEB504DC14640
+12	Vietnam Veterans of Oregon Memorial	4000 SW Canyon Rd.		Portland	OR	97221	attraction	5am - 10am daily			The memorial features the names of all the Oregonians killed in Vietnam. 	0101000020E6100000DFBF7971E2AD5EC066C0594A96C14640
+16	Hoyt Arboretum Vistor Center	4000 SW Fairview Blvd.		Portland	OR	97221	attraction	9am - 4pm (M-F), 11am - 3pm (weekends)	https://www.hoytarboretum.org/visit/plan-your-visit/			0101000020E6100000AE65321CCFAD5EC006BD378600C24640
+20	Lewis & Clark Memorial Column			Portland	OR	97205	public art				Historical landmark that marks the end of the Lewis & Clark expedition.	0101000020E6100000BB9BA73AE4AC5EC0D0B359F5B9C24640
+17	Portland Japanese Garden	611 SW Kingston Ave.		Portland	OR	97205	garden	Winter Public Garden Hours (October 1 – March 10): 12pm - 4pm (M); 10am - 4pm (T - Sun)\n	https://japanesegarden.org/		Many styles of gardens showcased in serene 5.5-acre space with waterfall, teahouse & mountain view.	0101000020E61000005874EB353DAD5EC06117450F7CC24640
+18	Oregon Zoo	4001 SW Canyon Rd.		Portland	OR	97221	attraction	9:30am - 4pm (Sept. 3, 2019 - May 24, 2020); 9:30am to 6pm (May 25, 2020 - Sept 2, 2020)	https://www.oregonzoo.org/		The 64-acre Oregon Zoo is considered part of Washington park. 	0101000020E6100000CA9DE3EDD2AD5EC0A818E76F42C14640
+19	Public Restroom	SW Washington Way		Portland	OR	97205	bathroom	7am - 8pm daily			Closed for the season.	0101000020E6100000410C74ED0BAD5EC0374F75C8CDC24640
+21	Sacajawea Statue	2600 SW Lewis Clark Way		Portland	OR	97205	public art					0101000020E6100000562AA8A8FAAC5EC013D731AEB8C24640
+22	Coming of the White Man Statue	92205 SW Washington Way		Portland	OR	97205	public art		https://en.wikipedia.org/wiki/Coming_of_the_White_Man		An outdoor bronze sculpture made by Hermon Atkins MacNeil.	0101000020E6100000C93CF20703AD5EC0FF942A51F6C24640
+23	Secret Garden	SW Rose Garden Way		Portland	OR	97205	garden				A small, quiet, and relaxing subsection of the larger rose garden.	0101000020E61000007444BE4B29AD5EC05E25C40199C24640
+24	Washington Park Amphitheater	410 SW Kingston Ave		Portland	OR	97205	attraction				Small outdoor theater with bleachers surrounded by gardens, the site of the Summer Festival.	0101000020E61000005305A3923AAD5EC0FB3A70CE88C24640
+25	Portland Japanese Garden Gift Shop	611 SW Kingston Ave		Portland	OR	97205	store	10am - 4pm	https://japanesegarden.org/gift-shop/		Compact gift shop, part of a park, specializing in Japanese-inspired decor for home & garden.	0101000020E6100000B7627FD93DAD5EC06DC5FEB27BC24640
+26	Rose Garden Store	850 SW Rose Garden Way		Portland	OR	97205	store	9am - 7pm daily (closed Jan and Feb)	http://www.rosefestival.org/buy/rose-garden-store			0101000020E610000029ED0DBE30AD5EC0C364AA6054C24640
 \.
 
 
@@ -1040,7 +1055,7 @@ SELECT pg_catalog.setval('public.invasive_species_report_gid_seq', 3, true);
 -- Name: park_location_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.park_location_gid_seq', 11, true);
+SELECT pg_catalog.setval('public.park_location_gid_seq', 26, true);
 
 
 --
