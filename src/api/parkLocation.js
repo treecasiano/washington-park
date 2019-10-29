@@ -21,6 +21,13 @@ export default {
       url: `/api/parkLocationGeoJSON`,
     });
   },
+  getGeoDataByType(params) {
+    return axios({
+      data: params,
+      method: "post",
+      url: `/api/parkLocation/getGeoDataByType`,
+    });
+  },
   list() {
     return axios({
       method: "get",

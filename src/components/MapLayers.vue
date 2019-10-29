@@ -28,13 +28,6 @@
                 v-model="displayStatusParkBoundaries"
               ></v-checkbox>
               <v-checkbox
-                :label="`Park Attractions and Amenities`"
-                color="primary"
-                data-cy="checkbox--parkLocations"
-                v-if="parkLocations.features"
-                v-model="displayStatusParkLocations"
-              ></v-checkbox>
-              <v-checkbox
                 :label="`Trails`"
                 color="primary"
                 data-cy="checkbox--trails"
@@ -55,6 +48,76 @@
                 v-if="invasiveSpeciesReports.features"
                 v-model="displayStatusInvasiveSpeciesReports"
               ></v-checkbox>
+              <v-checkbox
+                :label="`Attractions and Amenities`"
+                color="primary"
+                data-cy="checkbox--parkLocations"
+                v-if="parkLocations.features"
+                v-model="displayStatusParkLocations"
+              ></v-checkbox>
+              <v-radio-group
+                v-if="displayStatusParkLocations"
+                v-model="radiosParkLocationType"
+                class="pa-0"
+                style="margin: 0 0 -15px 32px;"
+                @change="filterParkLocations"
+              >
+                <v-radio color="accent" label="All" value="all" class="layerControls--radioButtons"></v-radio>
+                <v-radio
+                  color="accent"
+                  label="Attraction"
+                  value="attraction"
+                  class="layerControls--radioButtons"
+                ></v-radio>
+                <v-radio
+                  color="accent"
+                  label="Bathroom"
+                  value="bathroom"
+                  class="layerControls--radioButtons"
+                ></v-radio>
+                <v-radio
+                  color="accent"
+                  label="Gardens"
+                  value="garden"
+                  class="layerControls--radioButtons"
+                ></v-radio>
+                <v-radio
+                  color="accent"
+                  label="Picnic Shelter"
+                  value="picnic shelter"
+                  class="layerControls--radioButtons"
+                ></v-radio>
+                <v-radio
+                  color="accent"
+                  label="Playground"
+                  value="playground"
+                  class="layerControls--radioButtons"
+                ></v-radio>
+                <v-radio
+                  color="accent"
+                  label="Public Art"
+                  value="public art"
+                  class="layerControls--radioButtons"
+                ></v-radio>
+                <v-radio
+                  color="accent"
+                  label="Recreation Facility"
+                  value="recreation facility"
+                  class="layerControls--radioButtons"
+                ></v-radio>
+                <v-radio
+                  color="accent"
+                  label="Restaurant"
+                  value="restaurant"
+                  class="layerControls--radioButtons"
+                ></v-radio>
+                <v-radio
+                  color="accent"
+                  label="Store"
+                  value="store"
+                  class="layerControls--radioButtons"
+                ></v-radio>
+              </v-radio-group>
             </v-flex>
           </v-layout>
         </v-container>
@@ -64,7 +127,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "MapLayers",
@@ -120,9 +183,21 @@ export default {
     return {
       drawer: true,
       mini: true,
+      radiosParkLocationType: "all",
     };
   },
   methods: {
+    async filterParkLocations(value) {
+      if (value == "all") {
+        await this.fetchParkLocations();
+      } else {
+        const params = { location_type: value };
+        await this.fetchParkLocations(params);
+      }
+    },
+    ...mapActions({
+      fetchParkLocations: "parkLocation/getGeoJSON",
+    }),
     ...mapMutations({
       displayInvasiveSpeciesReports: "invasiveSpeciesReport/setDisplayStatus",
       displayParkBoundaries: "parkBoundaries/setDisplayStatus",
@@ -136,6 +211,10 @@ export default {
 
 <style>
 /* Vuetify override */
+.pdx-layerControls--radioButtons {
+  height: 20px !important;
+  padding: 0;
+}
 
 .mapLayers
   .v-input--selection-controls:not(.v-input--hide-details)

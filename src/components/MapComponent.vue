@@ -232,7 +232,7 @@ export default {
     }),
   },
   async created() {
-    // TODO: Implement Promise.all
+    // TODO: Implement Promise.all and use mapActions
     await this.$store.dispatch("invasiveSpeciesReport/getGeoJSON");
     await this.$store.dispatch("transitStop/getGeoJSON");
     await this.$store.dispatch("trail/getGeoJSON");
@@ -461,12 +461,14 @@ export default {
     width: String,
   },
   watch: {
-    // whenever object changes, this function will run
     invasiveSpeciesReportGeoJSON: function() {
       this.createInvasiveSpeciesReportMarkers(
         this.invasiveSpeciesReportGeoJSON,
         this.userReportIcon
       );
+    },
+    parkLocationGeoJSON: function() {
+      this.createParkLocationMarkers(this.parkLocationGeoJSON);
     },
   },
 };

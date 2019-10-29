@@ -14,9 +14,14 @@ const actions = {
     commit("setLoadingStatus", false);
     return commit("setList", result.data);
   },
-  async getGeoJSON({ commit }) {
+  async getGeoJSON({ commit }, params) {
     commit("setLoadingStatus", true);
-    const result = await parkLocationApi.getGeoJSON();
+    let result;
+    if (params) {
+      result = await parkLocationApi.getGeoDataByType(params);
+    } else {
+      result = await parkLocationApi.getGeoJSON();
+    }
     commit("setLoadingStatus", false);
     return commit("setGeoJSON", result.data);
   },
@@ -73,6 +78,11 @@ const getters = {
   getById: state => id => {
     return state.list.find(el => {
       return el.gid === id;
+    });
+  },
+  getByLocationType: state => locationType => {
+    return state.list.find(el => {
+      return el.location_type === locationType;
     });
   },
 };
