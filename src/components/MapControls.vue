@@ -34,7 +34,7 @@
                     href="http://explorewashingtonpark.org/"
                   >website</a>.
                 </p>
-                <p>Use the tabs above to locate yourself withint he park or search for park locations closest to you. You can even help us keep the park healthy by filing an invasive species report.</p>
+                <p>Use the tabs above to locate yourself within the park or search for park locations closest to you. You can even help us keep the park healthy by filing an invasive species report.</p>
               </v-layout>
             </v-tab-item>
             <v-tab-item key="2" value="search">
