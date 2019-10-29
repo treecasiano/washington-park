@@ -18,7 +18,7 @@
             <v-flex class="mb-4">
               <div class="mapLayers__heading">
                 <v-divider></v-divider>
-                <div>Park Features</div>
+                <div>Map Layers</div>
                 <v-divider class="mb-4"></v-divider>
               </div>
               <v-checkbox
@@ -48,6 +48,11 @@
                 v-if="invasiveSpeciesReports.features"
                 v-model="displayStatusInvasiveSpeciesReports"
               ></v-checkbox>
+              <div class="mapLayers__heading">
+                <v-divider></v-divider>
+                <div>Park Features</div>
+                <v-divider class="mb-4"></v-divider>
+              </div>
               <v-checkbox
                 :label="`Attractions and Amenities`"
                 color="primary"
@@ -211,6 +216,12 @@ export default {
 
 <style>
 /* Vuetify override */
+
+.v-input--checkbox {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .pdx-layerControls--radioButtons {
   height: 20px !important;
   padding: 0;
