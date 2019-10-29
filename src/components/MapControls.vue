@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-navigation-drawer v-model="drawer" :mini-variant.sync="mini" permanent width="350">
+    <v-navigation-drawer v-model="drawer" :mini-variant.sync="mini" permanent width="320">
       <template v-slot:prepend>
         <v-list-item v-if="mini" dense>
           <v-btn icon @click.stop="mini = !mini">
@@ -25,7 +25,7 @@
               <v-icon>note_add</v-icon>
             </v-tab>
             <v-tab-item key="1" value="welcome">
-              <v-layout column>
+              <v-layout column class="welcomeText">
                 <h2 class="primary--text mb-2">Welcome to Washington Park!</h2>
                 <p>
                   This application will help you learn more about the park's miles of trails, beautiful gardens, the Hoyt Arboretum, and many other attractions before or during your visit. For more information, visit the park's
@@ -34,7 +34,7 @@
                     href="http://explorewashingtonpark.org/"
                   >website</a>.
                 </p>
-                <p>Use the tabs above to locate yourself withint he park or search for park locations closest to you. You can even help us keep the park healthy by filing an invasive species report.</p>
+                <p>Use the tabs above to locate yourself within the park or search for park locations closest to you. You can even help us keep the park healthy by filing an invasive species report.</p>
               </v-layout>
             </v-tab-item>
             <v-tab-item key="2" value="search">
@@ -43,29 +43,33 @@
                 <p
                   class="text-left"
                 >Click the button below to locate yourself within the park. To see the points nearest you, use the input to select a search radius.</p>
-                <div class="d-flex justify-center">
-                  <v-btn
-                    rounded
-                    class="mx-5"
-                    color="primary"
-                    dark
-                    @click="showUserLocation"
-                  >FIND ME!</v-btn>
+                <div class="d-flex justify-center align-center">
                   <v-text-field
-                    label="Distance in kilometers"
+                    label="Distance in km"
+                    class="ml-3 mr-5"
+                    prepend-icon="place"
                     type="number"
                     step=".1"
                     v-model="searchRadius"
                   ></v-text-field>
+                  <v-btn
+                    rounded
+                    class="mr-5"
+                    color="primary"
+                    dark
+                    @click="showUserLocation"
+                  >FIND ME!</v-btn>
                 </div>
-                <v-layout scrollable v-if="searchResultsParkLocations">
-                  <ul class="text-left">
-                    <li
-                      v-for="(item) in searchResultsParkLocations"
-                      v-bind:item="item"
-                      v-bind:key="item.gid"
-                    >{{item.location_name}}, {{(item.distance/1000).toFixed(2)}}km</li>
-                  </ul>
+                <v-layout v-if="searchResultsParkLocations">
+                  <div class="searchResults scrollBox">
+                    <ul class="text-left">
+                      <li
+                        v-for="(item) in searchResultsParkLocations"
+                        v-bind:item="item"
+                        v-bind:key="item.gid"
+                      >{{item.location_name}}, {{(item.distance/1000).toFixed(2)}}km</li>
+                    </ul>
+                  </div>
                 </v-layout>
               </v-layout>
             </v-tab-item>
@@ -120,10 +124,10 @@ export default {
       // fake latitude for demo: 45.5145948
       // fake longitude for demo: -122.7104008
       const coordinates = {
-        // latitude: position.coords.latitude,
-        // longitude: position.coords.longitude,
-        latitude: 45.5145948,
-        longitude: -122.7104008,
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        // latitude: 45.5145948,
+        // longitude: -122.7104008,
       };
       this.setUserCoordinates(coordinates);
     },
@@ -164,5 +168,18 @@ export default {
 }
 .v-dialog__content {
   z-index: 1000000 !important;
+}
+
+.welcomeText {
+  height: 300px;
+  overflow: auto;
+}
+
+/* when screen height is taller than 700px */
+@media only screen and (min-height: 700px) {
+  .welcomeText {
+    height: 400px;
+    overflow: hidden;
+  }
 }
 </style>

@@ -1,6 +1,11 @@
 <template>
   <v-card>
-    <v-navigation-drawer v-model="drawer" :mini-variant.sync="mini" permanent width="250">
+    <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant.sync="mini"
+      permanent
+      class="navDrawer--layers"
+    >
       <template v-slot:prepend>
         <div v-if="mini">
           <v-btn icon @click.stop="mini = !mini">
@@ -18,7 +23,7 @@
             <v-flex class="mb-4">
               <div class="mapLayers__heading">
                 <v-divider></v-divider>
-                <div>Park Attractions and Amenities</div>
+                <div>Map Layers</div>
                 <v-divider class="mb-4"></v-divider>
               </div>
               <v-checkbox
@@ -26,13 +31,6 @@
                 color="primary"
                 data-cy="checkbox--parkBoundaries"
                 v-model="displayStatusParkBoundaries"
-              ></v-checkbox>
-              <v-checkbox
-                :label="`Park Attractions and Amenities`"
-                color="primary"
-                data-cy="checkbox--parkLocations"
-                v-if="parkLocations.features"
-                v-model="displayStatusParkLocations"
               ></v-checkbox>
               <v-checkbox
                 :label="`Trails`"
@@ -55,6 +53,88 @@
                 v-if="invasiveSpeciesReports.features"
                 v-model="displayStatusInvasiveSpeciesReports"
               ></v-checkbox>
+              <div class="mapLayers__heading">
+                <v-divider></v-divider>
+                <div>Park Features</div>
+                <v-divider class="mb-4"></v-divider>
+              </div>
+              <v-checkbox
+                :label="`Attractions and Amenities`"
+                color="primary"
+                data-cy="checkbox--parkLocations"
+                v-if="parkLocations.features"
+                v-model="displayStatusParkLocations"
+              ></v-checkbox>
+              <div class="radioButtonGroup scrollBox">
+                <v-radio-group
+                  v-if="displayStatusParkLocations"
+                  v-model="radiosParkLocationType"
+                  class="pa-0"
+                  style="margin: 0 0 -15px 32px;"
+                  @change="filterParkLocations"
+                >
+                  <v-radio
+                    color="accent"
+                    label="All"
+                    value="all"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Attraction"
+                    value="attraction"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Bathroom"
+                    value="bathroom"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Gardens"
+                    value="garden"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Picnic Shelter"
+                    value="picnic shelter"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Playground"
+                    value="playground"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Public Art"
+                    value="public art"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Recreation Facility"
+                    value="recreation facility"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Restaurant"
+                    value="restaurant"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                  <v-radio
+                    color="accent"
+                    label="Store"
+                    value="store"
+                    class="layerControls--radioButtons"
+                  ></v-radio>
+                </v-radio-group>
+              </div>
             </v-flex>
           </v-layout>
         </v-container>
@@ -64,7 +144,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   name: "MapLayers",
@@ -120,9 +200,21 @@ export default {
     return {
       drawer: true,
       mini: true,
+      radiosParkLocationType: "all",
     };
   },
   methods: {
+    async filterParkLocations(value) {
+      if (value == "all") {
+        await this.fetchParkLocations();
+      } else {
+        const params = { location_type: value };
+        await this.fetchParkLocations(params);
+      }
+    },
+    ...mapActions({
+      fetchParkLocations: "parkLocation/getGeoJSON",
+    }),
     ...mapMutations({
       displayInvasiveSpeciesReports: "invasiveSpeciesReport/setDisplayStatus",
       displayParkBoundaries: "parkBoundaries/setDisplayStatus",
@@ -137,20 +229,20 @@ export default {
 <style>
 /* Vuetify override */
 
+.v-input--checkbox {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.layerControls--radioButtons {
+  height: 22px !important;
+  padding: 0;
+}
+
 .mapLayers
   .v-input--selection-controls:not(.v-input--hide-details)
   .v-input__slot {
   margin: -0 !important;
-}
-
-.mapLayers__heading {
-  font-size: 16px;
-  font-weight: bold;
-}
-@media only screen and (max-height: 500px) {
-  .mapLayers__heading {
-    display: none;
-  }
 }
 </style>
 
