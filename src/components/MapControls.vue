@@ -25,7 +25,7 @@
               <v-icon>note_add</v-icon>
             </v-tab>
             <v-tab-item key="1" value="welcome">
-              <v-layout column class="welcomeText">
+              <v-layout column>
                 <h2 class="primary--text mb-2">Welcome to Washington Park!</h2>
                 <p>
                   This application will help you learn more about the park's miles of trails, beautiful gardens, the Hoyt Arboretum, and many other attractions before or during your visit. For more information, visit the park's
@@ -166,18 +166,5 @@ export default {
 }
 .v-dialog__content {
   z-index: 1000000 !important;
-}
-
-.welcomeText {
-  height: 300px;
-  overflow: auto;
-}
-
-/* when screen height is taller than 700px */
-@media only screen and (min-height: 700px) {
-  .welcomeText {
-    height: 400px;
-    overflow: hidden;
-  }
 }
 </style>

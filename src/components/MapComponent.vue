@@ -541,7 +541,6 @@ export default {
 }
 
 .radioButtonGroup.scrollBox {
-  border: 1px solid gray;
   height: 165px;
   padding-top: 5px;
 }
@@ -565,7 +564,6 @@ export default {
   }
 
   .radioButtonGroup.scrollBox {
-    border: 1px solid transparent;
     height: 350px;
   }
 }
