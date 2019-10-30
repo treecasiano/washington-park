@@ -67,7 +67,7 @@
               ></v-checkbox>
               <div class="radioButtonGroup scrollBox">
                 <v-radio-group
-                  v-if="displayStatusParkLocations"
+                  :disabled="!displayStatusParkLocations"
                   v-model="radiosParkLocationType"
                   class="pa-0"
                   style="margin: 0 0 -15px 32px;"
