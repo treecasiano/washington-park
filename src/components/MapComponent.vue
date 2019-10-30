@@ -145,9 +145,23 @@
             :dash-array="item.dashArray"
           >
             <l-popup>
-              <div>
+              <div v-if="item.props.trailname">
                 <strong>Trail Name:</strong>
                 {{item.props.trailname}}
+              </div>
+              <div v-if="item.props.systemname">
+                <strong>Trail System Name:</strong>
+                {{item.props.systemname}}
+              </div>
+              <div v-if="item.props.trlsurface">
+                <strong>Trail Surface:</strong>
+                {{item.props.trlsurface}}
+              </div>
+              <div v-if="item.props.accessible">
+                <strong>Accessible:&nbsp;</strong>
+                <span v-if="item.props.accessible === 'Not Evaluated'">Not evaluated</span>
+                <span v-if="item.props.accessible === 'Accessible'">Yes</span>
+                <span v-if="item.props.accessible === 'Not Accessible'">No</span>
               </div>
             </l-popup>
           </l-polyline>
@@ -494,7 +508,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.$refs.map.mapObject.scrollWheelZoom.disable();
+      // this.$refs.map.mapObject.scrollWheelZoom.disable();
     });
   },
   props: {
