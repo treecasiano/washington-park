@@ -40,28 +40,25 @@
             <v-tab-item key="2" value="search">
               <v-layout column mt-2>
                 <h2 class="primary--text mb-2">Find Locations Near You!</h2>
-                <p>Click the button below to locate yourself within the park. To see the points nearest you, use the input to select a search radius.</p>
+                <p>Click the Search button to locate yourself and nearby park locations.</p>
                 <div class="d-flex justify-center align-center">
                   <v-text-field
                     label="Miles"
                     class="ml-3 mr-5"
+                    min="0.01"
+                    max="10"
                     prepend-icon="place"
                     type="number"
                     step=".01"
                     v-model="searchRadius"
                   ></v-text-field>
-                  <v-btn
-                    rounded
-                    class="mr-5"
-                    color="primary"
-                    dark
-                    @click="showUserLocation"
-                  >FIND ME!</v-btn>
+                  <v-btn rounded class="mr-5" color="primary" dark @click="showUserLocation">Search</v-btn>
                 </div>
                 <v-layout column justify-start v-if="searchResultsParkLocations">
                   <div class="searchResults scrollBox">
                     <ul class="text-left" style="list-style-type: none;">
                       <li
+                        class="font-weight-thin caption"
                         v-for="(item) in searchResultsParkLocations"
                         v-bind:item="item"
                         v-bind:key="item.gid"
@@ -141,8 +138,10 @@ export default {
     },
     centerOnPoint(item) {
       const pointCoordinates = [item.latitude, item.longitude];
+
       this.setCenter([item.latitude, item.longitude]);
       this.setZoom(18);
+      this.mini = true;
     },
     showUserLocation() {
       this.getLocation();
