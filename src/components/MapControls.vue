@@ -28,13 +28,13 @@
               <v-layout column>
                 <h2 class="primary--text mb-2">Welcome to Washington Park!</h2>
                 <p>
-                  This application will help you learn more about the park's miles of trails, beautiful gardens, the Hoyt Arboretum, and many other attractions before or during your visit. For more information, visit the park's
+                  This application will help you learn more about the park's attractions, amenities, public art, miles of trails, and many other features before or during your visit. For more information, visit the park's
                   <a
                     color="secondary"
                     href="http://explorewashingtonpark.org/"
                   >website</a>.
                 </p>
-                <p>Use the tabs above to locate yourself within the park or search for park locations closest to you. You can even help us keep the park healthy by filing an invasive species report.</p>
+                <p>Use the tabs above to access forms to help you locate yourself and nearby features within the park. You can even help us keep the park ecosystem healthy by filing an invasive species report.</p>
               </v-layout>
             </v-tab-item>
             <v-tab-item key="2" value="search">
