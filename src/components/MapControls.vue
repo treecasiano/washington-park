@@ -43,7 +43,7 @@
                 <p>Click the button below to locate yourself within the park. To see the points nearest you, use the input to select a search radius.</p>
                 <div class="d-flex justify-center align-center">
                   <v-text-field
-                    label="Distance in km"
+                    label="Miles"
                     class="ml-3 mr-5"
                     prepend-icon="place"
                     type="number"
@@ -65,7 +65,7 @@
                         v-for="(item) in searchResultsParkLocations"
                         v-bind:item="item"
                         v-bind:key="item.gid"
-                      >{{item.location_name}}, {{(item.distance/1000).toFixed(2)}}km</li>
+                      >{{item.location_name}}, {{(item.distance*0.62137119 /1000).toFixed(2)}}mi</li>
                     </ul>
                   </div>
                 </v-layout>
@@ -136,7 +136,9 @@ export default {
       if (this.searchRadius) {
         // fetch list of points near user
         const geom = `${this.userLongitude}, ${this.userLatitude}`;
-        const distance = this.searchRadius * 1000;
+        const distanceMiles = this.searchRadius;
+        const distanceConvertedToMeters = distanceMiles * 1609.34;
+        const distance = distanceConvertedToMeters;
         this.fetchLocationsNearUser({
           geom,
           distance,
