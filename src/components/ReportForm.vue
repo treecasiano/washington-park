@@ -2,24 +2,29 @@
   <div>
     <v-dialog v-model="dialog" scrollable max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-layout column class="text-left searchInstructions">
+        <v-layout column class="searchInstructions">
           <h2 class="primary--text mb-2">Combat Invasive Species!</h2>
           <p>If you see an invasive species while you are in the park, please submit a quick report.</p>
-          <p>For more information visit</p>
-          <ul class="mb-2">
-            <li>
-              <a href="https://www.portlandoregon.gov/bes/55085">Invasive Animals</a>
-            </li>
-            <li>
-              <a href="https://www.portlandoregon.gov/parks/article/200906">Invasive Plants</a>
-            </li>
-          </ul>
-
           <div class="d-flex justify-center">
             <v-btn rounded color="primary" dark v-on="on">
               <v-icon>note_add</v-icon>&nbsp;Submit Report
             </v-btn>
           </div>
+          <v-list class="mt-5">
+            <v-list-item-title>
+              <h3>For more information:</h3>
+            </v-list-item-title>
+            <v-list-item>
+              <v-list-item-content>
+                <a href="https://www.portlandoregon.gov/bes/55085">Invasive Animals</a>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <a href="https://www.portlandoregon.gov/parks/article/200906">Invasive Plants</a>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </v-layout>
       </template>
       <v-form v-model="valid" style="z-index: 100000;">
@@ -56,12 +61,8 @@
               rows="1"
               v-model="record.location_details"
             ></v-textarea>
-            <v-text-field
-              dense
-              label="Your Email (optional)"
-              v-model="record.observer_email"
-              required
-            ></v-text-field>
+            <div class="primary--text font-weight-bold">To be added to our mailing list (optional):</div>
+            <v-text-field dense label="Your Email" v-model="record.observer_email" required></v-text-field>
             <div class="d-flex justify-end mt-3">
               <v-btn class="mr-3" rounded outlined @click="cancel">Cancel</v-btn>
               <v-btn rounded color="primary" @click="create" :disabled="!valid">Submit</v-btn>

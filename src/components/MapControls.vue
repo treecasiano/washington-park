@@ -40,9 +40,7 @@
             <v-tab-item key="2" value="search">
               <v-layout column mt-2>
                 <h2 class="primary--text mb-2">Find Locations Near You!</h2>
-                <p
-                  class="text-left"
-                >Click the button below to locate yourself within the park. To see the points nearest you, use the input to select a search radius.</p>
+                <p>Click the button below to locate yourself within the park. To see the points nearest you, use the input to select a search radius.</p>
                 <div class="d-flex justify-center align-center">
                   <v-text-field
                     label="Distance in km"
