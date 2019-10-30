@@ -47,7 +47,7 @@
                     class="ml-3 mr-5"
                     prepend-icon="place"
                     type="number"
-                    step=".1"
+                    step=".01"
                     v-model="searchRadius"
                   ></v-text-field>
                   <v-btn
@@ -58,14 +58,24 @@
                     @click="showUserLocation"
                   >FIND ME!</v-btn>
                 </div>
-                <v-layout v-if="searchResultsParkLocations">
+                <v-layout column justify-start v-if="searchResultsParkLocations">
                   <div class="searchResults scrollBox">
-                    <ul class="text-left">
+                    <ul class="text-left" style="list-style-type: none;">
                       <li
                         v-for="(item) in searchResultsParkLocations"
                         v-bind:item="item"
                         v-bind:key="item.gid"
-                      >{{item.location_name}}, {{(item.distance*0.62137119 /1000).toFixed(2)}}mi</li>
+                      >
+                        {{item.location_name}}, {{(item.distance*0.62137119 /1000).toFixed(2)}}mi
+                        <v-btn
+                          icon
+                          class="text-left"
+                          color="primary"
+                          @click.stop="centerOnPoint(item)"
+                        >
+                          <v-icon>near_me</v-icon>
+                        </v-btn>
+                      </li>
                     </ul>
                   </div>
                 </v-layout>
@@ -106,7 +116,7 @@ export default {
       drawer: true,
       mini: false,
       tab: null,
-      searchRadius: null,
+      searchRadius: 0.25,
     };
   },
   methods: {
@@ -122,12 +132,17 @@ export default {
       // fake latitude for demo: 45.5145948
       // fake longitude for demo: -122.7104008
       const coordinates = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        // latitude: 45.5145948,
-        // longitude: -122.7104008,
+        // latitude: position.coords.latitude,
+        // longitude: position.coords.longitude,
+        latitude: 45.5145948,
+        longitude: -122.7104008,
       };
       this.setUserCoordinates(coordinates);
+    },
+    centerOnPoint(item) {
+      const pointCoordinates = [item.latitude, item.longitude];
+      this.setCenter([item.latitude, item.longitude]);
+      this.setZoom(18);
     },
     showUserLocation() {
       this.getLocation();

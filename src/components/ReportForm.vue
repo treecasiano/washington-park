@@ -144,10 +144,10 @@ export default {
       // fake latitude for demo: 45.5145948
       // fake longitude for demo: -122.7104008
       const coordinates = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        // latitude: 45.5145948,
-        // longitude: -122.7104008,
+        // latitude: position.coords.latitude,
+        // longitude: position.coords.longitude,
+        latitude: 45.5145948,
+        longitude: -122.7104008,
       };
       this.setUserCoordinates(coordinates);
       this.showUserLatLng = true;
