@@ -26,15 +26,6 @@
           <MapLayers />
         </l-control>
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-        <div v-if="userLatitude && displayUserLocation">
-          <l-marker :lat-lng="userMarker" :icon="userIcon">
-            <l-popup>
-              <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
-              <div>latitude: {{userMarker.props.latitude}}</div>
-              <div>longitude: {{userMarker.props.longitude}}</div>
-            </l-popup>
-          </l-marker>
-        </div>
         <div v-if="displaySearchResultMarker">
           <l-circle-marker
             :lat-lng="searchResultMarker"
@@ -44,7 +35,15 @@
             :opacity="1"
           ></l-circle-marker>
         </div>
-
+        <div v-if="userLatitude && displayUserLocation">
+          <l-marker :lat-lng="userMarker" :icon="userIcon">
+            <l-popup>
+              <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
+              <div>latitude: {{userMarker.props.latitude}}</div>
+              <div>longitude: {{userMarker.props.longitude}}</div>
+            </l-popup>
+          </l-marker>
+        </div>
         <div v-if="displayParkBoundaries">
           <l-geo-json
             :geojson="parkBoundaries"
@@ -60,6 +59,7 @@
             v-bind:key="index"
             :lat-lng="item"
             :icon="item.icon"
+            :z-index-offset="9000"
           >
             <l-popup>
               <div>
@@ -294,7 +294,7 @@ export default {
       parkBoundaries,
       polylineArrayTrails: [],
       searchResultMarkerRadius: 30,
-      searchResultMarkerColor: "blue",
+      searchResultMarkerColor: "#55b8c5",
       subdomains: "abcd",
       url: baseMapUrl,
       // eslint-disable-next-line
@@ -407,7 +407,7 @@ export default {
         let props = feature["properties"];
 
         Object.assign(markerObject, { props });
-
+        // console.log("markerObject", markerObject);
         if (alternateIcon) {
           let icon = alternateIcon;
           if (props.location_type === "attraction") {
@@ -530,6 +530,8 @@ export default {
     },
     ...mapMutations({
       setCenter: "map/setCenter",
+      setDisplayStatusSearchResultMarker:
+        "parkLocation/setDisplayStatusSearchResultMarker",
       setZoom: "map/setZoom",
     }),
   },
@@ -552,6 +554,13 @@ export default {
     },
     parkLocationGeoJSON: function() {
       this.createParkLocationMarkers(this.parkLocationGeoJSON);
+    },
+    searchResultMarkerLatLng: function() {
+      // close all popups
+      this.$refs.map.mapObject.eachLayer(function(layer) {
+        layer.closePopup();
+      });
+      // trigger target popup
     },
   },
 };

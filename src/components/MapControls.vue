@@ -138,7 +138,6 @@ export default {
     },
     centerOnPoint(item) {
       const pointCoordinates = [item.latitude, item.longitude];
-
       this.setCenter([item.latitude, item.longitude]);
       this.setSearchResultMarkerLatLng([item.latitude, item.longitude]);
       this.setDisplayStatusSearchResultMarker(true);
