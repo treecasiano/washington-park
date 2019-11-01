@@ -12,6 +12,7 @@ import "./notifications";
 
 // register Vue2Leaflet components
 import {
+  LCircleMarker,
   LControl,
   LControlScale,
   LControlZoom,
@@ -25,6 +26,7 @@ import {
 
 import vuetify from "@/plugins/vuetify";
 
+Vue.component("l-circle-marker", LCircleMarker);
 Vue.component("l-control", LControl);
 Vue.component("l-control-scale", LControlScale);
 Vue.component("l-control-zoom", LControlZoom);

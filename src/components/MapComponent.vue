@@ -35,6 +35,15 @@
             </l-popup>
           </l-marker>
         </div>
+        <div v-if="displaySearchResultMarker">
+          <l-circle-marker
+            :lat-lng="searchResultMarker"
+            :radius="searchResultMarkerRadius"
+            :color="searchResultMarkerColor"
+            :weight="5"
+            :opacity="1"
+          ></l-circle-marker>
+        </div>
 
         <div v-if="displayParkBoundaries">
           <l-geo-json
@@ -209,6 +218,18 @@ export default {
         return {};
       };
     },
+    searchResultMarker() {
+      const lat = this.searchResultMarkerLatLng[0];
+      const long = this.searchResultMarkerLatLng[1];
+      // eslint-disable-next-line
+      const markerObject = L.latLng(lat, long);
+      const props = {
+        latitude: lat,
+        longitude: long,
+      };
+      Object.assign(markerObject, { props });
+      return markerObject;
+    },
     userMarker() {
       const userLat = this.$store.state.map.userLatitude;
       const userLong = this.$store.state.map.userLongitude;
@@ -227,6 +248,8 @@ export default {
         state.invasiveSpeciesReport.displayStatus,
       displayParkBoundaries: state => state.parkBoundaries.displayStatus,
       displayParkLocations: state => state.parkLocation.displayStatus,
+      displaySearchResultMarker: state =>
+        state.parkLocation.displayStatusSearchResultMarker,
       displayTrails: state => state.trail.displayStatus,
       displayTransitStops: state => state.transitStop.displayStatus,
       displayUserLocation: state => state.map.displayStatus,
@@ -236,6 +259,8 @@ export default {
         state.invasiveSpeciesReport.geoJSON,
       invasiveSpeciesReportsLoading: state =>
         state.invasiveSpeciesReport.loading,
+      searchResultMarkerLatLng: state =>
+        state.parkLocation.searchResultMarkerLatLng,
       trailsGeoJSON: state => state.trail.geoJSON,
       trailsLoading: state => state.trail.loading,
       transitStopDataLoading: state => state.transitStop.loading,
@@ -268,6 +293,8 @@ export default {
       minZoom: 4,
       parkBoundaries,
       polylineArrayTrails: [],
+      searchResultMarkerRadius: 30,
+      searchResultMarkerColor: "blue",
       subdomains: "abcd",
       url: baseMapUrl,
       // eslint-disable-next-line

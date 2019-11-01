@@ -140,6 +140,8 @@ export default {
       const pointCoordinates = [item.latitude, item.longitude];
 
       this.setCenter([item.latitude, item.longitude]);
+      this.setSearchResultMarkerLatLng([item.latitude, item.longitude]);
+      this.setDisplayStatusSearchResultMarker(true);
       this.setZoom(18);
       this.mini = true;
     },
@@ -168,6 +170,9 @@ export default {
       setUserCoordinates: "map/setUserCoordinates",
       setUserLocationDisplayStatus: "map/setDisplayStatus",
       setZoom: "map/setZoom",
+      setDisplayStatusSearchResultMarker:
+        "parkLocation/setDisplayStatusSearchResultMarker",
+      setSearchResultMarkerLatLng: "parkLocation/setSearchResultMarkerLatLng",
     }),
   },
 };
