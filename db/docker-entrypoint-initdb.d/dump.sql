@@ -439,6 +439,11 @@ COPY public.park_location (gid, location_name, street_addr_1, street_addr_2, cit
 26	Rose Garden Store	850 SW Rose Garden Way		Portland	OR	97205	store	9am - 7pm daily (closed Jan and Feb)	http://www.rosefestival.org/buy/rose-garden-store			0101000020E610000029ED0DBE30AD5EC0C364AA6054C24640
 27	Cascade Grill	4001 SW Canyon Rd.		Portland	OR	97221	restaurant		https://www.oregonzoo.org/visit/food-zoo		Soups, salads & sandwiches in a woodsy-lodge space with a patio, at the entrance to the Oregon Zoo.	0101000020E6100000D26F5F07CEAD5EC01AC05B2041C14640
 20	Lewis & Clark Memorial Column	Washington Park		Portland	OR	97205	public art				Historical landmark that marks the end of the Lewis & Clark expedition.	0101000020E6100000BB9BA73AE4AC5EC0D0B359F5B9C24640
+32	Public Restroom			Portland	OR		bathroom				Public restroom near Elephant House Picnic Shelter	0101000020E6100000AFCC5B751DAD5EC0AA0F24EF1CC24640
+31	Public Restroom at Rose Garden	850 SW Rose Garden Way		Portland	OR	97205	bathroom					0101000020E6100000E27492AD2EAD5EC0B5FD2B2B4DC24640
+33	Public Restroom			Portland	OR		bathroom				Near the Hoyt Arboretum Visitor Center	0101000020E6100000DBFCBFEAC8AD5EC03BFE0B0401C24640
+34	Restroom inside Oregon Zoo Plaza			Portland	OR		bathroom					0101000020E6100000A88E554ACFAD5EC041B7973446C14640
+35	Restroom at MAX Station Platform			Portland	OR		bathroom					0101000020E61000002CF2EB87D8AD5EC09E5DBEF561C14640
 \.
 
 
@@ -1056,7 +1061,7 @@ SELECT pg_catalog.setval('public.invasive_species_report_gid_seq', 3, true);
 -- Name: park_location_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.park_location_gid_seq', 27, true);
+SELECT pg_catalog.setval('public.park_location_gid_seq', 35, true);
 
 
 --
@@ -1095,14 +1100,6 @@ ALTER TABLE ONLY public.hello_table
 
 ALTER TABLE ONLY public.invasive_species_report
     ADD CONSTRAINT invasive_species_report_pkey PRIMARY KEY (gid);
-
-
---
--- Name: park_location park_location_location_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.park_location
-    ADD CONSTRAINT park_location_location_name_key UNIQUE (location_name);
 
 
 --
