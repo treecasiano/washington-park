@@ -37,7 +37,7 @@
         </div>
         <div v-if="userLatitude && displayUserLocation">
           <l-marker :lat-lng="userMarker" :icon="icons.userIcon" ref="userMarker" focus="true">
-            <l-popup :focus="true">
+            <l-popup>
               <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
               <div>latitude: {{userMarker.props.latitude}}</div>
               <div>longitude: {{userMarker.props.longitude}}</div>
@@ -67,12 +67,10 @@
                 <strong>Location:&nbsp;</strong>
                 {{item.props.location_name}}
               </div>
-              <div>
+              <div v-if="item.props.street_addr_1">
                 <strong>Address:&nbsp;</strong>
-                {{item.props.street_addr_1}},
-                <span
-                  v-if="item.props.street_addr_2"
-                >{{item.props.street_addr_2}},</span>
+                <span v-if="item.props.street_addr_1">{{item.props.street_addr_1}},</span>
+                <span v-if="item.props.street_addr_2">{{item.props.street_addr_2}},</span>
                 {{item.props.city}}, {{item.props.state}} {{item.props.zip}}
               </div>
               <div>
