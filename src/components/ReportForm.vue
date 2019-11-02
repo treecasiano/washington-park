@@ -141,13 +141,13 @@ export default {
       this.successNotification();
     },
     setUserLocation(position) {
-      // fake latitude for demo: 45.5145948
-      // fake longitude for demo: -122.7104008
+      // fake latitude for demo: 45.521825
+      // fake longitude for demo: -122.703068
       const coordinates = {
         // latitude: position.coords.latitude,
         // longitude: position.coords.longitude,
-        latitude: 45.5145948,
-        longitude: -122.7104008,
+        latitude: 45.521825,
+        longitude: -122.703068,
       };
       this.setUserCoordinates(coordinates);
       this.showUserLatLng = true;

@@ -527,11 +527,12 @@ export default {
     },
     searchResultMarkerLatLng: function() {
       // close all popups
-      // this.$refs.map.mapObject.eachLayer(function(layer) {
-      //   layer.closePopup();
-      // });
+      this.$refs.map.mapObject.eachLayer(function(layer) {
+        layer.closePopup();
+      });
 
       if (this.searchResultMarkerId) {
+        // TODO: Trigger popup
         const refs = this.$refs;
         const [marker] = refs[`parkLocation${this.searchResultMarkerId}`];
         const [popup] = refs[`parkLocationPopup${this.searchResultMarkerId}`];
