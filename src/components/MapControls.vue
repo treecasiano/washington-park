@@ -62,6 +62,10 @@
                   >Search</v-btn>
                 </div>
                 <v-layout column justify-start v-if="searchResultsParkLocations">
+                  <div
+                    class="font-weight-bold primary--text"
+                    v-if="searchResultsParkLocations.length"
+                  >{{searchResultsParkLocations.length}} search results</div>
                   <div class="searchResults scrollBox">
                     <ul class="text-left" style="list-style-type: none;">
                       <li
@@ -149,7 +153,7 @@ export default {
       this.setCenter([item.latitude, item.longitude]);
       this.setSearchResultMarkerLatLng([item.latitude, item.longitude]);
       this.setDisplayStatusSearchResultMarker(true);
-      this.setZoom(18);
+      this.setZoom(17);
       this.mini = true;
     },
     showUserLocation() {
