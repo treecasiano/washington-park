@@ -53,17 +53,16 @@
         </div>
         <div v-if="displayParkLocations && markersArrayParkLocation.length">
           <l-marker
-            ref="parkLocation"
+            :ref="`parkLocation${item.props.gid}`"
             v-for="(item, index) in markersArrayParkLocation"
             v-bind:item="item"
             v-bind:index="index"
             v-bind:key="index"
             :lat-lng="item"
             :icon="item.icon"
-            :options="{title: `park-location-${item.props.gid}`}"
             :z-index-offset="9000"
           >
-            <l-popup ref="parkLocationPopup">
+            <l-popup :ref="`parkLocationPopup${item.props.gid}`">
               <div>
                 <strong>Location:&nbsp;</strong>
                 {{item.props.location_name}}
@@ -528,17 +527,14 @@ export default {
     },
     searchResultMarkerLatLng: function() {
       // close all popups
-      this.$refs.map.mapObject.eachLayer(function(layer) {
-        layer.closePopup();
-      });
+      // this.$refs.map.mapObject.eachLayer(function(layer) {
+      //   layer.closePopup();
+      // });
 
       if (this.searchResultMarkerId) {
-        this.$refs.parkLocation.forEach(markerObj => {
-          const markerTitle = markerObj.options.title;
-          if (markerTitle === `park-location-${this.searchResultMarkerId}`) {
-            console.log(markerObj);
-          }
-        });
+        const refs = this.$refs;
+        const [marker] = refs[`parkLocation${this.searchResultMarkerId}`];
+        const [popup] = refs[`parkLocationPopup${this.searchResultMarkerId}`];
       }
     },
   },
