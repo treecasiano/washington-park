@@ -532,6 +532,9 @@ export default {
   },
   watch: {
     invasiveSpeciesReportGeoJSON: function() {
+      this.$refs.map.mapObject.eachLayer(function(layer) {
+        layer.closePopup();
+      });
       this.createInvasiveSpeciesReportMarkers(
         this.invasiveSpeciesReportGeoJSON
       );
