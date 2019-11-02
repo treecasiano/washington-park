@@ -37,7 +37,7 @@
         </div>
         <div v-if="userLatitude && displayUserLocation">
           <l-marker :lat-lng="userMarker" :icon="icons.userIcon" ref="userMarker" focus="true">
-            <l-popup>
+            <l-popup :focus="true">
               <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
               <div>latitude: {{userMarker.props.latitude}}</div>
               <div>longitude: {{userMarker.props.longitude}}</div>
@@ -189,85 +189,63 @@ import { mapMutations, mapState } from "vuex";
 import MapControls from "@/components/MapControls.vue";
 import MapLayers from "@/components/MapLayers.vue";
 import parkBoundaries from "../../public/parkBoundaries.json";
-const icons = {
-  attractionIcon: L.icon({
-    iconUrl: "leaflet/map_marker_star.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  bathroomIcon: L.icon({
-    iconUrl: "leaflet/map_marker_bathroom.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  gardenIcon: L.icon({
-    iconUrl: "leaflet/map_marker_garden.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  genericIcon: L.icon({
-    iconUrl: "leaflet/map_marker_generic.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  picnicShelterIcon: L.icon({
-    iconUrl: "leaflet/map_marker_picnic.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  playgroundIcon: L.icon({
-    iconUrl: "leaflet/map_marker_playground.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  publicArtIcon: L.icon({
-    iconUrl: "leaflet/map_marker_public_art.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  recreationFacilityIcon: L.icon({
-    iconUrl: "leaflet/map_marker_rec.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  restaurantIcon: L.icon({
-    iconUrl: "leaflet/map_marker_restaurant.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  storeIcon: L.icon({
-    iconUrl: "leaflet/map_marker_store.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  transitStopIcon: L.icon({
-    iconUrl: "leaflet/map_marker_transit.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  userIcon: L.icon({
-    iconUrl: "leaflet/map_marker_star2.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
-  userReportIcon: L.icon({
-    iconUrl: "leaflet/map_marker_bug.svg",
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [25, -40],
-  }),
+const iconAttributes = {
+  iconSize: [40, 40],
+  iconAnchor: [20, 20],
+  popupAnchor: [0, -24],
+};
+let icons = {
+  attractionIcon: L.icon(
+    Object.assign({ iconUrl: "leaflet/map_marker_star.svg" }, iconAttributes)
+  ),
+  bathroomIcon: L.icon(
+    Object.assign(
+      { iconUrl: "leaflet/map_marker_bathroom.svg" },
+      iconAttributes
+    )
+  ),
+  gardenIcon: L.icon(
+    Object.assign({ iconUrl: "leaflet/map_marker_garden.svg" }, iconAttributes)
+  ),
+  genericIcon: L.icon(
+    Object.assign({ iconUrl: "leaflet/map_marker_generic.svg" }, iconAttributes)
+  ),
+  picnicShelterIcon: L.icon(
+    Object.assign({ iconUrl: "leaflet/map_marker_picnic.svg" }, iconAttributes)
+  ),
+  playgroundIcon: L.icon(
+    Object.assign(
+      { iconUrl: "leaflet/map_marker_playground.svg" },
+      iconAttributes
+    )
+  ),
+  publicArtIcon: L.icon(
+    Object.assign(
+      { iconUrl: "leaflet/map_marker_public_art.svg" },
+      iconAttributes
+    )
+  ),
+  recreationFacilityIcon: L.icon(
+    Object.assign({ iconUrl: "leaflet/map_marker_rec.svg" }, iconAttributes)
+  ),
+  restaurantIcon: L.icon(
+    Object.assign(
+      { iconUrl: "leaflet/map_marker_restaurant.svg" },
+      iconAttributes
+    )
+  ),
+  storeIcon: L.icon(
+    Object.assign({ iconUrl: "leaflet/map_marker_store.svg" }, iconAttributes)
+  ),
+  transitStopIcon: L.icon(
+    Object.assign({ iconUrl: "leaflet/map_marker_transit.svg" }, iconAttributes)
+  ),
+  userIcon: L.icon(
+    Object.assign({ iconUrl: "leaflet/map_marker_star2.svg" }, iconAttributes)
+  ),
+  userReportIcon: L.icon(
+    Object.assign({ iconUrl: "leaflet/map_marker_bug.svg" }, iconAttributes)
+  ),
 };
 
 const baseMapUrl =
@@ -321,7 +299,7 @@ export default {
         latitude: userLat,
         longitude: userLong,
       };
-      Object.assign(markerObject, { props }, { focus: true });
+      Object.assign(markerObject, { props });
       return markerObject;
     },
     ...mapState({
