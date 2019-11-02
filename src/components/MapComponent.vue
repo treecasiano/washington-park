@@ -31,6 +31,8 @@
             :lat-lng="searchResultMarker"
             :radius="searchResultMarkerRadius"
             :color="searchResultMarkerColor"
+            :fill-color="searchResultMarkerColor"
+            :fill-opacity=".75"
             :weight="5"
             :opacity="1"
           ></l-circle-marker>
@@ -367,7 +369,7 @@ export default {
       parkBoundaries,
       polylineArrayTrails: [],
       searchResultMarkerRadius: 30,
-      searchResultMarkerColor: "#55b8c5",
+      searchResultMarkerColor: "orange",
       subdomains: "abcd",
       url: baseMapUrl,
     };
