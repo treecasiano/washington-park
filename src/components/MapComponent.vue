@@ -10,7 +10,7 @@
         @update:zoom="zoomUpdated"
         @update:center="centerUpdated"
         @update:bounds="boundsUpdated"
-        :options="{zoomControl: false}"
+        :options="{zoomControl: false, zoomDelta: 0.25, zoomSnap: 0.25}"
         v-bind:style="`height: calc(${height}vh - ${offsetHeight}px); width: ${width}%;`"
       >
         <l-control position="topleft">
@@ -273,7 +273,7 @@ const baseMapUrl =
 const attribution =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
-const defaultCenter = [45.5155, -122.715];
+const defaultCenter = [45.5151, -122.713];
 const defaultZoom = 15;
 
 const popupOptions = {
@@ -450,7 +450,7 @@ export default {
             props,
             color: "grey",
             dashArray: "4",
-            weight: 2,
+            weight: 3,
           }
         );
         return polyLineObj;
@@ -549,7 +549,6 @@ export default {
       this.$refs.map.mapObject.eachLayer(function(layer) {
         layer.closePopup();
       });
-      // trigger target popup
     },
   },
 };
