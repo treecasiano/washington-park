@@ -7,7 +7,6 @@ const expressOpenapi = require("express-openapi");
 const path = require("path");
 const pathToSwaggerUi = require("swagger-ui-dist").absolutePath();
 
-const ExampleService = require("./lib/exampleService");
 const InvasiveSpeciesReportService = require("./lib/invasiveSpeciesReportService");
 const ParkLocationService = require("./lib/parkLocationService");
 const TrailService = require("./lib/trailService");
@@ -27,7 +26,6 @@ process.env.TZ = "UTC";
       config: config.get("pg"),
     });
 
-    const exampleService = new ExampleService({ pg });
     const invasiveSpeciesReportService = new InvasiveSpeciesReportService({
       pg,
     });
@@ -86,7 +84,6 @@ process.env.TZ = "UTC";
       apiDoc,
       dependencies: {
         env,
-        exampleService,
         invasiveSpeciesReportService,
         parkLocationService,
         trailService,
