@@ -138,6 +138,7 @@ export default {
     },
     centerOnPoint(item) {
       const pointCoordinates = [item.latitude, item.longitude];
+      this.setSearchResultMarkerId(item.gid);
       this.setCenter([item.latitude, item.longitude]);
       this.setSearchResultMarkerLatLng([item.latitude, item.longitude]);
       this.setDisplayStatusSearchResultMarker(true);
@@ -172,6 +173,7 @@ export default {
       setDisplayStatusSearchResultMarker:
         "parkLocation/setDisplayStatusSearchResultMarker",
       setSearchResultMarkerLatLng: "parkLocation/setSearchResultMarkerLatLng",
+      setSearchResultMarkerId: "parkLocation/setSearchResultMarkerId",
     }),
   },
 };

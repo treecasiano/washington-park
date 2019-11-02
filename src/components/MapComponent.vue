@@ -36,7 +36,7 @@
           ></l-circle-marker>
         </div>
         <div v-if="userLatitude && displayUserLocation">
-          <l-marker :lat-lng="userMarker" :icon="icons.userIcon">
+          <l-marker :lat-lng="userMarker" :icon="icons.userIcon" ref="userMarker" focus="true">
             <l-popup>
               <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
               <div>latitude: {{userMarker.props.latitude}}</div>
@@ -53,15 +53,17 @@
         </div>
         <div v-if="displayParkLocations && markersArrayParkLocation.length">
           <l-marker
+            ref="parkLocation"
             v-for="(item, index) in markersArrayParkLocation"
             v-bind:item="item"
             v-bind:index="index"
             v-bind:key="index"
             :lat-lng="item"
             :icon="item.icon"
+            :options="{title: `park-location-${item.props.gid}`}"
             :z-index-offset="9000"
           >
-            <l-popup>
+            <l-popup ref="parkLocationPopup">
               <div>
                 <strong>Location:&nbsp;</strong>
                 {{item.props.location_name}}
@@ -319,7 +321,7 @@ export default {
         latitude: userLat,
         longitude: userLong,
       };
-      Object.assign(markerObject, { props });
+      Object.assign(markerObject, { props }, { focus: true });
       return markerObject;
     },
     ...mapState({
@@ -341,6 +343,7 @@ export default {
         state.invasiveSpeciesReport.loading,
       searchResultMarkerLatLng: state =>
         state.parkLocation.searchResultMarkerLatLng,
+      searchResultMarkerId: state => state.parkLocation.searchResultMarkerId,
       trailsGeoJSON: state => state.trail.geoJSON,
       trailsLoading: state => state.trail.loading,
       transitStopDataLoading: state => state.transitStop.loading,
@@ -397,7 +400,6 @@ export default {
         let props = feature["properties"];
 
         Object.assign(markerObject, { props });
-        // console.log("markerObject", markerObject);
         if (alternateIcon) {
           let icon = alternateIcon;
           if (props.location_type === "attraction") {
@@ -549,6 +551,15 @@ export default {
       this.$refs.map.mapObject.eachLayer(function(layer) {
         layer.closePopup();
       });
+
+      if (this.searchResultMarkerId) {
+        this.$refs.parkLocation.forEach(markerObj => {
+          const markerTitle = markerObj.options.title;
+          if (markerTitle === `park-location-${this.searchResultMarkerId}`) {
+            console.log(markerObj);
+          }
+        });
+      }
     },
   },
 };

@@ -48,6 +48,9 @@ const mutations = {
   setDisplayStatusSearchResultMarker(state, status) {
     state.displayStatusSearchResultMarker = status;
   },
+  setSearchResultMarkerId(state, data) {
+    state.searchResultMarkerId = data;
+  },
   setSearchResultMarkerLatLng(state, data) {
     state.searchResultMarkerLatLng = data;
   },
@@ -79,6 +82,7 @@ const state = {
   loading: false,
   record: {},
   searchResults: [],
+  searchResultMarkerId: null,
   searchResultMarkerLatLng: [],
 };
 
