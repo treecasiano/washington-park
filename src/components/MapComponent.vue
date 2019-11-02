@@ -500,16 +500,18 @@ export default {
     },
     setParkBoundariesStyles(layer) {
       const defaultStyle = {
-        weight: 2,
+        weight: 3,
         color: "#236557",
-        opacity: 1,
-        fillColor: "transparent",
+        opacity: 0.9,
+        fillColor: "#90f1fd",
+        fillOpacity: 0.4,
       };
       const highlightStyle = {
         weight: 2,
         color: "#236557",
-        opacity: 0.8,
-        fillColor: "#dce775",
+        opacity: 1,
+        fillColor: "#FFE694",
+        fillOpacity: 0.5,
       };
       this.setBaseStyles(layer, defaultStyle, highlightStyle);
     },
