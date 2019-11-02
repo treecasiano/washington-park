@@ -25,49 +25,65 @@
               <v-icon>note_add</v-icon>
             </v-tab>
             <v-tab-item key="1" value="welcome">
-              <v-layout column class="welcomeText">
+              <v-layout column>
                 <h2 class="primary--text mb-2">Welcome to Washington Park!</h2>
                 <p>
-                  This application will help you learn more about the park's miles of trails, beautiful gardens, the Hoyt Arboretum, and many other attractions before or during your visit. For more information, visit the park's
+                  This application will help you learn more about the park's attractions, amenities, public art, miles of trails, and many other features before or during your visit. For more information, visit the park's
                   <a
                     color="secondary"
                     href="http://explorewashingtonpark.org/"
                   >website</a>.
                 </p>
-                <p>Use the tabs above to locate yourself within the park or search for park locations closest to you. You can even help us keep the park healthy by filing an invasive species report.</p>
+                <p>Use the tabs above to access forms to help you locate yourself and nearby features within the park. You can even help us keep the park ecosystem healthy by filing an invasive species report.</p>
               </v-layout>
             </v-tab-item>
             <v-tab-item key="2" value="search">
               <v-layout column mt-2>
                 <h2 class="primary--text mb-2">Find Locations Near You!</h2>
-                <p
-                  class="text-left"
-                >Click the button below to locate yourself within the park. To see the points nearest you, use the input to select a search radius.</p>
+                <p>Click the Search button to locate yourself and nearby park locations.</p>
                 <div class="d-flex justify-center align-center">
                   <v-text-field
-                    label="Distance in km"
+                    label="Miles"
                     class="ml-3 mr-5"
+                    min="0.01"
+                    max="10"
                     prepend-icon="place"
                     type="number"
-                    step=".1"
+                    step=".01"
                     v-model="searchRadius"
                   ></v-text-field>
                   <v-btn
                     rounded
-                    class="mr-5"
+                    outlined
+                    class="mr-5 font-weight-bold"
                     color="primary"
                     dark
                     @click="showUserLocation"
-                  >FIND ME!</v-btn>
+                  >Search</v-btn>
                 </div>
-                <v-layout v-if="searchResultsParkLocations">
+                <v-layout column justify-start v-if="searchResultsParkLocations">
+                  <div
+                    class="font-weight-bold primary--text"
+                    v-if="searchResultsParkLocations.length"
+                  >{{searchResultsParkLocations.length}} search results</div>
                   <div class="searchResults scrollBox">
-                    <ul class="text-left">
+                    <ul class="text-left" style="list-style-type: none;">
                       <li
+                        class="font-weight-thin caption"
                         v-for="(item) in searchResultsParkLocations"
                         v-bind:item="item"
                         v-bind:key="item.gid"
-                      >{{item.location_name}}, {{(item.distance/1000).toFixed(2)}}km</li>
+                      >
+                        {{item.location_name}}, {{(item.distance*0.62137119 /1000).toFixed(2)}}mi
+                        <v-btn
+                          icon
+                          class="text-left"
+                          color="primary"
+                          @click.stop="centerOnPoint(item)"
+                        >
+                          <v-icon>near_me</v-icon>
+                        </v-btn>
+                      </li>
                     </ul>
                   </div>
                 </v-layout>
@@ -108,7 +124,7 @@ export default {
       drawer: true,
       mini: false,
       tab: null,
-      searchRadius: null,
+      searchRadius: 0.25,
     };
   },
   methods: {
@@ -121,15 +137,24 @@ export default {
       }
     },
     setUserLocation(position) {
-      // fake latitude for demo: 45.5145948
-      // fake longitude for demo: -122.7104008
+      // fake latitude for demo: 45.521825
+      // fake longitude for demo: -122.703068
       const coordinates = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        // latitude: 45.5145948,
-        // longitude: -122.7104008,
+        // latitude: position.coords.latitude,
+        // longitude: position.coords.longitude,
+        latitude: 45.521825,
+        longitude: -122.703068,
       };
       this.setUserCoordinates(coordinates);
+    },
+    centerOnPoint(item) {
+      const pointCoordinates = [item.latitude, item.longitude];
+      this.setSearchResultMarkerId(item.gid);
+      this.setCenter([item.latitude, item.longitude]);
+      this.setSearchResultMarkerLatLng([item.latitude, item.longitude]);
+      this.setDisplayStatusSearchResultMarker(true);
+      this.setZoom(17);
+      this.mini = true;
     },
     showUserLocation() {
       this.getLocation();
@@ -138,7 +163,9 @@ export default {
       if (this.searchRadius) {
         // fetch list of points near user
         const geom = `${this.userLongitude}, ${this.userLatitude}`;
-        const distance = this.searchRadius * 1000;
+        const distanceMiles = this.searchRadius;
+        const distanceConvertedToMeters = distanceMiles * 1609.34;
+        const distance = distanceConvertedToMeters;
         this.fetchLocationsNearUser({
           geom,
           distance,
@@ -154,6 +181,10 @@ export default {
       setUserCoordinates: "map/setUserCoordinates",
       setUserLocationDisplayStatus: "map/setDisplayStatus",
       setZoom: "map/setZoom",
+      setDisplayStatusSearchResultMarker:
+        "parkLocation/setDisplayStatusSearchResultMarker",
+      setSearchResultMarkerLatLng: "parkLocation/setSearchResultMarkerLatLng",
+      setSearchResultMarkerId: "parkLocation/setSearchResultMarkerId",
     }),
   },
 };
@@ -168,18 +199,5 @@ export default {
 }
 .v-dialog__content {
   z-index: 1000000 !important;
-}
-
-.welcomeText {
-  height: 300px;
-  overflow: auto;
-}
-
-/* when screen height is taller than 700px */
-@media only screen and (min-height: 700px) {
-  .welcomeText {
-    height: 400px;
-    overflow: hidden;
-  }
 }
 </style>

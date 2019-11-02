@@ -2,127 +2,67 @@
   <div>
     <v-dialog v-model="dialog" scrollable max-width="600px">
       <template v-slot:activator="{ on }">
-        <v-layout column class="text-left searchInstructions">
+        <v-layout column class="searchInstructions">
           <h2 class="primary--text mb-2">Combat Invasive Species!</h2>
           <p>If you see an invasive species while you are in the park, please submit a quick report.</p>
-          <p>If you are not currently near the location where you spotted the invasive species or you do not have a geolocation service enabled, you will need to input the latitude and longitude manually.</p>
-          <p>
-            For more information visit
-            <a
-              href="https://www.portlandoregon.gov/bes/55085"
-            >Invasive Animals</a> and
-            <a href="https://www.portlandoregon.gov/parks/article/200906">Invasive Plants</a>.
-          </p>
           <div class="d-flex justify-center">
-            <v-btn rounded color="primary" dark v-on="on">
+            <v-btn rounded outlined class="font-weight-bold" color="primary" dark v-on="on">
               <v-icon>note_add</v-icon>&nbsp;Submit Report
             </v-btn>
           </div>
+          <v-list class="mt-5">
+            <v-list-item-title>
+              <h3>For more information:</h3>
+            </v-list-item-title>
+            <v-list-item>
+              <v-list-item-content>
+                <a href="https://www.portlandoregon.gov/bes/55085">Invasive Animals</a>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <a href="https://www.portlandoregon.gov/parks/article/200906">Invasive Plants</a>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </v-layout>
       </template>
-      <v-form v-model="valid" style="z-index: 100000; height: 780px;">
-        <v-card class="elevation-0 pb-6">
+      <v-form v-model="valid" style="z-index: 100000;">
+        <v-card class="elevation-0 pb-6 text-left">
           <v-container>
-            <v-row>
-              <v-col>
-                <v-menu
-                  ref="menu"
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  :return-value.sync="record.observation_date"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-text-field
-                      :rules="fieldRules"
-                      v-model="record.observation_date"
-                      label="Observation Date"
-                      prepend-icon="event"
-                      readonly
-                      v-on="on"
-                      required
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker v-model="record.observation_date" no-title scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                    <v-btn text color="primary" @click="$refs.menu.save(record.observation_date)">OK</v-btn>
-                  </v-date-picker>
-                </v-menu>
-              </v-col>
-              <v-col>
-                <v-select
-                  :items="organismTypes"
-                  :rules="fieldRules"
-                  dense
-                  label="Organism Type"
-                  required
-                  v-model="record.organism_type"
-                ></v-select>
-              </v-col>
-            </v-row>
+            <div
+              class="text-left primary--text font-weight-bold"
+            >Observation date, organism type, organism description, and location details are required.</div>
+            <v-select
+              :items="organismTypes"
+              :rules="fieldRules"
+              dense
+              label="Organism Type"
+              required
+              v-model="record.organism_type"
+            ></v-select>
             <v-textarea
               auto-grow
               :rules="fieldRules"
               clearable
               counter="250"
-              label="Organism Description (Required)"
+              label="Organism Description"
               required
               rows="1"
               v-model="record.organism_description"
             ></v-textarea>
             <v-textarea
               auto-grow
+              :rules="fieldRules"
               clearable
               counter="250"
               label="Location Details"
+              required
               rows="1"
               v-model="record.location_details"
             ></v-textarea>
-            <div class="text-left">We will use your current location unless you check the box below.</div>
-            <div v-if="userLatitude && userLongitude" class="text-left">
-              <span
-                v-if="userLatitude && userLongitude"
-              >Lat: {{userLatitude}}, Long: {{userLongitude}}</span>
-            </div>
-            <div v-else>Your location is unknown. Please enter coordinates below.</div>
-            <v-checkbox v-model="useOtherLatLng" label="Use Other Coordinates"></v-checkbox>
-            <div v-show="useOtherLatLng">
-              <div
-                class="text-left"
-              >These coordinates will default to the center of the park. Please adjust them accordingly.</div>
-              <div class="d-flex">
-                <v-text-field label="Latitude:" v-model="otherLatitude" :rules="fieldRules"></v-text-field>
-                <v-text-field label="Longitude:" v-model="otherLongitude" :rules="fieldRules"></v-text-field>
-              </div>
-            </div>
+            <div class="primary--text font-weight-bold">To be added to our mailing list (optional):</div>
             <v-text-field dense label="Your Email" v-model="record.observer_email" required></v-text-field>
-            <v-row>
-              <v-col>
-                <v-text-field
-                  cols="6"
-                  dense
-                  label="Your First Name"
-                  required
-                  v-model="record.observer_first_name"
-                ></v-text-field>
-              </v-col>
-              <v-col>
-                <v-text-field
-                  cols="6"
-                  dense
-                  label="Your Last Name"
-                  required
-                  v-model="record.observer_last_name"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <div
-              v-show="!valid"
-              class="text-left warning--text font-weight-bold caption"
-            >Observation date, organism type, organism, lat/long, and description are required.</div>
             <div class="d-flex justify-end mt-3">
               <v-btn class="mr-3" rounded outlined @click="cancel">Cancel</v-btn>
               <v-btn rounded color="primary" @click="create" :disabled="!valid">Submit</v-btn>
@@ -153,9 +93,6 @@ export default {
     fieldRules: [v => !!v || "Field is required"],
     menu: false,
     organismTypes: ["plant", "animal"],
-    otherLatitude: 45.5155,
-    otherLongitude: -122.715,
-    useOtherLatLng: false,
     valid: false,
   }),
   methods: {
@@ -169,22 +106,19 @@ export default {
 
     async create() {
       try {
-        if (this.useOtherLatLng) {
-          this.record.geom = `POINT(${this.otherLongitude} ${this.otherLatitude})`;
-        } else {
-          this.record.geom = `POINT(${this.userLongitude} ${this.userLatitude})`;
-        }
+        this.record.geom = `POINT(${this.userLongitude} ${this.userLatitude})`;
+        const now = new Date();
+        const month = now.getMonth();
+        const year = now.getFullYear();
+        const day = now.getDate();
+        this.record.observation_date = `${year}-${month}-${day}`;
         await this.createRecord();
         await this.fetchGeoJSON();
 
         this.dialog = false;
         this.closeMapControls();
         this.notifySuccess();
-        if (this.useOtherLatLng) {
-          this.setCenter([this.otherLatitude, this.otherLongitude]);
-        } else {
-          this.setCenter([this.userLatitude, this.userLongitude]);
-        }
+        this.setCenter([this.userLatitude, this.userLongitude]);
         this.setZoom(18);
       } catch (e) {
         this.notifyFailure();
@@ -207,13 +141,13 @@ export default {
       this.successNotification();
     },
     setUserLocation(position) {
-      // fake latitude for demo: 45.5145948
-      // fake longitude for demo: -122.7104008
+      // fake latitude for demo: 45.521825
+      // fake longitude for demo: -122.703068
       const coordinates = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        // latitude: 45.5145948,
-        // longitude: -122.7104008,
+        // latitude: position.coords.latitude,
+        // longitude: position.coords.longitude,
+        latitude: 45.521825,
+        longitude: -122.703068,
       };
       this.setUserCoordinates(coordinates);
       this.showUserLatLng = true;

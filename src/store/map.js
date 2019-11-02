@@ -17,7 +17,7 @@ const mutations = {
 };
 
 const state = {
-  center: [45.5155, -122.715],
+  center: [45.5151, -122.713],
   displayStatus: false,
   userLatitude: null,
   userLongitude: null,
@@ -26,7 +26,7 @@ const state = {
   loading: false,
   record: {},
   searchResults: [],
-  zoom: 15,
+  zoom: 15.75,
 };
 
 const getters = {};

@@ -45,6 +45,15 @@ const mutations = {
   setDisplayStatus(state, status) {
     state.displayStatus = status;
   },
+  setDisplayStatusSearchResultMarker(state, status) {
+    state.displayStatusSearchResultMarker = status;
+  },
+  setSearchResultMarkerId(state, data) {
+    state.searchResultMarkerId = data;
+  },
+  setSearchResultMarkerLatLng(state, data) {
+    state.searchResultMarkerLatLng = data;
+  },
   setList(state, data) {
     state.list = data;
   },
@@ -67,11 +76,14 @@ const mutations = {
 
 const state = {
   displayStatus: true,
+  displayStatusSearchResultMarker: false,
   list: [],
   geoJSON: {},
   loading: false,
   record: {},
   searchResults: [],
+  searchResultMarkerId: null,
+  searchResultMarkerLatLng: [],
 };
 
 const getters = {
