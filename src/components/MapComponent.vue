@@ -36,7 +36,7 @@
           ></l-circle-marker>
         </div>
         <div v-if="userLatitude && displayUserLocation">
-          <l-marker :lat-lng="userMarker" :icon="userIcon">
+          <l-marker :lat-lng="userMarker" :icon="icons.userIcon">
             <l-popup>
               <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
               <div>latitude: {{userMarker.props.latitude}}</div>
@@ -187,6 +187,86 @@ import { mapMutations, mapState } from "vuex";
 import MapControls from "@/components/MapControls.vue";
 import MapLayers from "@/components/MapLayers.vue";
 import parkBoundaries from "../../public/parkBoundaries.json";
+const icons = {
+  attractionIcon: L.icon({
+    iconUrl: "leaflet/map_marker_star.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  bathroomIcon: L.icon({
+    iconUrl: "leaflet/map_marker_bathroom.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  gardenIcon: L.icon({
+    iconUrl: "leaflet/map_marker_garden.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  genericIcon: L.icon({
+    iconUrl: "leaflet/map_marker_generic.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  picnicShelterIcon: L.icon({
+    iconUrl: "leaflet/map_marker_picnic.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  playgroundIcon: L.icon({
+    iconUrl: "leaflet/map_marker_playground.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  publicArtIcon: L.icon({
+    iconUrl: "leaflet/map_marker_public_art.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  recreationFacilityIcon: L.icon({
+    iconUrl: "leaflet/map_marker_rec.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  restaurantIcon: L.icon({
+    iconUrl: "leaflet/map_marker_restaurant.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  storeIcon: L.icon({
+    iconUrl: "leaflet/map_marker_store.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  transitStopIcon: L.icon({
+    iconUrl: "leaflet/map_marker_transit.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  userIcon: L.icon({
+    iconUrl: "leaflet/map_marker_star2.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+  userReportIcon: L.icon({
+    iconUrl: "leaflet/map_marker_bug.svg",
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [25, -40],
+  }),
+};
 
 const baseMapUrl =
   "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
@@ -285,6 +365,7 @@ export default {
     return {
       attribution,
       bounds: null,
+      icons,
       loading: false,
       markersArrayInvasiveSpeciesReport: [],
       markersArrayParkLocation: [],
@@ -297,97 +378,6 @@ export default {
       searchResultMarkerColor: "#55b8c5",
       subdomains: "abcd",
       url: baseMapUrl,
-      // eslint-disable-next-line
-      attractionIcon: L.icon({
-        iconUrl: "leaflet/map_marker_star.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      bathroomIcon: L.icon({
-        iconUrl: "leaflet/map_marker_bathroom.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      gardenIcon: L.icon({
-        iconUrl: "leaflet/map_marker_garden.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      genericIcon: L.icon({
-        iconUrl: "leaflet/map_marker_generic.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      picnicShelterIcon: L.icon({
-        iconUrl: "leaflet/map_marker_picnic.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      playgroundIcon: L.icon({
-        iconUrl: "leaflet/map_marker_playground.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      publicArtIcon: L.icon({
-        iconUrl: "leaflet/map_marker_public_art.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      recreationFacilityIcon: L.icon({
-        iconUrl: "leaflet/map_marker_rec.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      restaurantIcon: L.icon({
-        iconUrl: "leaflet/map_marker_restaurant.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      storeIcon: L.icon({
-        iconUrl: "leaflet/map_marker_store.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      transitStopIcon: L.icon({
-        iconUrl: "leaflet/map_marker_transit.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      userIcon: L.icon({
-        iconUrl: "leaflet/map_marker_star2.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
-      // eslint-disable-next-line
-      userReportIcon: L.icon({
-        iconUrl: "leaflet/map_marker_bug.svg",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
-        popupAnchor: [25, -40],
-      }),
     };
   },
   methods: {
@@ -411,31 +401,31 @@ export default {
         if (alternateIcon) {
           let icon = alternateIcon;
           if (props.location_type === "attraction") {
-            icon = this.attractionIcon;
+            icon = this.icons.attractionIcon;
           }
           if (props.location_type === "bathroom") {
-            icon = this.bathroomIcon;
+            icon = this.icons.bathroomIcon;
           }
           if (props.location_type === "garden") {
-            icon = this.gardenIcon;
+            icon = this.icons.gardenIcon;
           }
           if (props.location_type === "playground") {
-            icon = this.playgroundIcon;
+            icon = this.icons.playgroundIcon;
           }
           if (props.location_type === "picnic shelter") {
-            icon = this.picnicShelterIcon;
+            icon = this.icons.picnicShelterIcon;
           }
           if (props.location_type === "public art") {
-            icon = this.publicArtIcon;
+            icon = this.icons.publicArtIcon;
           }
           if (props.location_type === "recreation facility") {
-            icon = this.recreationFacilityIcon;
+            icon = this.icons.recreationFacilityIcon;
           }
           if (props.location_type === "restaurant") {
-            icon = this.restaurantIcon;
+            icon = this.icons.restaurantIcon;
           }
           if (props.location_type === "store") {
-            icon = this.storeIcon;
+            icon = this.icons.storeIcon;
           }
 
           Object.assign(markerObject, { icon });
@@ -474,13 +464,13 @@ export default {
     createInvasiveSpeciesReportMarkers(geoJSON) {
       this.markersArrayInvasiveSpeciesReport = this.createMarkers(
         geoJSON,
-        this.userReportIcon
+        this.icons.userReportIcon
       );
     },
     createParkLocationMarkers(geoJSON) {
       this.markersArrayParkLocation = this.createMarkers(
         geoJSON,
-        this.attractionIcon
+        this.icons.attractionIcon
       );
     },
     createTrailsPolyLines(geoJSON) {
@@ -489,7 +479,7 @@ export default {
     createTransitStopMarkers(geoJSON) {
       this.markersArrayTransitStop = this.createMarkers(
         geoJSON,
-        this.transitStopIcon
+        this.icons.transitStopIcon
       );
     },
     onEachParkBoundariesFeature(feature, layer) {
@@ -548,8 +538,7 @@ export default {
   watch: {
     invasiveSpeciesReportGeoJSON: function() {
       this.createInvasiveSpeciesReportMarkers(
-        this.invasiveSpeciesReportGeoJSON,
-        this.userReportIcon
+        this.invasiveSpeciesReportGeoJSON
       );
     },
     parkLocationGeoJSON: function() {
