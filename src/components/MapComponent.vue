@@ -592,6 +592,10 @@ export default {
   .radioButtonGroup.scrollBox {
     height: 350px;
   }
+
+  .searchResults.scrollBox {
+    max-height: 350px;
+  }
 }
 </style>
 
