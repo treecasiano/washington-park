@@ -52,7 +52,14 @@
                     step=".01"
                     v-model="searchRadius"
                   ></v-text-field>
-                  <v-btn rounded class="mr-5" color="primary" dark @click="showUserLocation">Search</v-btn>
+                  <v-btn
+                    rounded
+                    outlined
+                    class="mr-5 font-weight-bold"
+                    color="primary"
+                    dark
+                    @click="showUserLocation"
+                  >Search</v-btn>
                 </div>
                 <v-layout column justify-start v-if="searchResultsParkLocations">
                   <div class="searchResults scrollBox">

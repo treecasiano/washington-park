@@ -567,6 +567,8 @@ export default {
   font-weight: bold;
   /* hiding headings on small screens by default */
   display: none;
+  color: var(--v-primary-darken1);
+  background: var(--v-accent-lighten4);
 }
 
 /* when screen height is taller than 700px */

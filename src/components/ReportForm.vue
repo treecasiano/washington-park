@@ -6,7 +6,7 @@
           <h2 class="primary--text mb-2">Combat Invasive Species!</h2>
           <p>If you see an invasive species while you are in the park, please submit a quick report.</p>
           <div class="d-flex justify-center">
-            <v-btn rounded color="primary" dark v-on="on">
+            <v-btn rounded outlined class="font-weight-bold" color="primary" dark v-on="on">
               <v-icon>note_add</v-icon>&nbsp;Submit Report
             </v-btn>
           </div>
