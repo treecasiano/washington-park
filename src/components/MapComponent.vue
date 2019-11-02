@@ -138,6 +138,20 @@
                 <strong>Route</strong>
                 : {{item.props.rte_desc}}
               </div>
+              <div>
+                <strong>Direction</strong>
+                : {{item.props.dir_desc}}
+              </div>
+              <div>
+                <strong>Location</strong>
+                : {{item.props.location}}
+              </div>
+              <div>
+                <a
+                  class="primary--text font-weight-bold"
+                  href="https://trimet.org/"
+                >>>> Trimet Transit Tracker</a>
+              </div>
             </l-popup>
           </l-marker>
         </div>
