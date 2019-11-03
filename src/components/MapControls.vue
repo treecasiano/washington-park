@@ -61,11 +61,19 @@
                     @click="showUserLocation"
                   >Search</v-btn>
                 </div>
+                <v-select
+                  v-model="selectedLocationType"
+                  :items="locationTypes"
+                  clearable
+                  label="Filter Search Results"
+                  item-color="secondary"
+                  style="z-index: 100000;"
+                ></v-select>
                 <v-layout column justify-start v-if="searchResultsParkLocations">
                   <div
                     class="font-weight-bold primary--text"
-                    v-if="searchResultsParkLocations.length"
-                  >{{searchResultsParkLocations.length}} search results</div>
+                    v-if="showSearchResults"
+                  >{{searchResultsParkLocations.length}} result(s)</div>
                   <div class="searchResults scrollBox">
                     <ul class="text-left" style="list-style-type: none;">
                       <li
@@ -101,6 +109,7 @@
   </v-card>
 </template>
 <script>
+import { locationTypes } from "../dropdownValues.json";
 import { mapActions, mapMutations, mapState } from "vuex";
 import ReportForm from "@/components/ReportForm.vue";
 
@@ -109,9 +118,20 @@ export default {
     ReportForm,
   },
   computed: {
+    searchResultsParkLocations() {
+      const results = this.$store.state.parkLocation.searchResults;
+
+      if (this.selectedLocationType) {
+        const filteredResults = results.filter(result => {
+          return result.location_type === this.selectedLocationType;
+        });
+        return filteredResults;
+      }
+
+      return results;
+    },
     ...mapState({
       displayUserLocation: state => state.map.displayStatus,
-      searchResultsParkLocations: state => state.parkLocation.searchResults,
       userLatitude: state => state.map.userLatitude,
       userLongitude: state => state.map.userLongitude,
     }),
@@ -122,9 +142,12 @@ export default {
   data() {
     return {
       drawer: true,
+      locationTypes,
       mini: false,
-      tab: null,
       searchRadius: 0.25,
+      selectedLocationType: null,
+      showSearchResults: false,
+      tab: null,
     };
   },
   methods: {
@@ -172,6 +195,7 @@ export default {
         });
       }
       this.setZoom(18);
+      this.showSearchResults = true;
     },
     ...mapActions({
       fetchLocationsNearUser: "parkLocation/search",

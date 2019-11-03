@@ -192,6 +192,7 @@ export default {
     ...mapState({
       invasiveSpeciesReports: state => state.invasiveSpeciesReport.geoJSON,
       parkLocations: state => state.parkLocation.geoJSON,
+      searchResultsParkLocations: state => state.parkLocation.searchResults,
       transitStops: state => state.transitStop.geoJSON,
       trails: state => state.trail.geoJSON,
     }),
@@ -222,6 +223,15 @@ export default {
       displayTrails: "trail/setDisplayStatus",
       displayTransitStops: "transitStop/setDisplayStatus",
     }),
+  },
+  watch: {
+    searchResultsParkLocations: function() {
+      if (this.searchResultsParkLocations.length) {
+        this.fetchParkLocations();
+        this.radiosParkLocationType = "all";
+        this.displayStatusParkLocations = true;
+      }
+    },
   },
 };
 </script>
