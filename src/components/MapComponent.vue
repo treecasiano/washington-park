@@ -177,8 +177,12 @@
                 <strong>Trail System Name:</strong>
                 {{item.props.systemname}}
               </div>
+              <div>
+                <strong>Status:</strong>
+                {{item.props.status}}
+              </div>
               <div v-if="item.props.trlsurface">
-                <strong>Trail Surface:</strong>
+                <strong>Surface:</strong>
                 {{item.props.trlsurface}}
               </div>
               <div v-if="item.props.accessible">
