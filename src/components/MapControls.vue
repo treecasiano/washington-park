@@ -160,13 +160,15 @@ export default {
       }
     },
     setUserLocation(position) {
-      // fake latitude for demo: 45.518753
-      // fake longitude for demo: -122.705351
+      // fake latitude for demo1: 45.518753
+      // fake longitude for demo1: -122.705351
+      // fake latitude for demo2: 45.516447
+      // fake longitude for demo2: -122.715854
       const coordinates = {
         // latitude: position.coords.latitude,
         // longitude: position.coords.longitude,
-        latitude: 45.518753,
-        longitude: -122.705351,
+        latitude: 45.516447,
+        longitude: -122.715854,
       };
       this.setUserCoordinates(coordinates);
     },

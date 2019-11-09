@@ -27,12 +27,13 @@
           </v-list>
         </v-layout>
       </template>
-      <v-form v-model="valid" style="z-index: 100000;">
+      <v-form v-model="valid" style="z-index: 100000;" ref="form">
         <v-card class="elevation-0 pb-6 text-left">
           <v-container>
             <div
               class="text-left primary--text font-weight-bold"
             >Observation date, organism type, organism description, and location details are required.</div>
+            <div>This application uses gelocation, so be sure you are in the vicinity of the invasive species.</div>
             <v-select
               :items="organismTypes"
               :rules="fieldRules"
@@ -141,13 +142,15 @@ export default {
       this.successNotification();
     },
     setUserLocation(position) {
-      // fake latitude for demo: 45.518753
-      // fake longitude for demo: -122.705351
+      // fake latitude for demo1: 45.518753
+      // fake longitude for demo1: -122.705351
+      // fake latitude for demo2: 45.516447
+      // fake longitude for demo2: -122.715854
       const coordinates = {
         // latitude: position.coords.latitude,
         // longitude: position.coords.longitude,
-        latitude: 45.518753,
-        longitude: -122.705351,
+        latitude: 45.516447,
+        longitude: -122.715854,
       };
       this.setUserCoordinates(coordinates);
       this.showUserLatLng = true;
@@ -175,6 +178,11 @@ export default {
       message:
         "Please try again later or contact park administration for assistance.",
       type: "warn",
+    },
+  },
+  watch: {
+    dialog() {
+      this.$refs.form.reset();
     },
   },
 };
