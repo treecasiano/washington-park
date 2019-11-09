@@ -177,7 +177,7 @@
                 <strong>Trail System Name:</strong>
                 {{item.props.systemname}}
               </div>
-              <div v-if="item.props.status">
+              <div>
                 <strong>Status:</strong>
                 {{item.props.status}}
               </div>
