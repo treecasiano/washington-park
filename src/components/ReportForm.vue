@@ -112,7 +112,7 @@ export default {
         const month = now.getMonth();
         const year = now.getFullYear();
         const day = now.getDate();
-        this.record.observation_date = `${year}-${month}-${day}`;
+        this.record.observation_date = `${year}-${month + 1}-${day}`;
         await this.createRecord();
         await this.fetchGeoJSON();
 
