@@ -33,7 +33,7 @@
             <div
               class="text-left primary--text font-weight-bold"
             >Observation date, organism type, organism description, and location details are required.</div>
-            <div>This application uses gelocation, so be sure you are in the vicinity of the invasive species.</div>
+            <div>This application uses geolocation, so be sure you are in the vicinity of the invasive species.</div>
             <v-select
               :items="organismTypes"
               :rules="fieldRules"
