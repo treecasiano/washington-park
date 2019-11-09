@@ -38,7 +38,13 @@
           ></l-circle-marker>
         </div>
         <div v-if="userLatitude && displayUserLocation">
-          <l-marker :lat-lng="userMarker" :icon="icons.userIcon" ref="userMarker" focus="true">
+          <l-marker
+            :lat-lng="userMarker"
+            :icon="icons.userIcon"
+            ref="userMarker"
+            :z-index-offset="9100"
+            focus="true"
+          >
             <l-popup>
               <div class="primary--text font-weight-bold title">YOU ARE HERE!</div>
               <div>latitude: {{userMarker.props.latitude}}</div>
@@ -271,7 +277,7 @@ const attribution =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 const defaultCenter = [45.5151, -122.713];
-const defaultZoom = 15;
+const defaultZoom = 13;
 
 const popupOptions = {
   permanent: false,
