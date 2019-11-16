@@ -80,7 +80,7 @@ function factory(logger, invasiveSpeciesReportService) {
             },
             admin_notes: {
               description: "Admin Notes",
-              type: ["string"],
+              type: "string",
             },
             observation_date: {
               description: "Observation Date",

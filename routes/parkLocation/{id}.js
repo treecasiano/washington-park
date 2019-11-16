@@ -81,11 +81,11 @@ function factory(logger, parkLocationService) {
             },
             street_addr_1: {
               description: "Street Address Line 1",
-              type: ["string", "null"],
+              type: "string",
             },
             street_addr_2: {
               description: "Street Address Line 2",
-              type: ["string", "null"],
+              type: "string",
             },
             city: {
               description: "City",
@@ -110,19 +110,19 @@ function factory(logger, parkLocationService) {
             },
             hrs_of_operation: {
               description: "Hours of Operation",
-              type: ["string", "null"],
+              type: ["string"],
             },
             url: {
               description: "Park Location URL",
-              type: ["string", "null"],
+              type: ["string"],
             },
             image_url: {
               description: "Park Location Image URL",
-              type: ["string", "null"],
+              type: ["string"],
             },
             description: {
               description: "Park Location Description",
-              type: ["string", "null"],
+              type: ["string"],
             },
             geom: {
               description: "Geometry in the form of 'POINT(long lat)'",
