@@ -1,6 +1,6 @@
 # Washington Park
 
-This project is a VueJS and Node application with a Postgres development database in a Docker container.
+This project is a VueJS and Node application with a PostgreSQL development database in a Docker container. It satisfies requirements for GEOG 777 Capstone in GIS Development, the penultimate course in the Cartography and GIS Development MS degree program at the University of Wisconsin-Madison. 
 
 The core front-end libraries/frameworks include the following:
 
@@ -14,7 +14,7 @@ _Instructions are for Linux/Unix users._
 
 ### 1. Set up the config folder
 
-Before you install node modules or try to run the application, you will need to create a config folder. The `config` folder is not kept in version control. It's a place to store API keys or other secrets.
+Before you install node modules or try to run the application, you will need to create a config folder. The `config` folder is not kept in version control. It's a place to store API keys or other secrets. The config posted here is just for local development, so it's harmless to post the details in this README. 
 
 From the root of the project, create a folder called `config`:
 
@@ -111,15 +111,12 @@ Install Prettier for VS Code: https://marketplace.visualstudio.com/items?itemNam
 ### Client-side Testing: End-to-End Testing with Cypress
 
 With the app running, the Cypress tests will run with the command `npm run cypress`.
-
-### Server-side Testing: Unit and API Integration Testing with Jest
-
-Unit tests: `npm run test`
-
-Integration tests: `npm run integration` (make sure back-end of app is running)
+At this time, there is only one Cypress test and it is being skipped. Testing was beyond the scope of this course project, but the starter project form which this application was built included this testing.
 
 ## FUTURE WORK
 
-- Implement programmatic resetting of database so that write operations can be execurted (PUT, POST) during integration and Cypress testing without harming dev data.
+- Implement programmatic resetting of database so that write operations can be executed (PUT, POST) during integration and Cypress testing without harming dev data.
 - Turn services into classes.
 - Update Vue-CLI.
+- Escape strings in queries.
+- Handle `null` updates in the UI (update to Open API 3.0?)
