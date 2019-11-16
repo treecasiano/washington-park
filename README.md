@@ -1,6 +1,6 @@
 # Washington Park
 
-This project is a VueJS and Node application with a PostgreSQL development database in a Docker container.
+This project is a VueJS and Node application with a PostgreSQL development database in a Docker container. It satisfies requirements for GEOG 777 Capstone in GIS Development, the penultimate course in the Cartography and GIS Development MS degree program at the University of Wisconsin-Madison. 
 
 The core front-end libraries/frameworks include the following:
 
